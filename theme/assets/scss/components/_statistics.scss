@@ -1,0 +1,67 @@
+// -----------------------------------------------------------------------------
+// Components › Statistics strip
+// The floating stats card that overlaps the hero and the section below it.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-stats {
+	@include container;
+
+	position: relative;
+	z-index: z("raised");
+	margin-block-start: clamp(-4rem, -6vw, -2.5rem);
+	display: grid;
+	gap: 0;
+	grid-template-columns: repeat(2, 1fr);
+	padding: clamp(1.25rem, 3vw, 2rem);
+	background: var(--color-surface-card);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-raised);
+
+	@include respond-to("md") { grid-template-columns: repeat(4, 1fr); }
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		padding: 0.75rem 1.25rem;
+		text-align: start;
+
+		& + & { border-inline-start: 1px solid var(--color-border); }
+
+		@include respond-max("mobile") {
+			&:nth-child(odd) { border-inline-start: 0; }
+			&:nth-child(n + 3) { border-block-start: 1px solid var(--color-border); }
+		}
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 46px;
+		block-size: 46px;
+		flex: 0 0 auto;
+		border-radius: var(--radius-md);
+		background: color-mix(in srgb, var(--color-accent) 14%, transparent);
+		color: var(--color-accent);
+
+		svg { inline-size: 24px; block-size: 24px; fill: currentColor; }
+	}
+
+	&__value {
+		font-family: var(--font-heading);
+		font-weight: 800;
+		font-size: clamp(1.35rem, 1.1rem + 1vw, 1.9rem);
+		color: var(--color-primary);
+		line-height: 1;
+	}
+
+	&__label {
+		display: block;
+		margin-block-start: 0.25rem;
+		color: var(--color-text-soft);
+		font-size: 0.9rem;
+	}
+}

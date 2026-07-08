@@ -1,0 +1,31 @@
+{
+	"name": "alostora-theme",
+	"version": "1.0.0",
+	"description": "Build tooling for the Alostora WordPress theme (SCSS compilation, autoprefixing and RTL generation).",
+	"private": true,
+	"license": "GPL-2.0-or-later",
+	"engines": {
+		"node": ">=18"
+	},
+	"scripts": {
+		"sass": "sass assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=compressed",
+		"sass:dev": "sass assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=expanded",
+		"prefix": "postcss \"assets/css/*.css\" --replace --no-map",
+		"rtl": "rtlcss assets/css/main.css assets/css/main-rtl.css && rtlcss assets/css/editor.css assets/css/editor-rtl.css",
+		"build": "npm run sass && npm run prefix && npm run rtl",
+		"build:dev": "npm run sass:dev && npm run prefix && npm run rtl",
+		"watch": "sass --watch assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=expanded"
+	},
+	"browserslist": [
+		"> 0.5%",
+		"last 2 versions",
+		"not dead"
+	],
+	"devDependencies": {
+		"autoprefixer": "^10.4.20",
+		"postcss": "^8.4.49",
+		"postcss-cli": "^11.0.0",
+		"rtlcss": "^4.3.0",
+		"sass": "^1.83.0"
+	}
+}

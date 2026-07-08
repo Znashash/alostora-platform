@@ -1,0 +1,146 @@
+// -----------------------------------------------------------------------------
+// Components › Header & primary navigation
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-header {
+	position: sticky;
+	inset-block-start: 0;
+	z-index: z("header");
+	background: color-mix(in srgb, var(--color-surface-invert) 92%, transparent);
+	backdrop-filter: saturate(140%) blur(10px);
+	color: var(--color-text-invert);
+	transition: background-color var(--transition-base), box-shadow var(--transition-base);
+
+	&.is-stuck {
+		box-shadow: var(--shadow-raised);
+		background: var(--color-surface-invert);
+	}
+
+	&__inner {
+		@include container;
+
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		min-block-size: var(--header-height);
+	}
+
+	&__nav {
+		flex: 1 1 auto;
+		display: flex;
+		justify-content: center;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	&__toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 44px;
+		block-size: 44px;
+		color: inherit;
+		border-radius: var(--radius-sm);
+
+		svg { inline-size: 24px; block-size: 24px; fill: currentColor; }
+
+		@include respond-to("lg") { display: none; }
+
+		&:focus-visible { @include focus-ring; }
+	}
+}
+
+.alostora-brand {
+	display: inline-flex;
+	align-items: center;
+	flex: 0 0 auto;
+
+	&__img {
+		block-size: 44px;
+		inline-size: auto;
+	}
+}
+
+.alostora-menu {
+	--gap: clamp(0.75rem, 1.5vw, 1.75rem);
+
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--gap);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+
+	a {
+		position: relative;
+		display: inline-block;
+		padding-block: 0.5rem;
+		color: inherit;
+		font-weight: 500;
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset-inline: 0;
+			inset-block-end: 0;
+			block-size: 2px;
+			background: var(--color-accent);
+			transform: scaleX(0);
+			transform-origin: inline-start;
+			transition: transform var(--transition-base);
+		}
+
+		&:hover,
+		&:focus { color: var(--color-accent-light); }
+	}
+
+	.current-menu-item > a,
+	.current_page_item > a {
+		color: var(--color-accent-light);
+
+		&::after { transform: scaleX(1); }
+	}
+
+	// Off-canvas drawer on small screens.
+	@include respond-max("tablet") {
+		position: fixed;
+		inset-block: 0;
+		inset-inline-end: 0;
+		z-index: z("overlay");
+		flex-direction: column;
+		flex-wrap: nowrap;
+		inline-size: min(84vw, 340px);
+		padding: calc(var(--header-height) + 1.5rem) 1.5rem 1.5rem;
+		background: var(--color-surface-invert);
+		box-shadow: var(--shadow-raised);
+		transform: translateX(100%);
+		transition: transform var(--transition-base);
+		overflow-y: auto;
+
+		[dir="ltr"] & { transform: translateX(-100%); }
+
+		&.is-open { transform: translateX(0); }
+	}
+}
+
+.alostora-nav-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: z("sticky");
+	background: rgba(10, 20, 40, 0.55);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity var(--transition-base), visibility var(--transition-base);
+
+	&.is-open {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	@include respond-to("lg") { display: none; }
+}

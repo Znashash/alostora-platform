@@ -1,0 +1,22 @@
+/*
+Theme Name:        Alostora
+Theme URI:         https://alostorajo.com/
+Author:            Alostora Platform
+Author URI:        https://alostorajo.com/
+Description:       Alostora is a premium, production-ready WordPress theme for the Alostora animated-history learning platform. Built on the Hello Elementor philosophy, it ships a complete RTL-first design system, reusable components, and deep integrations with Elementor Pro, LifterLMS and VdoCipher. Homepage and all layouts are composed with the Elementor Pro Theme Builder.
+Version:           1.0.0
+Requires at least: 6.4
+Tested up to:      6.7
+Requires PHP:      8.0
+License:           GNU General Public License v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       alostora
+Domain Path:       /languages
+Tags:              rtl-language-support, custom-colors, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready, full-site-editing, education
+*/
+
+/*
+ * The compiled design-system stylesheet lives in assets/css/main.css and is
+ * enqueued from inc/enqueue.php. This file only carries the required WordPress
+ * theme header. Do not add styles here — author them in assets/scss/ instead.
+ */

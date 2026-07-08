@@ -1,0 +1,50 @@
+// -----------------------------------------------------------------------------
+// Utilities › Animations
+// GPU-friendly (transform/opacity only). Scroll-reveal is toggled by JS adding
+// `.is-visible`; count-up is handled in JS. All effects gate on `.has-animations`
+// so the reduce-motion toggle disables them cleanly.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+@keyframes alostora-fade-up {
+	from { opacity: 0; transform: translateY(24px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes alostora-float {
+	0%, 100% { transform: translateY(0); }
+	50%      { transform: translateY(-10px); }
+}
+
+@keyframes alostora-pulse-ring {
+	0%   { transform: scale(0.9); opacity: 0.7; }
+	70%  { transform: scale(1.4); opacity: 0; }
+	100% { transform: scale(1.4); opacity: 0; }
+}
+
+.has-animations {
+	[data-reveal] {
+		opacity: 0;
+		transform: translateY(24px);
+		transition: opacity var(--transition-slow), transform var(--transition-slow);
+		will-change: opacity, transform;
+
+		&.is-visible {
+			opacity: 1;
+			transform: translateY(0);
+		}
+
+		&[data-reveal-delay="1"] { transition-delay: 0.08s; }
+		&[data-reveal-delay="2"] { transition-delay: 0.16s; }
+		&[data-reveal-delay="3"] { transition-delay: 0.24s; }
+		&[data-reveal-delay="4"] { transition-delay: 0.32s; }
+	}
+
+	[data-float] {
+		animation: alostora-float 6s ease-in-out infinite;
+	}
+}
+
+.alostora-fade-up {
+	animation: alostora-fade-up 0.6s ease both;
+}

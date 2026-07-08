@@ -1,0 +1,18 @@
+// =============================================================================
+// Block editor styles — mirror the front-end design system inside Gutenberg so
+// editors preview brand typography, colours and components accurately.
+// Compiled to ../css/editor.css and loaded via add_editor_style().
+// =============================================================================
+@use "base/root";
+@use "base/typography";
+@use "components/buttons";
+@use "components/rating";
+@use "components/course-card";
+@use "components/testimonial";
+@use "utilities/helpers";
+
+.editor-styles-wrapper {
+	font-family: var(--font-body);
+	background: var(--color-bg);
+	color: var(--color-text);
+}

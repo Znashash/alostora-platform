@@ -1,0 +1,97 @@
+// -----------------------------------------------------------------------------
+// Components › Course card
+// Used both by the LifterLMS loop override and the homepage course carousel.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-course {
+	display: flex;
+	flex-direction: column;
+	block-size: 100%;
+	overflow: hidden;
+	background: var(--color-surface-card);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-card);
+	transition: transform var(--transition-base), box-shadow var(--transition-base);
+
+	&:hover {
+		transform: translateY(-6px);
+		box-shadow: var(--shadow-raised);
+	}
+
+	&__media {
+		position: relative;
+		overflow: hidden;
+		@include aspect(16, 10);
+
+		img {
+			inline-size: 100%;
+			block-size: 100%;
+			object-fit: cover;
+			transition: transform var(--transition-slow);
+		}
+	}
+
+	&:hover &__media img { transform: scale(1.06); }
+
+	&__badge {
+		position: absolute;
+		inset-block-start: 0.85rem;
+		inset-inline-end: 0.85rem;
+		padding: 0.35rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--color-text-invert);
+		background: var(--gradient-accent);
+		border-radius: var(--radius-pill);
+	}
+
+	&__body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		flex: 1 1 auto;
+		padding: 1.25rem;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 1.2rem;
+
+		a { color: var(--color-heading); }
+		a:hover { color: var(--color-accent); }
+
+		@include line-clamp(2);
+	}
+
+	&__instructor {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--color-text-soft);
+		font-size: 0.9rem;
+	}
+
+	&__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem;
+		margin-block-start: 0.25rem;
+		color: var(--color-text-soft);
+		font-size: 0.85rem;
+
+		span { display: inline-flex; align-items: center; gap: 0.35rem; }
+		svg { inline-size: 16px; block-size: 16px; fill: currentColor; opacity: 0.8; }
+	}
+
+	&__footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-block-start: auto;
+		padding-block-start: 0.9rem;
+		border-block-start: 1px solid var(--color-border);
+	}
+}

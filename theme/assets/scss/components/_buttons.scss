@@ -1,0 +1,71 @@
+// -----------------------------------------------------------------------------
+// Components › Buttons
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.85rem 1.75rem;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 1rem;
+	line-height: 1;
+	white-space: nowrap;
+	border-radius: var(--radius-pill);
+	transition: transform var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base), color var(--transition-base);
+	will-change: transform;
+
+	&:hover {
+		transform: translateY(-2px);
+	}
+
+	&:active {
+		transform: translateY(0);
+	}
+
+	&:focus-visible {
+		@include focus-ring;
+	}
+
+	.alostora-btn__icon {
+		display: inline-flex;
+		inline-size: 1.15em;
+		block-size: 1.15em;
+
+		svg { inline-size: 100%; block-size: 100%; fill: currentColor; }
+	}
+
+	// Variants.
+	&--primary {
+		background: var(--gradient-accent);
+		color: var(--color-text-invert);
+		box-shadow: 0 10px 24px rgba(243, 144, 25, 0.35);
+
+		&:hover { box-shadow: 0 14px 30px rgba(243, 144, 25, 0.45); color: var(--color-text-invert); }
+	}
+
+	&--secondary {
+		background: var(--color-primary);
+		color: var(--color-text-invert);
+
+		&:hover { background: var(--color-secondary); color: var(--color-text-invert); }
+	}
+
+	&--ghost {
+		background: transparent;
+		color: currentColor;
+		border: 2px solid color-mix(in srgb, currentColor 45%, transparent);
+
+		&:hover {
+			background: color-mix(in srgb, currentColor 12%, transparent);
+			border-color: currentColor;
+		}
+	}
+
+	&--sm { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+	&--lg { padding: 1rem 2.25rem; font-size: 1.0625rem; }
+	&--block { display: flex; inline-size: 100%; }
+}

@@ -1,0 +1,266 @@
+{
+	"version": "0.4",
+	"title": "Alostora Homepage",
+	"type": "page",
+	"content": [
+		{
+			"id": "000100e",
+			"elType": "section",
+			"settings": {
+				"_css_classes": "alostora-hero",
+				"layout": "full_width",
+				"gap": "wide"
+			},
+			"elements": [
+				{
+					"id": "000100b",
+					"elType": "column",
+					"settings": {
+						"_column_size": 50
+					},
+					"elements": [
+						{
+							"id": "0001006",
+							"elType": "widget",
+							"widgetType": "heading",
+							"settings": {
+								"title": "التاريخ لم يعد يُقرأ...",
+								"header_size": "h1"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001007",
+							"elType": "widget",
+							"widgetType": "heading",
+							"settings": {
+								"title": "بل يُشاهد!",
+								"header_size": "h1",
+								"_css_classes": "alostora-hero__accent"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001008",
+							"elType": "widget",
+							"widgetType": "text-editor",
+							"settings": {
+								"editor": "<p>حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.</p>"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001009",
+							"elType": "widget",
+							"widgetType": "button",
+							"settings": {
+								"text": "ابدأ التعلم الآن",
+								"link": {
+									"url": "#",
+									"is_external": "",
+									"nofollow": ""
+								},
+								"css_classes": "alostora-btn alostora-btn--primary alostora-btn--lg"
+							},
+							"elements": []
+						},
+						{
+							"id": "000100a",
+							"elType": "widget",
+							"widgetType": "button",
+							"settings": {
+								"text": "تصفح الدورات",
+								"link": {
+									"url": "#courses",
+									"is_external": "",
+									"nofollow": ""
+								},
+								"css_classes": "alostora-btn alostora-btn--ghost alostora-btn--lg"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				},
+				{
+					"id": "000100d",
+					"elType": "column",
+					"settings": {
+						"_column_size": 50
+					},
+					"elements": [
+						{
+							"id": "000100c",
+							"elType": "widget",
+							"widgetType": "image",
+							"settings": {
+								"image": {
+									"url": ""
+								}
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "0001011",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width"
+			},
+			"elements": [
+				{
+					"id": "0001010",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100
+					},
+					"elements": [
+						{
+							"id": "000100f",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_statistics items=\"24500+|طالب وطالبة|users,1200+|درس متحرك|play,180+|دورة تعليمية|book,98%|نسبة رضا الطلاب|trophy\"]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "0001016",
+			"elType": "section",
+			"settings": {
+				"_css_classes": "alostora-section",
+				"layout": "boxed"
+			},
+			"elements": [
+				{
+					"id": "0001015",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100
+					},
+					"elements": [
+						{
+							"id": "0001012",
+							"elType": "widget",
+							"widgetType": "heading",
+							"settings": {
+								"title": "دوراتنا المميزة",
+								"header_size": "h2",
+								"_css_classes": "alostora-section__title",
+								"align": "center"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001013",
+							"elType": "widget",
+							"widgetType": "text-editor",
+							"settings": {
+								"editor": "<p style=\"text-align:center\">تعلم من خلال أفضل الدورات المصممة بطريقة عصرية وممتعة.</p>"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001014",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[lifterlms_courses per_page=\"8\" columns=\"3\"]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "000101d",
+			"elType": "section",
+			"settings": {
+				"_css_classes": "alostora-section alostora-section--surface",
+				"layout": "boxed"
+			},
+			"elements": [
+				{
+					"id": "000101c",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100
+					},
+					"elements": [
+						{
+							"id": "0001017",
+							"elType": "widget",
+							"widgetType": "heading",
+							"settings": {
+								"title": "كيف ندرس؟",
+								"header_size": "h2",
+								"align": "center",
+								"_css_classes": "alostora-section__title"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001018",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_step_card number=\"1\" title=\"من الكتاب\" icon=\"book\"]نأخذ المعلومة الأساسية[/alostora_step_card]"
+							},
+							"elements": []
+						},
+						{
+							"id": "0001019",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_step_card number=\"2\" title=\"إلى الرسوم المتحركة\" icon=\"video\"]نحوّلها إلى قصة مرئية[/alostora_step_card]"
+							},
+							"elements": []
+						},
+						{
+							"id": "000101a",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_step_card number=\"3\" title=\"إلى الفهم والذكر\" icon=\"brain\"]تصل المعلومة بطريقة أسهل[/alostora_step_card]"
+							},
+							"elements": []
+						},
+						{
+							"id": "000101b",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_step_card number=\"4\" title=\"إلى التفوق والنجاح\" icon=\"trophy\"]لتحقيق أفضل النتائج[/alostora_step_card]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		}
+	],
+	"page_settings": {
+		"template": "elementor_canvas"
+	},
+	"metadata": {
+		"template_type": "page",
+		"wp_page_template": "elementor_canvas"
+	}
+}

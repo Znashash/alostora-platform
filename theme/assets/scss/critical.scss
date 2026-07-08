@@ -1,0 +1,68 @@
+// =============================================================================
+// Critical, above-the-fold CSS. Compiled to ../css/critical.css and inlined by
+// inc/performance.php to avoid render-blocking on first paint. Keep this small:
+// only the header + hero shell that appears before the main stylesheet loads.
+// =============================================================================
+@use "settings" as *;
+@use "sass:map";
+
+:root {
+	--color-bg: #{map.get($brand, "white")};
+	--color-text: #{map.get($brand, "ink")};
+	--color-text-invert: #{map.get($brand, "white")};
+	--color-primary: #{map.get($brand, "primary")};
+	--color-accent: #{map.get($brand, "accent")};
+	--header-height: 76px;
+	--gutter: #{$gutter};
+	--font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+	--font-heading: "Tajawal", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+	margin: 0;
+	font-family: var(--font-body);
+	color: var(--color-text);
+	background: var(--color-bg);
+	line-height: 1.7;
+}
+
+.alostora-header {
+	position: sticky;
+	inset-block-start: 0;
+	z-index: 1000;
+	min-block-size: var(--header-height);
+	background: #{map.get($brand, "primary-dark")};
+	color: var(--color-text-invert);
+}
+
+.alostora-header__inner {
+	max-inline-size: #{$container-max};
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	min-block-size: var(--header-height);
+}
+
+.alostora-hero {
+	background: linear-gradient(135deg, #{map.get($brand, "primary-dark")} 0%, #{map.get($brand, "primary")} 55%, #1c4a86 100%);
+	color: var(--color-text-invert);
+}
+
+.alostora-hero__inner {
+	max-inline-size: #{$container-max};
+	margin-inline: auto;
+	padding-inline: var(--gutter);
+	padding-block: clamp(3rem, 7vw, 6rem);
+}
+
+.alostora-hero__title {
+	font-family: var(--font-heading);
+	font-weight: 800;
+	line-height: 1.12;
+	font-size: clamp(2.5rem, 1.8rem + 3.4vw, 4.75rem);
+	margin: 0 0 1rem;
+}

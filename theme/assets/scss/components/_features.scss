@@ -1,0 +1,70 @@
+// -----------------------------------------------------------------------------
+// Components › Feature band ("Why learn with animation?")
+// Dark section with an icon list beside the brand character.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-features {
+	position: relative;
+	overflow: hidden;
+	background: var(--gradient-hero);
+	color: var(--color-text-invert);
+	border-radius: var(--radius-lg);
+
+	&__inner {
+		display: grid;
+		gap: clamp(1.5rem, 4vw, 3rem);
+		align-items: center;
+		padding: clamp(1.75rem, 4vw, 3rem);
+		grid-template-columns: 1fr;
+
+		@include respond-to("lg") { grid-template-columns: 1.2fr 0.8fr; }
+	}
+
+	&__title {
+		color: var(--color-text-invert);
+		margin-block-end: 1.5rem;
+	}
+
+	&__grid {
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: 1fr;
+
+		@include respond-to("sm") { grid-template-columns: repeat(2, 1fr); }
+	}
+
+	&__item {
+		display: flex;
+		gap: 0.85rem;
+		align-items: flex-start;
+	}
+
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 44px;
+		block-size: 44px;
+		flex: 0 0 auto;
+		border-radius: var(--radius-md);
+		background: color-mix(in srgb, var(--color-accent) 22%, transparent);
+		color: var(--color-accent-light);
+
+		svg { inline-size: 22px; block-size: 22px; fill: currentColor; }
+	}
+
+	&__item-title {
+		margin: 0 0 0.2rem;
+		color: var(--color-text-invert);
+		font-size: 1.05rem;
+	}
+
+	&__item-text {
+		margin: 0;
+		font-size: 0.9rem;
+		color: color-mix(in srgb, var(--color-text-invert) 78%, transparent);
+	}
+
+	&__media img { border-radius: var(--radius-md); }
+}

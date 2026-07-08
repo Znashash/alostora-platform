@@ -1,0 +1,33 @@
+// -----------------------------------------------------------------------------
+// Utilities › Helpers
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.u-text-center { text-align: center; }
+.u-text-start  { text-align: start; }
+.u-text-accent { color: var(--color-accent); }
+.u-text-invert { color: var(--color-text-invert); }
+
+.u-mt-0 { margin-block-start: 0; }
+.u-mb-0 { margin-block-end: 0; }
+
+.u-visually-hidden { @include visually-hidden; }
+
+.u-full-bleed {
+	inline-size: 100vw;
+	margin-inline: calc(50% - 50vw);
+}
+
+.u-no-scroll {
+	overflow: hidden;
+}
+
+// Decorative brand motif divider (book/torch accent line).
+.u-divider {
+	inline-size: 64px;
+	block-size: 4px;
+	border: 0;
+	margin: 1rem auto;
+	border-radius: var(--radius-pill);
+	background: var(--gradient-accent);
+}

@@ -1,0 +1,110 @@
+// -----------------------------------------------------------------------------
+// Components › Video card & responsive VdoCipher wrapper
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+// Responsive, brand-styled wrapper that hosts the VdoCipher embed.
+.alostora-video {
+	position: relative;
+	inline-size: 100%;
+
+	&__frame {
+		position: relative;
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+		background: var(--color-surface-invert);
+
+		iframe,
+		video,
+		.vdo-player,
+		> div {
+			position: absolute;
+			inset: 0;
+			inline-size: 100% !important;
+			block-size: 100% !important;
+			border: 0;
+		}
+	}
+
+	&--16x9 .alostora-video__frame { @include aspect(16, 9); }
+	&--4x3 .alostora-video__frame  { @include aspect(4, 3); }
+	&--1x1 .alostora-video__frame  { @include aspect(1, 1); }
+
+	&__placeholder {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.75rem;
+		color: color-mix(in srgb, var(--color-text-invert) 75%, transparent);
+		background: var(--gradient-hero);
+	}
+
+	&__icon {
+		inline-size: 60px;
+		block-size: 60px;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-text-invert) 14%, transparent);
+		position: relative;
+
+		&::before {
+			content: "";
+			position: absolute;
+			inset-block: 50%;
+			inset-inline: 50%;
+			transform: translate(-50%, -50%);
+			border-block: 10px solid transparent;
+			border-inline-start: 16px solid currentColor;
+		}
+	}
+}
+
+// Clickable poster tile that opens a lesson video.
+.alostora-video-card {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	background: var(--color-surface-invert);
+	@include aspect(16, 10);
+
+	img {
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		transition: transform var(--transition-slow);
+	}
+
+	&:hover img { transform: scale(1.06); }
+
+	&__play {
+		position: absolute;
+		inset-block: 50%;
+		inset-inline: 50%;
+		transform: translate(-50%, -50%);
+		inline-size: 54px;
+		block-size: 54px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-base, #fff) 92%, transparent);
+		color: var(--color-primary);
+		box-shadow: var(--shadow-raised);
+
+		svg { inline-size: 20px; block-size: 20px; fill: currentColor; margin-inline-start: 2px; }
+	}
+
+	&__title {
+		position: absolute;
+		inset-inline: 0;
+		inset-block-end: 0;
+		padding: 1.5rem 1rem 0.85rem;
+		margin: 0;
+		color: var(--color-text-invert);
+		font-size: 1rem;
+		background: linear-gradient(to top, rgba(10, 20, 40, 0.85), transparent);
+	}
+}

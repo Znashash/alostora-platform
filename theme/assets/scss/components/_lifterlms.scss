@@ -1,0 +1,172 @@
+// -----------------------------------------------------------------------------
+// Components › LifterLMS presentation
+// Brand styling for LifterLMS pages that are NOT composed in Elementor
+// (checkout, account, quizzes, syllabus). Content stays owned by LifterLMS.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-llms {
+	padding-block: clamp(2rem, 5vw, 4rem);
+
+	&__main { inline-size: 100%; }
+}
+
+// Course progress bar.
+.llms-progress {
+	.progress-bar-complete {
+		background: var(--gradient-accent) !important;
+	}
+}
+
+// Buttons rendered by LifterLMS inherit the brand button styling.
+.llms-button-action,
+.llms-button-primary,
+.button.llms-button-action {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.85rem 1.75rem;
+	font-family: var(--font-heading);
+	font-weight: 700;
+	color: var(--color-text-invert);
+	background: var(--gradient-accent);
+	border: 0;
+	border-radius: var(--radius-pill);
+	transition: transform var(--transition-base), box-shadow var(--transition-base);
+
+	&:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); color: var(--color-text-invert); }
+}
+
+.llms-button-secondary {
+	background: var(--color-primary);
+	color: var(--color-text-invert);
+	border-radius: var(--radius-pill);
+	padding: 0.85rem 1.75rem;
+}
+
+// Lesson video slot.
+.llms-lesson-preview,
+.llms-video-wrapper {
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+
+// Syllabus.
+.llms-syllabus-wrapper {
+	.llms-section-title { font-family: var(--font-heading); color: var(--color-heading); }
+
+	.llms-lesson-link {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		transition: border-color var(--transition-base), box-shadow var(--transition-base);
+
+		&:hover { border-color: var(--color-accent); box-shadow: var(--shadow-card); }
+	}
+}
+
+// Notices.
+.llms-notice {
+	border-inline-start: 4px solid var(--color-accent);
+	border-radius: var(--radius-sm);
+}
+
+// Catalog grid: replace LifterLMS float columns with a responsive CSS grid.
+.llms-loop-list {
+	display: grid;
+	gap: clamp(1rem, 2.5vw, 2rem);
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	@include respond-to("md") { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	@include respond-to("lg") { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+	.llms-loop-item {
+		inline-size: auto !important;
+		float: none !important;
+		margin: 0 !important;
+		list-style: none;
+	}
+}
+
+// Brand loop card wrapper (li.alostora-course from the content.php override).
+.alostora-course__inner { block-size: 100%; }
+
+.alostora-course .llms-loop-link {
+	display: flex;
+	flex-direction: column;
+	block-size: 100%;
+	color: inherit;
+
+	&:hover { color: inherit; }
+}
+
+.alostora-course .alostora-course__media .llms-featured-image,
+.alostora-course .alostora-course__media img {
+	inline-size: 100%;
+	block-size: 100%;
+	object-fit: cover;
+}
+
+// Course meta info row.
+.alostora-course-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	color: var(--color-text-soft);
+	font-size: 0.9rem;
+}
+
+// Single-course instructors.
+.alostora-instructors {
+	margin-block: 2rem;
+
+	&__title { font-size: 1.4rem; margin-block-end: 1rem; }
+
+	&__grid {
+		display: grid;
+		gap: 1.25rem;
+		grid-template-columns: 1fr;
+
+		@include respond-to("md") { grid-template-columns: repeat(2, 1fr); }
+	}
+}
+
+.alostora-instructor {
+	display: flex;
+	gap: 0.9rem;
+	align-items: flex-start;
+	padding: 1rem;
+	@include card-surface;
+
+	&__avatar { border-radius: 50%; flex: 0 0 auto; }
+	&__name { margin: 0 0 0.25rem; font-family: var(--font-heading); font-weight: 700; color: var(--color-heading); }
+	&__bio { margin: 0; font-size: 0.9rem; color: var(--color-text-soft); }
+}
+
+// Pagination shared by catalog + archives.
+.alostora-pagination,
+.wp-block-query-pagination,
+.navigation.pagination {
+	margin-block-start: 2.5rem;
+
+	.page-numbers {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-inline-size: 44px;
+		block-size: 44px;
+		padding-inline: 0.5rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--color-border);
+		color: var(--color-primary);
+		transition: background-color var(--transition-base), color var(--transition-base);
+
+		&.current { background: var(--gradient-accent); color: var(--color-text-invert); border-color: transparent; }
+		&:hover:not(.current) { background: var(--color-bg-alt); }
+	}
+
+	ul { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; margin: 0; padding: 0; justify-content: center; }
+}
