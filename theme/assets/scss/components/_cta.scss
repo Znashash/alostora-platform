@@ -1,0 +1,45 @@
+// -----------------------------------------------------------------------------
+// Components › CTA banner
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-cta {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	padding: clamp(1.75rem, 4vw, 2.75rem);
+	background: var(--gradient-hero);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-raised);
+	color: var(--color-text-invert);
+
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background:
+			radial-gradient(50% 80% at 90% 20%, rgba(243, 144, 25, 0.28), transparent 60%),
+			radial-gradient(45% 70% at 5% 100%, rgba(44, 111, 191, 0.3), transparent 65%);
+		pointer-events: none;
+	}
+
+	> * { position: relative; z-index: 1; }
+
+	&__title {
+		margin: 0;
+		color: var(--color-text-invert);
+		font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2rem);
+	}
+
+	&__subtitle {
+		margin: 0.35rem 0 0;
+		color: color-mix(in srgb, var(--color-text-invert) 80%, transparent);
+	}
+
+	&__actions { flex-shrink: 0; }
+}

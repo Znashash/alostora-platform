@@ -58,46 +58,25 @@ const footer = template('Alostora Footer', 'footer', [
 ]);
 
 // ---------- Homepage ----------
+// Each homepage section is a single full-width, zero-padding Elementor section
+// wrapping one theme shortcode widget. The theme owns the markup/styling and the
+// content stays editable via the shortcode attributes. Imagery falls back to
+// bundled placeholders so no widget is ever empty.
+const fullSection = (sc) =>
+	section(
+		[ col([ shortcode(sc) ], { padding: { unit: 'px', top: '0', right: '0', bottom: '0', left: '0', isLinked: true } }) ],
+		{ layout: 'full_width', gap: 'no', padding: { unit: 'px', top: '0', right: '0', bottom: '0', left: '0', isLinked: true } }
+	);
+
 const homepage = template('Alostora Homepage', 'page', [
-	// Hero.
-	section([
-		col([
-			widget('heading', { title: 'التاريخ لم يعد يُقرأ...', header_size: 'h1' }),
-			widget('heading', { title: 'بل يُشاهد!', header_size: 'h1', _css_classes: 'alostora-hero__accent' }),
-			textEditor('<p>حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.</p>'),
-			button('ابدأ التعلم الآن', '#', 'alostora-btn alostora-btn--primary alostora-btn--lg'),
-			button('تصفح الدورات', '#courses', 'alostora-btn alostora-btn--ghost alostora-btn--lg'),
-		], { _column_size: 50 }),
-		col([ image('') ], { _column_size: 50 }),
-	], { _css_classes: 'alostora-hero', layout: 'full_width', gap: 'wide' }),
-
-	// Stats strip.
-	section([
-		col([ shortcode('[alostora_statistics items="24500+|طالب وطالبة|users,1200+|درس متحرك|play,180+|دورة تعليمية|book,98%|نسبة رضا الطلاب|trophy"]') ]),
-	], { layout: 'full_width' }),
-
-	// Featured courses (LifterLMS course carousel).
-	section([
-		col([
-			heading('دوراتنا المميزة', 'h2', { _css_classes: 'alostora-section__title', align: 'center' }),
-			textEditor('<p style="text-align:center">تعلم من خلال أفضل الدورات المصممة بطريقة عصرية وممتعة.</p>'),
-			shortcode('[lifterlms_courses per_page="8" columns="3"]'),
-		]),
-	], { _css_classes: 'alostora-section', layout: 'boxed' }, {}),
-
-	// How we teach (steps).
-	section([
-		col([
-			heading('كيف ندرس؟', 'h2', { align: 'center', _css_classes: 'alostora-section__title' }),
-			shortcode('[alostora_step_card number="1" title="من الكتاب" icon="book"]نأخذ المعلومة الأساسية[/alostora_step_card]'),
-			shortcode('[alostora_step_card number="2" title="إلى الرسوم المتحركة" icon="video"]نحوّلها إلى قصة مرئية[/alostora_step_card]'),
-			shortcode('[alostora_step_card number="3" title="إلى الفهم والذكر" icon="brain"]تصل المعلومة بطريقة أسهل[/alostora_step_card]'),
-			shortcode('[alostora_step_card number="4" title="إلى التفوق والنجاح" icon="trophy"]لتحقيق أفضل النتائج[/alostora_step_card]'),
-		]),
-	], { _css_classes: 'alostora-section alostora-section--surface', layout: 'boxed' }),
-
-	// CTA banner handled by footer template.
-], { template: 'elementor_canvas' });
+	fullSection('[alostora_hero eyebrow="منصة الأسطورة التعليمية" title="التاريخ لم يعد يُقرأ..." title_accent="بل يُشاهد!" primary_label="ابدأ التعلم الآن" primary_url="/courses/" video_url="#" video_label="شاهد تجربة من أحد الدروس"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]'),
+	fullSection('[alostora_statistics items="24500+|طالب وطالبة|users,1200+|درس متحرك|play,180+|دورة تعليمية|book,98%|نسبة رضا الطلاب|trophy"]'),
+	fullSection('[alostora_courses_carousel]'),
+	fullSection('[alostora_steps]'),
+	fullSection('[alostora_features]'),
+	fullSection('[alostora_video_showcase]'),
+	fullSection('[alostora_cta_banner url="/courses/"]'),
+], {});
 
 fs.mkdirSync(OUT_TB, { recursive: true });
 fs.mkdirSync(OUT_KIT, { recursive: true });

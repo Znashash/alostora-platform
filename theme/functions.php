@@ -50,6 +50,7 @@ $alostora_modules = array(
 	'inc/enqueue.php',            // Styles, scripts, fonts, preloading.
 	'inc/template-functions.php', // Shared render helpers used by components.
 	'inc/components.php',         // Reusable component loader + registry.
+	'inc/sections.php',           // Homepage section shortcodes.
 	'inc/theme-options.php',      // Customizer: brand, socials, CTAs, toggles.
 	'inc/performance.php',        // Core Web Vitals: lazyload, cleanup, WebP/AVIF.
 	'inc/elementor.php',          // Elementor locations + Theme Builder support.

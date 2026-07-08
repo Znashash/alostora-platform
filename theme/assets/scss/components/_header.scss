@@ -17,6 +17,35 @@
 		background: var(--color-surface-invert);
 	}
 
+	// Transparent overlay over the hero on the front page; turns solid on scroll.
+	.home & {
+		position: sticky;
+
+		&:not(.is-stuck) {
+			background: transparent;
+			backdrop-filter: none;
+			box-shadow: none;
+		}
+	}
+}
+
+// Pull the hero up beneath the transparent header on the front page so the dark
+// hero sits behind the header (no white strip). Works regardless of Elementor
+// wrapper nesting since there is a single hero on the homepage.
+.home {
+	.alostora-hero {
+		margin-block-start: calc(-1 * var(--header-height));
+
+		.alostora-hero__inner { padding-block-start: calc(var(--header-height) + clamp(2rem, 5vw, 4rem)); }
+	}
+
+	// Neutralise default top spacing on the very first Elementor section so the
+	// negative hero margin reaches the top of the viewport.
+	.alostora-site__content .elementor-section-wrap > .elementor-section:first-child,
+	.alostora-site__content .elementor > .e-con:first-child {
+		margin-block-start: 0;
+	}
+
 	&__inner {
 		@include container;
 

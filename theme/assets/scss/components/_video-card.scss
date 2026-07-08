@@ -108,3 +108,22 @@
 		background: linear-gradient(to top, rgba(10, 20, 40, 0.85), transparent);
 	}
 }
+
+// Video showcase: one large feature video beside a stack/row of smaller tiles.
+.alostora-showcase {
+	display: grid;
+	gap: clamp(1rem, 2.5vw, 1.5rem);
+	grid-template-columns: 1fr;
+
+	@include respond-to("lg") { grid-template-columns: 1.6fr 1fr; }
+
+	&__main .alostora-video-card { aspect-ratio: 16 / 9; block-size: 100%; }
+
+	&__tiles {
+		display: grid;
+		gap: clamp(1rem, 2.5vw, 1.5rem);
+		grid-template-columns: repeat(3, 1fr);
+
+		@include respond-to("lg") { grid-template-columns: 1fr; }
+	}
+}

@@ -30,6 +30,9 @@ $args = wp_parse_args( $args, array(
 	'video_label'   => '',
 	'image'         => '',
 ) );
+
+// Never render an empty media slot: fall back to the bundled placeholder art.
+$hero_image = $args['image'] ? $args['image'] : alostora_placeholder_url( 'hero-character.webp' );
 ?>
 <section class="alostora-hero has-animations">
 	<div class="alostora-hero__inner">
@@ -70,10 +73,8 @@ $args = wp_parse_args( $args, array(
 			<?php endif; ?>
 		</div>
 
-		<?php if ( $args['image'] ) : ?>
-			<div class="alostora-hero__media" data-reveal data-reveal-delay="2" data-float>
-				<img src="<?php echo esc_url( $args['image'] ); ?>" alt="" loading="eager" decoding="async" fetchpriority="high" width="720" height="720">
-			</div>
-		<?php endif; ?>
+		<div class="alostora-hero__media" data-reveal data-reveal-delay="2" data-float>
+			<img src="<?php echo esc_url( $hero_image ); ?>" alt="" loading="eager" decoding="async" fetchpriority="high" width="760" height="760">
+		</div>
 	</div>
 </section>

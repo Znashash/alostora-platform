@@ -110,6 +110,26 @@ function alostora_get_rating( $rating, $count = 0 ) {
 }
 
 /**
+ * Return the URL to a bundled placeholder asset.
+ *
+ * Placeholders live in assets/images/placeholders and are used until final
+ * artwork is provided. Falls back to the inline SVG logo if the file is missing.
+ *
+ * @param string $name File name (e.g. 'hero-character.webp').
+ * @return string
+ */
+function alostora_placeholder_url( $name ) {
+	$name = sanitize_file_name( $name );
+	$rel  = 'assets/images/placeholders/' . $name;
+
+	if ( is_readable( ALOSTORA_DIR . $rel ) ) {
+		return ALOSTORA_URI . $rel;
+	}
+
+	return ALOSTORA_URI . 'assets/images/logo.svg';
+}
+
+/**
  * Whether front-end animations should run, respecting the reduce-motion toggle.
  *
  * @return bool

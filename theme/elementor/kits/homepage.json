@@ -4,99 +4,42 @@
 	"type": "page",
 	"content": [
 		{
-			"id": "000100e",
+			"id": "0001008",
 			"elType": "section",
 			"settings": {
-				"_css_classes": "alostora-hero",
 				"layout": "full_width",
-				"gap": "wide"
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
 			},
 			"elements": [
 				{
-					"id": "000100b",
+					"id": "0001007",
 					"elType": "column",
 					"settings": {
-						"_column_size": 50
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
 					},
 					"elements": [
 						{
 							"id": "0001006",
 							"elType": "widget",
-							"widgetType": "heading",
+							"widgetType": "shortcode",
 							"settings": {
-								"title": "التاريخ لم يعد يُقرأ...",
-								"header_size": "h1"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001007",
-							"elType": "widget",
-							"widgetType": "heading",
-							"settings": {
-								"title": "بل يُشاهد!",
-								"header_size": "h1",
-								"_css_classes": "alostora-hero__accent"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001008",
-							"elType": "widget",
-							"widgetType": "text-editor",
-							"settings": {
-								"editor": "<p>حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.</p>"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001009",
-							"elType": "widget",
-							"widgetType": "button",
-							"settings": {
-								"text": "ابدأ التعلم الآن",
-								"link": {
-									"url": "#",
-									"is_external": "",
-									"nofollow": ""
-								},
-								"css_classes": "alostora-btn alostora-btn--primary alostora-btn--lg"
-							},
-							"elements": []
-						},
-						{
-							"id": "000100a",
-							"elType": "widget",
-							"widgetType": "button",
-							"settings": {
-								"text": "تصفح الدورات",
-								"link": {
-									"url": "#courses",
-									"is_external": "",
-									"nofollow": ""
-								},
-								"css_classes": "alostora-btn alostora-btn--ghost alostora-btn--lg"
-							},
-							"elements": []
-						}
-					],
-					"isInner": false
-				},
-				{
-					"id": "000100d",
-					"elType": "column",
-					"settings": {
-						"_column_size": 50
-					},
-					"elements": [
-						{
-							"id": "000100c",
-							"elType": "widget",
-							"widgetType": "image",
-							"settings": {
-								"image": {
-									"url": ""
-								}
+								"shortcode": "[alostora_hero eyebrow=\"منصة الأسطورة التعليمية\" title=\"التاريخ لم يعد يُقرأ...\" title_accent=\"بل يُشاهد!\" primary_label=\"ابدأ التعلم الآن\" primary_url=\"/courses/\" video_url=\"#\" video_label=\"شاهد تجربة من أحد الدروس\"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]"
 							},
 							"elements": []
 						}
@@ -107,21 +50,38 @@
 			"isInner": false
 		},
 		{
-			"id": "0001011",
+			"id": "000100b",
 			"elType": "section",
 			"settings": {
-				"layout": "full_width"
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
 			},
 			"elements": [
 				{
-					"id": "0001010",
+					"id": "000100a",
 					"elType": "column",
 					"settings": {
-						"_column_size": 100
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
 					},
 					"elements": [
 						{
-							"id": "000100f",
+							"id": "0001009",
 							"elType": "widget",
 							"widgetType": "shortcode",
 							"settings": {
@@ -136,47 +96,42 @@
 			"isInner": false
 		},
 		{
-			"id": "0001016",
+			"id": "000100e",
 			"elType": "section",
 			"settings": {
-				"_css_classes": "alostora-section",
-				"layout": "boxed"
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
 			},
 			"elements": [
 				{
-					"id": "0001015",
+					"id": "000100d",
 					"elType": "column",
 					"settings": {
-						"_column_size": 100
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
 					},
 					"elements": [
 						{
-							"id": "0001012",
-							"elType": "widget",
-							"widgetType": "heading",
-							"settings": {
-								"title": "دوراتنا المميزة",
-								"header_size": "h2",
-								"_css_classes": "alostora-section__title",
-								"align": "center"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001013",
-							"elType": "widget",
-							"widgetType": "text-editor",
-							"settings": {
-								"editor": "<p style=\"text-align:center\">تعلم من خلال أفضل الدورات المصممة بطريقة عصرية وممتعة.</p>"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001014",
+							"id": "000100c",
 							"elType": "widget",
 							"widgetType": "shortcode",
 							"settings": {
-								"shortcode": "[lifterlms_courses per_page=\"8\" columns=\"3\"]"
+								"shortcode": "[alostora_courses_carousel]"
 							},
 							"elements": []
 						}
@@ -187,65 +142,180 @@
 			"isInner": false
 		},
 		{
-			"id": "000101d",
+			"id": "0001011",
 			"elType": "section",
 			"settings": {
-				"_css_classes": "alostora-section alostora-section--surface",
-				"layout": "boxed"
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
 			},
 			"elements": [
 				{
-					"id": "000101c",
+					"id": "0001010",
 					"elType": "column",
 					"settings": {
-						"_column_size": 100
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
 					},
 					"elements": [
 						{
-							"id": "0001017",
+							"id": "000100f",
 							"elType": "widget",
-							"widgetType": "heading",
+							"widgetType": "shortcode",
 							"settings": {
-								"title": "كيف ندرس؟",
-								"header_size": "h2",
-								"align": "center",
-								"_css_classes": "alostora-section__title"
+								"shortcode": "[alostora_steps]"
 							},
 							"elements": []
-						},
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "0001014",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "0001013",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
+					},
+					"elements": [
+						{
+							"id": "0001012",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_features]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "0001017",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "0001016",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
+					},
+					"elements": [
+						{
+							"id": "0001015",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_video_showcase]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		},
+		{
+			"id": "000101a",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width",
+				"gap": "no",
+				"padding": {
+					"unit": "px",
+					"top": "0",
+					"right": "0",
+					"bottom": "0",
+					"left": "0",
+					"isLinked": true
+				}
+			},
+			"elements": [
+				{
+					"id": "0001019",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100,
+						"padding": {
+							"unit": "px",
+							"top": "0",
+							"right": "0",
+							"bottom": "0",
+							"left": "0",
+							"isLinked": true
+						}
+					},
+					"elements": [
 						{
 							"id": "0001018",
 							"elType": "widget",
 							"widgetType": "shortcode",
 							"settings": {
-								"shortcode": "[alostora_step_card number=\"1\" title=\"من الكتاب\" icon=\"book\"]نأخذ المعلومة الأساسية[/alostora_step_card]"
-							},
-							"elements": []
-						},
-						{
-							"id": "0001019",
-							"elType": "widget",
-							"widgetType": "shortcode",
-							"settings": {
-								"shortcode": "[alostora_step_card number=\"2\" title=\"إلى الرسوم المتحركة\" icon=\"video\"]نحوّلها إلى قصة مرئية[/alostora_step_card]"
-							},
-							"elements": []
-						},
-						{
-							"id": "000101a",
-							"elType": "widget",
-							"widgetType": "shortcode",
-							"settings": {
-								"shortcode": "[alostora_step_card number=\"3\" title=\"إلى الفهم والذكر\" icon=\"brain\"]تصل المعلومة بطريقة أسهل[/alostora_step_card]"
-							},
-							"elements": []
-						},
-						{
-							"id": "000101b",
-							"elType": "widget",
-							"widgetType": "shortcode",
-							"settings": {
-								"shortcode": "[alostora_step_card number=\"4\" title=\"إلى التفوق والنجاح\" icon=\"trophy\"]لتحقيق أفضل النتائج[/alostora_step_card]"
+								"shortcode": "[alostora_cta_banner url=\"/courses/\"]"
 							},
 							"elements": []
 						}
@@ -256,9 +326,7 @@
 			"isInner": false
 		}
 	],
-	"page_settings": {
-		"template": "elementor_canvas"
-	},
+	"page_settings": {},
 	"metadata": {
 		"template_type": "page",
 		"wp_page_template": "elementor_canvas"
