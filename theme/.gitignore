@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Sass cache
+.sass-cache/
+*.css.map
