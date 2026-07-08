@@ -1,0 +1,59 @@
+// -----------------------------------------------------------------------------
+// Components › Testimonial
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-testimonial {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	block-size: 100%;
+	padding: clamp(1.5rem, 3vw, 2rem);
+	@include card-surface;
+
+	&__quote {
+		position: relative;
+		margin: 0;
+		font-size: 1.05rem;
+		line-height: 1.7;
+		color: var(--color-text);
+
+		&::before {
+			content: "\201D";
+			display: block;
+			font-family: var(--font-heading);
+			font-size: 3rem;
+			line-height: 0.6;
+			color: var(--color-accent);
+		}
+	}
+
+	&__person {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		margin-block-start: auto;
+	}
+
+	&__avatar {
+		inline-size: 52px;
+		block-size: 52px;
+		border-radius: 50%;
+		object-fit: cover;
+		flex: 0 0 auto;
+	}
+
+	&__name {
+		margin: 0;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1rem;
+		color: var(--color-heading);
+	}
+
+	&__role {
+		margin: 0;
+		font-size: 0.85rem;
+		color: var(--color-text-soft);
+	}
+}

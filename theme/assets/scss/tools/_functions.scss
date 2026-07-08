@@ -1,0 +1,25 @@
+// -----------------------------------------------------------------------------
+// Tools › Functions
+// -----------------------------------------------------------------------------
+@use "sass:map";
+@use "../settings" as *;
+
+// Fetch a spacing value from the scale.
+@function space($key) {
+	@return map.get($spacing, $key);
+}
+
+// Fetch a radius value.
+@function radius($key) {
+	@return map.get($radius, $key);
+}
+
+// Fetch a raw brand colour (compile-time; prefer the CSS var() at runtime).
+@function brand($key) {
+	@return map.get($brand, $key);
+}
+
+// Fetch a z-index level.
+@function z($key) {
+	@return map.get($z, $key);
+}

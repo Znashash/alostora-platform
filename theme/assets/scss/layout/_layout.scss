@@ -1,0 +1,63 @@
+// -----------------------------------------------------------------------------
+// Layout › Containers, grid and sections
+// -----------------------------------------------------------------------------
+@use "../settings" as *;
+@use "../tools" as *;
+
+.alostora-container {
+	@include container;
+}
+
+.alostora-container--narrow {
+	@include container($content-max);
+}
+
+.alostora-section {
+	@include section-padding;
+
+	&--tight { padding-block: clamp(2rem, 4vw, 3rem); }
+
+	&--surface { background: var(--color-bg-alt); }
+
+	&--invert {
+		background: var(--gradient-hero);
+		color: var(--color-text-invert);
+
+		:where(h1, h2, h3, h4) { color: var(--color-text-invert); }
+	}
+}
+
+.alostora-section__head {
+	max-inline-size: 640px;
+	margin-inline: auto;
+	margin-block-end: clamp(2rem, 4vw, 3rem);
+	text-align: center;
+
+	.alostora-section__title { margin-block-end: 0.4em; }
+
+	.alostora-section__subtitle {
+		margin: 0;
+		color: var(--color-text-soft);
+		font-size: 1.05rem;
+	}
+}
+
+// Auto-fit responsive grid used by cards.
+.alostora-grid {
+	display: grid;
+	gap: clamp(1rem, 2.5vw, 2rem);
+	grid-template-columns: repeat(var(--cols, 1), minmax(0, 1fr));
+
+	@include respond-to("md") { --cols: 2; }
+	@include respond-to("lg") { --cols: var(--cols-lg, 3); }
+
+	&--4 { @include respond-to("lg") { --cols-lg: 4; } }
+	&--2 { @include respond-to("lg") { --cols-lg: 2; } }
+}
+
+.alostora-cluster {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--cluster-gap, 1rem);
+	align-items: center;
+}

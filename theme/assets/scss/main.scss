@@ -1,0 +1,10 @@
+// =============================================================================
+// Alostora — main stylesheet entry
+// Authored in SCSS (7-1 architecture) and compiled to ../css/main.css.
+// Order: settings -> tools -> base -> layout -> components -> utilities.
+// =============================================================================
+
+@use "base";
+@use "layout";
+@use "components";
+@use "utilities";

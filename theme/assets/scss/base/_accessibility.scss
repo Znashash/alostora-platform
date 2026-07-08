@@ -1,0 +1,39 @@
+// -----------------------------------------------------------------------------
+// Base › Accessibility
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.screen-reader-text {
+	@include visually-hidden;
+
+	&:focus {
+		position: fixed;
+		inset-block-start: 1rem;
+		inset-inline-start: 1rem;
+		z-index: z("modal");
+		inline-size: auto;
+		block-size: auto;
+		padding: 0.75rem 1.25rem;
+		clip: auto;
+		background: var(--color-bg);
+		color: var(--color-primary);
+		border-radius: var(--radius-sm);
+		box-shadow: var(--shadow-raised);
+	}
+}
+
+.skip-link {
+	@extend .screen-reader-text;
+}
+
+// Honour the OS-level reduced-motion preference and the theme toggle.
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+}

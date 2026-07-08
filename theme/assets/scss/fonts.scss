@@ -1,0 +1,29 @@
+// =============================================================================
+// Self-hosted brand fonts. Compiled to ../css/fonts.css and enqueued early.
+// Files live in ../fonts and are preloaded from inc/performance.php.
+// `font-display: swap` avoids invisible text during load (good CLS/LCP).
+// =============================================================================
+
+$font-path: "../fonts";
+
+// --- IBM Plex Sans Arabic (body / primary Arabic) ---
+@each $weight in (400, 500, 600, 700) {
+	@font-face {
+		font-family: "IBM Plex Sans Arabic";
+		font-style: normal;
+		font-weight: $weight;
+		font-display: swap;
+		src: url("#{$font-path}/ibm-plex-sans-arabic-#{$weight}.woff2") format("woff2");
+	}
+}
+
+// --- Tajawal (display / headings) ---
+@each $weight in (500, 700, 800) {
+	@font-face {
+		font-family: "Tajawal";
+		font-style: normal;
+		font-weight: $weight;
+		font-display: swap;
+		src: url("#{$font-path}/tajawal-#{$weight}.woff2") format("woff2");
+	}
+}

@@ -1,0 +1,45 @@
+// -----------------------------------------------------------------------------
+// Components › Star rating
+// A pure-CSS overlay star bar driven by an inline width percentage.
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-rating {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	font-size: 0.85rem;
+	color: var(--color-text-soft);
+
+	&__track {
+		position: relative;
+		display: inline-block;
+		font-size: 1rem;
+		line-height: 1;
+		color: color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+
+		&::before {
+			content: "\2605\2605\2605\2605\2605";
+			letter-spacing: 2px;
+		}
+	}
+
+	&__fill {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		color: var(--color-accent);
+
+		&::before {
+			content: "\2605\2605\2605\2605\2605";
+			letter-spacing: 2px;
+		}
+	}
+
+	&__value {
+		font-weight: 700;
+		color: var(--color-heading);
+	}
+}

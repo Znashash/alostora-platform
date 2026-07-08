@@ -1,0 +1,80 @@
+// -----------------------------------------------------------------------------
+// Components › Step card ("How we teach" flow)
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-step {
+	position: relative;
+	text-align: center;
+	padding: 1.5rem 1rem;
+
+	&__icon {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 84px;
+		block-size: 84px;
+		margin-block-end: 1rem;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-secondary) 12%, transparent);
+		color: var(--color-primary);
+
+		svg { inline-size: 38px; block-size: 38px; fill: currentColor; }
+	}
+
+	&__number {
+		position: absolute;
+		inset-block-start: -6px;
+		inset-inline-end: -6px;
+		inline-size: 30px;
+		block-size: 30px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.85rem;
+		color: var(--color-text-invert);
+		background: var(--gradient-accent);
+		border-radius: 50%;
+		border: 3px solid var(--color-bg);
+	}
+
+	&__title {
+		margin: 0 0 0.4rem;
+		font-size: 1.15rem;
+	}
+
+	&__desc {
+		margin: 0;
+		color: var(--color-text-soft);
+		font-size: 0.95rem;
+	}
+}
+
+// The connected flow row with arrows between steps.
+.alostora-steps {
+	display: grid;
+	gap: 1rem;
+	align-items: start;
+	grid-template-columns: 1fr;
+
+	@include respond-to("md") {
+		grid-template-columns: repeat(var(--steps, 4), 1fr);
+	}
+
+	&__arrow {
+		display: none;
+		align-self: center;
+		color: var(--color-border);
+
+		@include respond-to("md") { display: inline-flex; }
+
+		svg { inline-size: 28px; block-size: 28px; fill: currentColor; }
+
+		// Point the arrow with the reading direction (RTL-aware).
+		[dir="rtl"] & { transform: scaleX(1); }
+		[dir="ltr"] & { transform: scaleX(-1); }
+	}
+}

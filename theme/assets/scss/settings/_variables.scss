@@ -1,0 +1,74 @@
+// -----------------------------------------------------------------------------
+// Settings › Variables
+// Sass-level tokens used by mixins/functions at compile time. Runtime theming is
+// driven by the CSS custom properties emitted in base/_root.scss so that a future
+// dark theme only needs to override the semantic properties.
+// -----------------------------------------------------------------------------
+
+// Brand palette (source of truth for the emitted custom properties).
+$brand: (
+	"primary":       #14315e,
+	"primary-dark":  #0a1428,
+	"secondary":     #2c6fbf,
+	"accent":        #f39019,
+	"accent-light":  #f5a623,
+	"white":         #ffffff,
+	"surface":       #f5f7fa,
+	"surface-alt":   #eef2f7,
+	"ink":           #111c30,
+	"muted":         #6b7280,
+	"border":        #e2e8f0,
+);
+
+// Responsive breakpoints. Min-width values align with Elementor's defaults so
+// theme CSS and Elementor controls agree.
+$breakpoints: (
+	"sm":  480px,
+	"md":  768px,
+	"lg":  1025px,
+	"xl":  1200px,
+	"xxl": 1440px,
+);
+
+// Elementor max-width breakpoints (for max-width queries).
+$breakpoints-max: (
+	"mobile":       767px,
+	"tablet":       1024px,
+);
+
+// Spacing scale (mirrors theme.json spacingSizes).
+$spacing: (
+	"xs": 0.5rem,
+	"sm": 1rem,
+	"md": 1.5rem,
+	"lg": 2.5rem,
+	"xl": 4rem,
+	"2xl": 6rem,
+);
+
+// Layout.
+$container-max:  1200px;
+$content-max:    760px;
+$gutter:         clamp(1rem, 5vw, 2.5rem);
+
+// Radii.
+$radius: (
+	"sm":   8px,
+	"md":   14px,
+	"lg":   22px,
+	"pill": 999px,
+);
+
+// Motion.
+$transition-base: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-slow: 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+// Z-index scale.
+$z: (
+	"base":    1,
+	"raised":  10,
+	"sticky":  100,
+	"header":  1000,
+	"overlay": 1100,
+	"modal":   1200,
+);

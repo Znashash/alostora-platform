@@ -1,0 +1,76 @@
+// -----------------------------------------------------------------------------
+// Base › Reset
+// A small, modern reset. Intentionally light so it plays well with Elementor's
+// own normalisation and WordPress block styles.
+// -----------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+	text-size-adjust: 100%;
+	scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	margin: 0;
+	min-block-size: 100vh;
+	text-rendering: optimizeSpeed;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-inline-size: 100%;
+	block-size: auto;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+	color: inherit;
+}
+
+button {
+	cursor: pointer;
+	background: none;
+	border: 0;
+}
+
+ul[role="list"],
+ol[role="list"] {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	color: var(--color-link);
+	text-decoration: none;
+	transition: color var(--transition-base);
+
+	&:hover,
+	&:focus {
+		color: var(--color-link-hover);
+	}
+}
+
+:where(:focus-visible) {
+	outline: 3px solid color-mix(in srgb, var(--color-accent) 60%, transparent);
+	outline-offset: 2px;
+}

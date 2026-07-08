@@ -1,0 +1,78 @@
+// -----------------------------------------------------------------------------
+// Base › Root custom properties
+// The runtime design system. Brand tokens are emitted from the Sass palette;
+// semantic tokens map brand -> role. A future dark theme only needs to override
+// the semantic tokens inside the [data-theme="dark"] scope (see bottom).
+// -----------------------------------------------------------------------------
+@use "sass:map";
+@use "../settings" as *;
+
+:root {
+	// --- Brand scale (raw values) ---
+	@each $name, $value in $brand {
+		--brand-#{$name}: #{$value};
+	}
+
+	// --- Semantic colour roles (light theme defaults) ---
+	--color-bg: var(--brand-white);
+	--color-bg-alt: var(--brand-surface);
+	--color-surface: var(--brand-surface);
+	--color-surface-card: var(--brand-white);
+	--color-surface-invert: var(--brand-primary-dark);
+	--color-text: var(--brand-ink);
+	--color-text-soft: var(--brand-muted);
+	--color-text-invert: var(--brand-white);
+	--color-heading: var(--brand-primary);
+	--color-primary: var(--brand-primary);
+	--color-secondary: var(--brand-secondary);
+	--color-accent: var(--brand-accent);
+	--color-accent-light: var(--brand-accent-light);
+	--color-border: var(--brand-border);
+	--color-link: var(--brand-secondary);
+	--color-link-hover: var(--brand-accent);
+
+	// --- Gradients ---
+	--gradient-hero: linear-gradient(135deg, #{map.get($brand, "primary-dark")} 0%, #{map.get($brand, "primary")} 55%, #1c4a86 100%);
+	--gradient-accent: linear-gradient(135deg, #{map.get($brand, "accent")} 0%, #{map.get($brand, "accent-light")} 100%);
+
+	// --- Radius ---
+	--radius-sm: #{map.get($radius, "sm")};
+	--radius-md: #{map.get($radius, "md")};
+	--radius-lg: #{map.get($radius, "lg")};
+	--radius-pill: #{map.get($radius, "pill")};
+
+	// --- Elevation ---
+	--shadow-card: 0 12px 30px rgba(20, 49, 94, 0.10);
+	--shadow-raised: 0 20px 45px rgba(20, 49, 94, 0.16);
+	--shadow-focus: 0 0 0 3px rgba(243, 144, 25, 0.35);
+
+	// --- Motion ---
+	--transition-base: #{$transition-base};
+	--transition-slow: #{$transition-slow};
+
+	// --- Layout ---
+	--container-max: #{$container-max};
+	--content-max: #{$content-max};
+	--gutter: #{$gutter};
+	--header-height: 76px;
+
+	// --- Typography ---
+	--font-body: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+	--font-heading: "Tajawal", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+}
+
+// -----------------------------------------------------------------------------
+// Dark theme scaffold (intentionally NOT enabled yet).
+// The structure is prepared so dark mode can ship later by simply setting
+// data-theme="dark" on <html> and filling these overrides — no refactor needed.
+// -----------------------------------------------------------------------------
+[data-theme="dark"] {
+	// --color-bg: #0a1428;
+	// --color-bg-alt: #0f1d38;
+	// --color-surface: #10223f;
+	// --color-surface-card: #13284a;
+	// --color-text: #e7edf6;
+	// --color-text-soft: #9fb0c8;
+	// --color-heading: #ffffff;
+	// --color-border: #22375c;
+}
