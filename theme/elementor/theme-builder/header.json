@@ -1,0 +1,42 @@
+{
+	"version": "0.4",
+	"title": "Alostora Header",
+	"type": "header",
+	"content": [
+		{
+			"id": "0001002",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width",
+				"_css_classes": "alostora-header-tb"
+			},
+			"elements": [
+				{
+					"id": "0001001",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100
+					},
+					"elements": [
+						{
+							"id": "0001000",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_component slug=\"header\"]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		}
+	],
+	"page_settings": {},
+	"metadata": {
+		"template_type": "header",
+		"wp_page_template": "elementor_canvas"
+	}
+}

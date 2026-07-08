@@ -60,6 +60,28 @@ function alostora_register_component_shortcodes() {
 	add_shortcode( 'alostora_video_card', 'alostora_shortcode_video_card' );
 	add_shortcode( 'alostora_testimonial', 'alostora_shortcode_testimonial' );
 	add_shortcode( 'alostora_button', 'alostora_shortcode_button' );
+	add_shortcode( 'alostora_component', 'alostora_shortcode_component' );
+}
+
+/**
+ * Generic component renderer for structural, argument-less components such as
+ * the header and footer, used by the bundled Elementor Theme Builder templates.
+ *
+ * [alostora_component slug="header"]
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_component( $atts ) {
+	$atts = shortcode_atts( array( 'slug' => '' ), $atts, 'alostora_component' );
+
+	$allowed = array( 'header', 'footer' );
+
+	if ( ! in_array( $atts['slug'], $allowed, true ) ) {
+		return '';
+	}
+
+	return alostora_get_component( $atts['slug'] );
 }
 add_action( 'init', 'alostora_register_component_shortcodes' );
 

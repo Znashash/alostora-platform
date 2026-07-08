@@ -1,0 +1,42 @@
+{
+	"version": "0.4",
+	"title": "Alostora Footer",
+	"type": "footer",
+	"content": [
+		{
+			"id": "0001005",
+			"elType": "section",
+			"settings": {
+				"layout": "full_width",
+				"_css_classes": "alostora-footer-tb"
+			},
+			"elements": [
+				{
+					"id": "0001004",
+					"elType": "column",
+					"settings": {
+						"_column_size": 100
+					},
+					"elements": [
+						{
+							"id": "0001003",
+							"elType": "widget",
+							"widgetType": "shortcode",
+							"settings": {
+								"shortcode": "[alostora_button label=\"ابدأ الآن مجاناً\" url=\"#\" style=\"primary\"]"
+							},
+							"elements": []
+						}
+					],
+					"isInner": false
+				}
+			],
+			"isInner": false
+		}
+	],
+	"page_settings": {},
+	"metadata": {
+		"template_type": "footer",
+		"wp_page_template": "elementor_canvas"
+	}
+}
