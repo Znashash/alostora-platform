@@ -198,12 +198,5 @@
 				":hover": { "color": { "background": "var(--wp--preset--color--accent-light)" } }
 			}
 		}
-	},
-	"customTemplates": [
-		{ "name": "page-full-width", "title": "Full Width (Elementor Canvas)", "postTypes": [ "page" ] }
-	],
-	"templateParts": [
-		{ "name": "header", "title": "Header", "area": "header" },
-		{ "name": "footer", "title": "Footer", "area": "footer" }
-	]
+	}
 }
