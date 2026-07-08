@@ -326,7 +326,9 @@
 			"isInner": false
 		}
 	],
-	"page_settings": {},
+	"page_settings": {
+		"template": "elementor_header_footer"
+	},
 	"metadata": {
 		"template_type": "page",
 		"wp_page_template": "elementor_canvas"

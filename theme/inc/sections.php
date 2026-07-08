@@ -47,7 +47,7 @@ function alostora_section_head( $title, $subtitle = '', $invert = false ) {
 function alostora_shortcode_features( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title' => esc_html__( 'Why learn with animation?', 'alostora' ),
+			'title' => 'لماذا التعلّم بالرسوم المتحركة؟',
 			'image' => '',
 		),
 		$atts,
@@ -55,10 +55,10 @@ function alostora_shortcode_features( $atts ) {
 	);
 
 	$items = array(
-		array( 'icon' => 'chart', 'title' => esc_html__( 'Boosts retention', 'alostora' ), 'text' => esc_html__( 'Better exam recall and results.', 'alostora' ) ),
-		array( 'icon' => 'brain', 'title' => esc_html__( 'Sticks in memory', 'alostora' ), 'text' => esc_html__( 'Information is retained far longer.', 'alostora' ) ),
-		array( 'icon' => 'video', 'title' => esc_html__( 'Makes learning fun', 'alostora' ), 'text' => esc_html__( 'Turns lessons into stories.', 'alostora' ) ),
-		array( 'icon' => 'trophy', 'title' => esc_html__( 'Sharpens focus', 'alostora' ), 'text' => esc_html__( 'Keeps attention and clarity high.', 'alostora' ) ),
+		array( 'icon' => 'chart', 'title' => 'رفع مستوى التحصيل', 'text' => 'نتائج وتذكّر أفضل في الاختبارات.' ),
+		array( 'icon' => 'brain', 'title' => 'ثبات المعلومة في الذاكرة', 'text' => 'تساعد على تذكّر المعلومة لفترة أطول.' ),
+		array( 'icon' => 'video', 'title' => 'اجعل التعلّم ممتعاً', 'text' => 'تحوّل الدروس إلى قصص مشوّقة.' ),
+		array( 'icon' => 'trophy', 'title' => 'زيادة التركيز والفهم', 'text' => 'تحافظ على الانتباه ووضوح الفكرة.' ),
 	);
 
 	$inner = alostora_get_component( 'features', array(
@@ -79,8 +79,8 @@ function alostora_shortcode_features( $atts ) {
 function alostora_shortcode_courses_carousel( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title'    => esc_html__( 'Our featured courses', 'alostora' ),
-			'subtitle' => esc_html__( 'Learn through the best courses, designed in a modern and engaging way.', 'alostora' ),
+			'title'    => 'دوراتنا المميّزة',
+			'subtitle' => 'تعلّم من خلال أفضل الدورات المصمّمة بطريقة عصرية وممتعة.',
 			'count'    => 8,
 		),
 		$atts,
@@ -105,12 +105,12 @@ function alostora_shortcode_courses_carousel( $atts ) {
 						</div>
 					</div>
 					<div class="alostora-carousel__controls">
-						<button class="alostora-carousel__btn alostora-carousel__btn--prev" type="button" data-carousel-prev aria-label="<?php esc_attr_e( 'Previous', 'alostora' ); ?>"><?php alostora_svg( 'chevron' ); ?></button>
-						<button class="alostora-carousel__btn alostora-carousel__btn--next" type="button" data-carousel-next aria-label="<?php esc_attr_e( 'Next', 'alostora' ); ?>"><?php alostora_svg( 'chevron' ); ?></button>
+						<button class="alostora-carousel__btn alostora-carousel__btn--prev" type="button" data-carousel-prev aria-label="السابق"><?php alostora_svg( 'chevron' ); ?></button>
+						<button class="alostora-carousel__btn alostora-carousel__btn--next" type="button" data-carousel-next aria-label="التالي"><?php alostora_svg( 'chevron' ); ?></button>
 					</div>
 				</div>
 			<?php else : ?>
-				<p class="u-text-center"><?php esc_html_e( 'Courses will appear here once LifterLMS courses are published.', 'alostora' ); ?></p>
+				<p class="u-text-center">ستظهر الدورات هنا بعد نشر دورات LifterLMS.</p>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -164,7 +164,7 @@ function alostora_get_course_cards( $count = 8 ) {
 			'category'   => $category,
 			'instructor' => get_the_author_meta( 'display_name', $post->post_author ),
 			'lessons'    => $lessons,
-			'cta_label'  => esc_html__( 'Enrol now', 'alostora' ),
+			'cta_label'  => 'ابدأ الآن',
 		) );
 	}
 
@@ -182,18 +182,18 @@ function alostora_get_course_cards( $count = 8 ) {
 function alostora_shortcode_steps( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title'    => esc_html__( 'How do we teach?', 'alostora' ),
-			'subtitle' => esc_html__( 'We turned learning into an unforgettable experience.', 'alostora' ),
+			'title'    => 'كيف ندرّس؟',
+			'subtitle' => 'حوّلنا التعلّم إلى تجربة لا تُنسى.',
 		),
 		$atts,
 		'alostora_steps'
 	);
 
 	$steps = array(
-		array( 'number' => '1', 'icon' => 'book', 'title' => esc_html__( 'From the book', 'alostora' ), 'description' => esc_html__( 'We take the core information.', 'alostora' ) ),
-		array( 'number' => '2', 'icon' => 'video', 'title' => esc_html__( 'To animation', 'alostora' ), 'description' => esc_html__( 'We turn it into a visual story.', 'alostora' ) ),
-		array( 'number' => '3', 'icon' => 'brain', 'title' => esc_html__( 'To understanding', 'alostora' ), 'description' => esc_html__( 'It reaches the mind more easily.', 'alostora' ) ),
-		array( 'number' => '4', 'icon' => 'trophy', 'title' => esc_html__( 'To excellence', 'alostora' ), 'description' => esc_html__( 'For the best results.', 'alostora' ) ),
+		array( 'number' => '1', 'icon' => 'book', 'title' => 'من الكتاب', 'description' => 'نأخذ المعلومة الأساسية.' ),
+		array( 'number' => '2', 'icon' => 'video', 'title' => 'إلى الرسوم المتحركة', 'description' => 'نحوّلها إلى قصة مرئية.' ),
+		array( 'number' => '3', 'icon' => 'brain', 'title' => 'إلى الفهم والذكر', 'description' => 'تصل المعلومة بطريقة أسهل.' ),
+		array( 'number' => '4', 'icon' => 'trophy', 'title' => 'إلى التفوق والنجاح', 'description' => 'لتحقيق أفضل النتائج.' ),
 	);
 
 	ob_start();
@@ -227,8 +227,8 @@ function alostora_shortcode_steps( $atts ) {
 function alostora_shortcode_video_showcase( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title'    => esc_html__( 'Watch how we teach', 'alostora' ),
-			'subtitle' => esc_html__( 'A fully simulated educational experience.', 'alostora' ),
+			'title'    => 'شاهد طريقة تدريسنا',
+			'subtitle' => 'تجربة تعليمية محاكاة بالكامل.',
 			'main_id'  => '',
 			'tiles'    => '',
 		),
@@ -253,7 +253,7 @@ function alostora_shortcode_video_showcase( $atts ) {
 					<?php
 					alostora_component( 'video-card', array(
 						'id'    => $atts['main_id'],
-						'title' => esc_html__( 'A sample lesson', 'alostora' ),
+						'title' => 'مشاهدة درس تجريبي',
 						'image' => $poster,
 					) );
 					?>
@@ -285,9 +285,9 @@ function alostora_shortcode_video_showcase( $atts ) {
 function alostora_shortcode_cta_banner( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title'    => esc_html__( 'Start your learning journey today', 'alostora' ),
-			'text'     => esc_html__( 'Join thousands of students who chose an animated way to learn.', 'alostora' ),
-			'label'    => esc_html__( 'Register now for free', 'alostora' ),
+			'title'    => 'ابدأ رحلتك التعليمية اليوم',
+			'text'     => 'انضمّ إلى آلاف الطلاب الذين اختاروا طريقة الرسوم المتحركة للتعلّم.',
+			'label'    => 'سجّل الآن مجاناً',
 			'url'      => '#',
 		),
 		$atts,

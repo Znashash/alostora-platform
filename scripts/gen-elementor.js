@@ -76,7 +76,7 @@ const homepage = template('Alostora Homepage', 'page', [
 	fullSection('[alostora_features]'),
 	fullSection('[alostora_video_showcase]'),
 	fullSection('[alostora_cta_banner url="/courses/"]'),
-], {});
+], { template: 'elementor_header_footer' });
 
 fs.mkdirSync(OUT_TB, { recursive: true });
 fs.mkdirSync(OUT_KIT, { recursive: true });
