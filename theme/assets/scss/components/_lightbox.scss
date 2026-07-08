@@ -1,0 +1,46 @@
+// -----------------------------------------------------------------------------
+// Components › Video lightbox
+// -----------------------------------------------------------------------------
+@use "../tools" as *;
+
+.alostora-lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: z("modal");
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: clamp(1rem, 4vw, 3rem);
+
+	&[hidden] { display: none; }
+
+	&__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(10, 20, 40, 0.8);
+		backdrop-filter: blur(4px);
+	}
+
+	&__dialog {
+		position: relative;
+		inline-size: min(960px, 100%);
+	}
+
+	&__close {
+		position: absolute;
+		inset-block-start: -3rem;
+		inset-inline-end: 0;
+		inline-size: 44px;
+		block-size: 44px;
+		font-size: 1.75rem;
+		line-height: 1;
+		color: var(--color-text-invert);
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-text-invert) 14%, transparent);
+
+		&:hover { background: var(--color-accent); }
+		&:focus-visible { @include focus-ring; }
+	}
+
+	&__body { width: 100%; }
+}
