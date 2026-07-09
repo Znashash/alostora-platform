@@ -13,6 +13,34 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Register the homepage section shortcodes.
+ *
+ * Registration is co-located with the implementations in this file so a
+ * shortcode can never be registered without its callback being available (and
+ * vice-versa). Runs on `init`, the standard, safe hook for shortcodes so they
+ * work on the front end without Elementor editing mode. Guarded with
+ * function_exists as a final safety net.
+ *
+ * @return void
+ */
+function alostora_register_section_shortcodes() {
+	$shortcodes = array(
+		'alostora_courses_carousel' => 'alostora_shortcode_courses_carousel',
+		'alostora_steps'            => 'alostora_shortcode_steps',
+		'alostora_features'         => 'alostora_shortcode_features',
+		'alostora_video_showcase'   => 'alostora_shortcode_video_showcase',
+		'alostora_cta_banner'       => 'alostora_shortcode_cta_banner',
+	);
+
+	foreach ( $shortcodes as $tag => $callback ) {
+		if ( function_exists( $callback ) ) {
+			add_shortcode( $tag, $callback );
+		}
+	}
+}
+add_action( 'init', 'alostora_register_section_shortcodes' );
+
+/**
  * Render a section heading block.
  *
  * @param string $title    Title.

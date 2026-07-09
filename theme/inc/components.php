@@ -61,11 +61,9 @@ function alostora_register_component_shortcodes() {
 	add_shortcode( 'alostora_testimonial', 'alostora_shortcode_testimonial' );
 	add_shortcode( 'alostora_button', 'alostora_shortcode_button' );
 	add_shortcode( 'alostora_component', 'alostora_shortcode_component' );
-	add_shortcode( 'alostora_features', 'alostora_shortcode_features' );
-	add_shortcode( 'alostora_courses_carousel', 'alostora_shortcode_courses_carousel' );
-	add_shortcode( 'alostora_steps', 'alostora_shortcode_steps' );
-	add_shortcode( 'alostora_video_showcase', 'alostora_shortcode_video_showcase' );
-	add_shortcode( 'alostora_cta_banner', 'alostora_shortcode_cta_banner' );
+
+	// Homepage section shortcodes register themselves in inc/sections.php so that
+	// registration always stays co-located with the implementations.
 }
 
 /**
