@@ -69,7 +69,7 @@ const fullSection = (sc) =>
 	);
 
 const homepage = template('Alostora Homepage', 'page', [
-	fullSection('[alostora_hero eyebrow="منصة الأسطورة التعليمية" title="التاريخ لم يعد يُقرأ..." title_accent="بل يُشاهد!" primary_label="ابدأ التعلم الآن" primary_url="/courses/" video_url="#" video_label="شاهد تجربة من أحد الدروس"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]'),
+	fullSection('[alostora_hero eyebrow="منصة الأسطورة التعليمية" title="التاريخ لم يعد يُقرأ..." title_accent="بل يُشاهد!" primary_label="ابدأ التعلم الآن" primary_url="/courses/" secondary_label="تصفّح الدورات" secondary_url="/courses/" video_url="#" video_label="شاهد تجربة من أحد الدروس"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]'),
 	fullSection('[alostora_statistics items="24500+|طالب وطالبة|users,1200+|درس متحرك|play,180+|دورة تعليمية|book,98%|نسبة رضا الطلاب|trophy"]'),
 	fullSection('[alostora_courses_carousel]'),
 	fullSection('[alostora_steps]'),

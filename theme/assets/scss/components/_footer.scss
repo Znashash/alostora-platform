@@ -55,9 +55,23 @@
 
 	&__brand-desc {
 		margin-block: 1rem 1.5rem;
-		max-inline-size: 34ch;
+		max-inline-size: 40ch;
 		font-size: 0.95rem;
+		line-height: 1.8;
 	}
+
+	&__note {
+		margin: 0 0 0.75rem;
+		font-size: 0.92rem;
+		line-height: 1.8;
+		color: color-mix(in srgb, var(--color-text-invert) 78%, transparent);
+	}
+
+	&__made {
+		color: color-mix(in srgb, var(--color-text-invert) 65%, transparent);
+	}
+
+	&__brand .alostora-brand__img { block-size: 52px; }
 
 	a {
 		color: inherit;

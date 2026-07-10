@@ -20,15 +20,17 @@
 defined( 'ABSPATH' ) || exit;
 
 $args = wp_parse_args( $args, array(
-	'eyebrow'       => '',
-	'title'         => '',
-	'title_accent'  => '',
-	'description'   => '',
-	'primary_label' => '',
-	'primary_url'   => '#',
-	'video_url'     => '',
-	'video_label'   => '',
-	'image'         => '',
+	'eyebrow'         => '',
+	'title'           => '',
+	'title_accent'    => '',
+	'description'     => '',
+	'primary_label'   => '',
+	'primary_url'     => '#',
+	'secondary_label' => '',
+	'secondary_url'   => '#',
+	'video_url'       => '',
+	'video_label'     => '',
+	'image'           => '',
 ) );
 
 // Never render an empty media slot: fall back to the bundled placeholder art.
@@ -59,6 +61,15 @@ $hero_image = $args['image'] ? $args['image'] : alostora_placeholder_url( 'hero-
 						'label' => $args['primary_label'],
 						'url'   => $args['primary_url'],
 						'style' => 'primary',
+						'size'  => 'lg',
+					) );
+				}
+
+				if ( $args['secondary_label'] ) {
+					alostora_component( 'buttons', array(
+						'label' => $args['secondary_label'],
+						'url'   => $args['secondary_url'],
+						'style' => 'ghost',
 						'size'  => 'lg',
 					) );
 				}

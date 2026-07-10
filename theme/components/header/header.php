@@ -7,27 +7,25 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$primary_label = get_theme_mod( 'alostora_cta_primary_label', esc_html__( 'Register Now', 'alostora' ) );
-$primary_url   = get_theme_mod( 'alostora_cta_primary_url', '#' );
-$login_label   = get_theme_mod( 'alostora_cta_login_label', esc_html__( 'Login', 'alostora' ) );
-$login_url     = get_theme_mod( 'alostora_cta_login_url', '#' );
+$primary_label = get_theme_mod( 'alostora_cta_primary_label', 'سجّل الآن' );
+$primary_url   = get_theme_mod( 'alostora_cta_primary_url', home_url( '/register/' ) );
+$login_label   = get_theme_mod( 'alostora_cta_login_label', 'تسجيل الدخول' );
+$login_url     = get_theme_mod( 'alostora_cta_login_url', wp_login_url() );
 ?>
 <header class="alostora-header" data-header>
 	<div class="alostora-header__inner">
-		<?php alostora_brand_logo(); ?>
+		<?php alostora_brand_logo( array( 'variant' => 'light' ) ); ?>
 
 		<nav class="alostora-header__nav" aria-label="<?php esc_attr_e( 'Primary', 'alostora' ); ?>">
 			<?php
-			if ( has_nav_menu( 'primary' ) ) {
-				wp_nav_menu( array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'alostora-menu',
-					'menu_id'        => 'alostora-primary-menu',
-					'depth'          => 2,
-					'fallback_cb'    => false,
-				) );
-			}
+			wp_nav_menu( array(
+				'theme_location' => 'primary',
+				'container'      => false,
+				'menu_class'     => 'alostora-menu',
+				'menu_id'        => 'alostora-primary-menu',
+				'depth'          => 2,
+				'fallback_cb'    => 'alostora_primary_menu_fallback',
+			) );
 			?>
 		</nav>
 

@@ -120,14 +120,16 @@ function alostora_shortcode_button( $atts ) {
 function alostora_shortcode_hero( $atts, $content = '' ) {
 	$atts = shortcode_atts(
 		array(
-			'eyebrow'       => '',
-			'title'         => '',
-			'title_accent'  => '',
-			'primary_label' => esc_html__( 'Start learning', 'alostora' ),
-			'primary_url'   => '#',
-			'video_url'     => '',
-			'video_label'   => esc_html__( 'Watch a lesson', 'alostora' ),
-			'image'         => '',
+			'eyebrow'         => '',
+			'title'           => '',
+			'title_accent'    => '',
+			'primary_label'   => 'ابدأ التعلم الآن',
+			'primary_url'     => home_url( '/courses/' ),
+			'secondary_label' => 'تصفّح الدورات',
+			'secondary_url'   => home_url( '/courses/' ),
+			'video_url'       => '',
+			'video_label'     => 'شاهد تجربة من أحد الدروس',
+			'image'           => '',
 		),
 		$atts,
 		'alostora_hero'

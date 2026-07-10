@@ -13,9 +13,11 @@
 
 .u-visually-hidden { @include visually-hidden; }
 
+// Full-bleed without using 100vw (which includes the scrollbar and causes
+// horizontal overflow). Uses 100% of the viewport minus the scrollbar gutter.
 .u-full-bleed {
-	inline-size: 100vw;
-	margin-inline: calc(50% - 50vw);
+	inline-size: 100%;
+	margin-inline: 0;
 }
 
 .u-no-scroll {

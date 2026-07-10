@@ -31,22 +31,22 @@ function alostora_customize_register( $wp_customize ) {
 
 	$ctas = array(
 		'alostora_cta_primary_label' => array(
-			'default' => esc_html__( 'Register Now', 'alostora' ),
+			'default' => 'سجّل الآن',
 			'label'   => esc_html__( 'Primary CTA label', 'alostora' ),
 			'type'    => 'text',
 		),
 		'alostora_cta_primary_url'   => array(
-			'default' => '#',
+			'default' => home_url( '/register/' ),
 			'label'   => esc_html__( 'Primary CTA URL', 'alostora' ),
 			'type'    => 'url',
 		),
 		'alostora_cta_login_label'   => array(
-			'default' => esc_html__( 'Login', 'alostora' ),
+			'default' => 'تسجيل الدخول',
 			'label'   => esc_html__( 'Login label', 'alostora' ),
 			'type'    => 'text',
 		),
 		'alostora_cta_login_url'     => array(
-			'default' => '#',
+			'default' => wp_login_url(),
 			'label'   => esc_html__( 'Login URL', 'alostora' ),
 			'type'    => 'url',
 		),

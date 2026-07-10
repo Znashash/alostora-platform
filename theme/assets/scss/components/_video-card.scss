@@ -110,20 +110,30 @@
 }
 
 // Video showcase: one large feature video beside a stack/row of smaller tiles.
+// Tracks use minmax(0, …) so grid children can shrink below content size, and
+// the main card is sized by width + aspect-ratio (never block-size:100%, which
+// previously let the tall tiles column stretch it to ~1490px and overflow).
 .alostora-showcase {
 	display: grid;
 	gap: clamp(1rem, 2.5vw, 1.5rem);
-	grid-template-columns: 1fr;
+	grid-template-columns: minmax(0, 1fr);
 
-	@include respond-to("lg") { grid-template-columns: 1.6fr 1fr; }
+	@include respond-to("lg") { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
 
-	&__main .alostora-video-card { aspect-ratio: 16 / 9; block-size: 100%; }
+	&__main,
+	&__tiles { min-inline-size: 0; }
+
+	&__main .alostora-video-card {
+		inline-size: 100%;
+		block-size: auto;
+		aspect-ratio: 16 / 9;
+	}
 
 	&__tiles {
 		display: grid;
 		gap: clamp(1rem, 2.5vw, 1.5rem);
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 
-		@include respond-to("lg") { grid-template-columns: 1fr; }
+		@include respond-to("lg") { grid-template-columns: minmax(0, 1fr); }
 	}
 }

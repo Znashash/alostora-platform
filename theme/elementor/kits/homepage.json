@@ -39,7 +39,7 @@
 							"elType": "widget",
 							"widgetType": "shortcode",
 							"settings": {
-								"shortcode": "[alostora_hero eyebrow=\"منصة الأسطورة التعليمية\" title=\"التاريخ لم يعد يُقرأ...\" title_accent=\"بل يُشاهد!\" primary_label=\"ابدأ التعلم الآن\" primary_url=\"/courses/\" video_url=\"#\" video_label=\"شاهد تجربة من أحد الدروس\"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]"
+								"shortcode": "[alostora_hero eyebrow=\"منصة الأسطورة التعليمية\" title=\"التاريخ لم يعد يُقرأ...\" title_accent=\"بل يُشاهد!\" primary_label=\"ابدأ التعلم الآن\" primary_url=\"/courses/\" secondary_label=\"تصفّح الدورات\" secondary_url=\"/courses/\" video_url=\"#\" video_label=\"شاهد تجربة من أحد الدروس\"]حوّلنا الكتاب المدرسي إلى تجربة تعليمية سينمائية تساعد الطالب على الفهم والذكر والتفوق.[/alostora_hero]"
 							},
 							"elements": []
 						}

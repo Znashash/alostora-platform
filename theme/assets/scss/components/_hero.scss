@@ -74,8 +74,17 @@
 
 	&__media {
 		position: relative;
+		text-align: center;
 
-		img { border-radius: var(--radius-lg); }
+		img {
+			inline-size: 100%;
+			block-size: auto;
+			max-inline-size: 480px;
+			margin-inline: auto;
+			border-radius: var(--radius-lg);
+
+			@include respond-to("lg") { max-inline-size: 100%; }
+		}
 	}
 
 	// Inline video trigger with pulsing ring.

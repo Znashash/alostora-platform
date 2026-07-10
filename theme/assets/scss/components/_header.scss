@@ -63,6 +63,17 @@
 		gap: 0.75rem;
 	}
 
+	&__login {
+		color: inherit;
+		font-weight: 600;
+		white-space: nowrap;
+
+		&:hover { color: var(--color-accent-light); }
+
+		// Avoid crowding on small screens; register button + hamburger remain.
+		@include respond-max("mobile") { display: none; }
+	}
+
 	&__toggle {
 		display: inline-flex;
 		align-items: center;

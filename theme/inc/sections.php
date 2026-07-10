@@ -117,33 +117,69 @@ function alostora_shortcode_courses_carousel( $atts ) {
 
 	$cards = alostora_get_course_cards( (int) $atts['count'] );
 
+	// Never show an empty section: fall back to curated placeholder courses.
+	if ( empty( $cards ) ) {
+		$cards = alostora_get_placeholder_course_cards();
+	}
+
 	ob_start();
 	?>
 	<div class="alostora-section" id="courses">
 		<div class="alostora-container">
 			<?php echo alostora_section_head( $atts['title'], $atts['subtitle'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>
 
-			<?php if ( ! empty( $cards ) ) : ?>
-				<div class="alostora-carousel" data-carousel>
-					<div class="alostora-carousel__viewport" data-carousel-viewport>
-						<div class="alostora-carousel__track">
-							<?php foreach ( $cards as $card ) : ?>
-								<div class="alostora-carousel__item"><?php echo $card; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Component escapes its own output. ?></div>
-							<?php endforeach; ?>
-						</div>
-					</div>
-					<div class="alostora-carousel__controls">
-						<button class="alostora-carousel__btn alostora-carousel__btn--prev" type="button" data-carousel-prev aria-label="السابق"><?php alostora_svg( 'chevron' ); ?></button>
-						<button class="alostora-carousel__btn alostora-carousel__btn--next" type="button" data-carousel-next aria-label="التالي"><?php alostora_svg( 'chevron' ); ?></button>
+			<div class="alostora-carousel" data-carousel>
+				<div class="alostora-carousel__viewport" data-carousel-viewport>
+					<div class="alostora-carousel__track">
+						<?php foreach ( $cards as $card ) : ?>
+							<div class="alostora-carousel__item"><?php echo $card; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Component escapes its own output. ?></div>
+						<?php endforeach; ?>
 					</div>
 				</div>
-			<?php else : ?>
-				<p class="u-text-center">ستظهر الدورات هنا بعد نشر دورات LifterLMS.</p>
-			<?php endif; ?>
+				<div class="alostora-carousel__controls">
+					<button class="alostora-carousel__btn alostora-carousel__btn--prev" type="button" data-carousel-prev aria-label="السابق"><?php alostora_svg( 'chevron' ); ?></button>
+					<button class="alostora-carousel__btn alostora-carousel__btn--next" type="button" data-carousel-next aria-label="التالي"><?php alostora_svg( 'chevron' ); ?></button>
+				</div>
+			</div>
 		</div>
 	</div>
 	<?php
 	return ob_get_clean();
+}
+
+/**
+ * Curated placeholder course cards shown when no LifterLMS courses are published.
+ *
+ * @return array Rendered course-card component strings.
+ */
+function alostora_get_placeholder_course_cards() {
+	$poster = alostora_placeholder_url( 'video-cover.webp' );
+	$url    = post_type_exists( 'course' ) ? home_url( '/courses/' ) : '#';
+
+	$samples = array(
+		array( 'title' => 'تاريخ الأردن', 'category' => 'تاريخ وطني', 'lessons' => 8, 'duration' => '5 ساعات', 'rating' => 4.9 ),
+		array( 'title' => 'الحضارات القديمة', 'category' => 'حضارات', 'lessons' => 12, 'duration' => '6 ساعات', 'rating' => 4.8 ),
+		array( 'title' => 'التاريخ الإسلامي', 'category' => 'تاريخ إسلامي', 'lessons' => 10, 'duration' => '5 ساعات', 'rating' => 4.9 ),
+		array( 'title' => 'تربية وطنية', 'category' => 'تربية وطنية', 'lessons' => 6, 'duration' => '3 ساعات', 'rating' => 4.7 ),
+	);
+
+	$cards = array();
+	foreach ( $samples as $s ) {
+		$cards[] = alostora_get_component( 'course-card', array(
+			'title'      => $s['title'],
+			'url'        => $url,
+			'image'      => $poster,
+			'category'   => $s['category'],
+			'instructor' => 'أ. نسيم اللبدي',
+			'lessons'    => $s['lessons'],
+			'duration'   => $s['duration'],
+			'rating'     => $s['rating'],
+			'reviews'    => 0,
+			'cta_label'  => 'ابدأ الآن',
+		) );
+	}
+
+	return $cards;
 }
 
 /**
