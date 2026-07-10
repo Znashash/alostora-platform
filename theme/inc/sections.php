@@ -247,17 +247,17 @@ function alostora_shortcode_steps( $atts ) {
 	$atts = shortcode_atts(
 		array(
 			'title'    => 'كيف ندرّس؟',
-			'subtitle' => 'حوّلنا التعلّم إلى تجربة لا تُنسى.',
+			'subtitle' => 'حوّلنا طريقة التعلّم إلى تجربة لا تُنسى',
 		),
 		$atts,
 		'alostora_steps'
 	);
 
 	$steps = array(
-		array( 'number' => '1', 'icon' => 'book', 'title' => 'من الكتاب', 'description' => 'نأخذ المعلومة الأساسية.' ),
-		array( 'number' => '2', 'icon' => 'video', 'title' => 'إلى الرسوم المتحركة', 'description' => 'نحوّلها إلى قصة مرئية.' ),
-		array( 'number' => '3', 'icon' => 'brain', 'title' => 'إلى الفهم والذكر', 'description' => 'تصل المعلومة بطريقة أسهل.' ),
-		array( 'number' => '4', 'icon' => 'trophy', 'title' => 'إلى التفوق والنجاح', 'description' => 'لتحقيق أفضل النتائج.' ),
+		array( 'number' => '1', 'icon' => 'step-book', 'title' => 'من الكتاب', 'description' => 'نأخذ المعلومة الأساسية.' ),
+		array( 'number' => '2', 'icon' => 'step-clapperboard', 'title' => 'إلى الرسوم المتحركة', 'description' => 'نحوّلها إلى قصة مرئية.' ),
+		array( 'number' => '3', 'icon' => 'step-brain', 'title' => 'إلى الفهم والتذكّر', 'description' => 'تصل المعلومة بطريقة أسهل.' ),
+		array( 'number' => '4', 'icon' => 'step-trophy', 'title' => 'إلى التفوق والنجاح', 'description' => 'لتحقيق أفضل النتائج.' ),
 	);
 
 	ob_start();
@@ -271,7 +271,7 @@ function alostora_shortcode_steps( $atts ) {
 				foreach ( $steps as $i => $step ) {
 					alostora_component( 'step-card', $step );
 					if ( $i < $last ) {
-						echo '<span class="alostora-steps__arrow" aria-hidden="true">' . alostora_get_svg( 'chevron' ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG.
+						echo '<span class="alostora-steps__arrow" aria-hidden="true">' . alostora_get_svg( 'arrow-step' ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG.
 					}
 				}
 				?>
