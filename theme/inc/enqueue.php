@@ -75,10 +75,12 @@ function alostora_enqueue_assets() {
 		'isRtl'        => is_rtl(),
 		'reduceMotion' => (bool) get_theme_mod( 'alostora_reduce_motion', false ),
 		'i18n'         => array(
-			'menu'  => esc_html__( 'Menu', 'alostora' ),
-			'close' => esc_html__( 'Close', 'alostora' ),
-			'next'  => esc_html__( 'Next', 'alostora' ),
-			'prev'  => esc_html__( 'Previous', 'alostora' ),
+			'menu'         => esc_html__( 'القائمة', 'alostora' ),
+			'close'        => esc_html__( 'إغلاق', 'alostora' ),
+			'next'         => esc_html__( 'التالي', 'alostora' ),
+			'prev'         => esc_html__( 'السابق', 'alostora' ),
+			'showPassword' => esc_html__( 'إظهار كلمة المرور', 'alostora' ),
+			'hidePassword' => esc_html__( 'إخفاء كلمة المرور', 'alostora' ),
 		),
 	) );
 

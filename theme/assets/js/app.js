@@ -343,5 +343,48 @@
 		initReveal();
 		initCountUp();
 		initCarousels();
+		initPasswordToggles();
 	} );
+
+	/* ---------------------------------------------------------------------
+	 * Password visibility toggle (LifterLMS login / serial forms)
+	 * ------------------------------------------------------------------ */
+	function initPasswordToggles() {
+		var i18n = data.i18n || {};
+		var showLabel = i18n.showPassword || 'إظهار كلمة المرور';
+		var hideLabel = i18n.hidePassword || 'إخفاء كلمة المرور';
+		var roots = document.querySelectorAll(
+			'.alostora-login-page .alostora-password-field, form.llms-login .alostora-password-field, .llms-person-login-form-wrapper .alostora-password-field'
+		);
+
+		Array.prototype.forEach.call( roots, function ( field ) {
+			if ( field.getAttribute( 'data-password-toggle-ready' ) ) {
+				return;
+			}
+			var input = field.querySelector( 'input[type="password"], input#llms_password' );
+			if ( ! input ) {
+				return;
+			}
+
+			field.setAttribute( 'data-password-toggle-ready', '1' );
+
+			var wrap = document.createElement( 'div' );
+			wrap.className = 'alostora-password-field-wrap password-field-wrap';
+			input.parentNode.insertBefore( wrap, input );
+			wrap.appendChild( input );
+
+			var btn = document.createElement( 'button' );
+			btn.type = 'button';
+			btn.className = 'alostora-password-toggle password-toggle';
+			btn.setAttribute( 'aria-label', showLabel );
+			btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>';
+			wrap.appendChild( btn );
+
+			btn.addEventListener( 'click', function () {
+				var isHidden = input.type === 'password';
+				input.type = isHidden ? 'text' : 'password';
+				btn.setAttribute( 'aria-label', isHidden ? hideLabel : showLabel );
+			} );
+		} );
+	}
 }() );

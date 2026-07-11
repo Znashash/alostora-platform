@@ -46,16 +46,17 @@ function alostora_require( $relative_path ) {
  * modules hook into it.
  */
 $alostora_modules = array(
-	'inc/setup.php',              // Theme supports, menus, image sizes, i18n.
-	'inc/enqueue.php',            // Styles, scripts, fonts, preloading.
-	'inc/template-functions.php', // Shared render helpers used by components.
-	'inc/components.php',         // Reusable component loader + registry.
-	'inc/sections.php',           // Homepage section shortcodes.
-	'inc/theme-options.php',      // Customizer: brand, socials, CTAs, toggles.
-	'inc/performance.php',        // Core Web Vitals: lazyload, cleanup, WebP/AVIF.
-	'inc/elementor.php',          // Elementor locations + Theme Builder support.
-	'inc/lifterlms.php',          // LifterLMS support + VdoCipher integration.
-	'inc/i18n-frontend.php',      // Frontend Arabic strings for LifterLMS/account UI.
+	'inc/setup.php',                 // Theme supports, menus, image sizes, i18n.
+	'inc/enqueue.php',               // Styles, scripts, fonts, preloading.
+	'inc/template-functions.php',    // Shared render helpers used by components.
+	'inc/components.php',            // Reusable component loader + registry.
+	'inc/sections.php',              // Homepage section shortcodes.
+	'inc/theme-options.php',         // Customizer: brand, socials, CTAs, toggles.
+	'inc/performance.php',           // Core Web Vitals: lazyload, cleanup, WebP/AVIF.
+	'inc/elementor.php',             // Elementor locations + Theme Builder support.
+	'inc/lifterlms.php',             // LifterLMS support + VdoCipher integration.
+	'inc/frontend-translations.php', // Frontend Arabic gettext fallback (LifterLMS / serial).
+	'inc/i18n-frontend.php',         // Additional LifterLMS form/dashboard Arabic helpers.
 );
 
 foreach ( $alostora_modules as $alostora_module ) {
