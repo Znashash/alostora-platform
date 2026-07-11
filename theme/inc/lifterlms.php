@@ -139,17 +139,11 @@ function alostora_has_vdocipher() {
 }
 
 /* -------------------------------------------------------------------------
- * Student Dashboard / frontend account links.
- *
- * Students must never be sent to wp-login.php or wp-admin. Frontend "login"
- * and "my account" CTAs always point at the LifterLMS Student Dashboard page,
- * which shows the login form when logged out and the dashboard when logged in.
- * Administrators keep normal wp-admin access via WordPress core — these helpers
- * only affect theme chrome links.
+ * Student Dashboard + registration page URLs for frontend CTAs.
  * ---------------------------------------------------------------------- */
 
 /**
- * Whether a URL targets WordPress auth/admin screens that students must not use.
+ * Whether a URL targets WordPress auth/admin screens students must not use.
  *
  * @param string $url Candidate URL.
  * @return bool
@@ -159,12 +153,8 @@ function alostora_is_forbidden_student_auth_url( $url ) {
 		return true;
 	}
 
-	$path = (string) wp_parse_url( $url, PHP_URL_PATH );
-	$path = strtolower( untrailingslashit( $path ) );
-
-	if ( '' === $path ) {
-		return false;
-	}
+	$path = strtolower( (string) wp_parse_url( $url, PHP_URL_PATH ) );
+	$path = untrailingslashit( $path );
 
 	if ( false !== strpos( $path, 'wp-login.php' ) ) {
 		return true;
@@ -180,7 +170,7 @@ function alostora_is_forbidden_student_auth_url( $url ) {
 /**
  * Find a published page that embeds the LifterLMS my-account shortcode.
  *
- * @return int Page ID or 0.
+ * @return int
  */
 function alostora_find_lifterlms_my_account_page_id() {
 	static $cached = null;
@@ -206,13 +196,9 @@ function alostora_find_lifterlms_my_account_page_id() {
 }
 
 /**
- * Resolve the LifterLMS Student Dashboard (My Account) page ID.
+ * Resolve the LifterLMS Student Dashboard page ID.
  *
- * Priority:
- * 1. LifterLMS configured `myaccount` page (`llms_get_page_id` / option).
- * 2. Published page containing `[lifterlms_my_account]`.
- *
- * @return int Page ID or 0 when unknown.
+ * @return int
  */
 function alostora_get_student_dashboard_page_id() {
 	$page_id = 0;
@@ -234,9 +220,6 @@ function alostora_get_student_dashboard_page_id() {
 
 /**
  * Permalink for the LifterLMS Student Dashboard / login page.
- *
- * Never returns wp-login.php or wp-admin URLs. Falls back to
- * home_url( '/student-dashboard/' ) when no dashboard page can be resolved.
  *
  * @return string
  */
@@ -266,11 +249,7 @@ function alostora_get_student_dashboard_url() {
 		}
 	}
 
-	if ( ! $url ) {
-		$url = home_url( '/student-dashboard/' );
-	}
-
-	if ( alostora_is_forbidden_student_auth_url( $url ) ) {
+	if ( ! $url || alostora_is_forbidden_student_auth_url( $url ) ) {
 		$url = home_url( '/student-dashboard/' );
 	}
 
@@ -282,21 +261,14 @@ function alostora_get_student_dashboard_url() {
 /**
  * Frontend account link label based on authentication state.
  *
- * Logged out: تسجيل الدخول (Student Dashboard shows the login form).
- * Logged in: حسابي (same dashboard URL).
- *
  * @return string
  */
 function alostora_get_account_link_label() {
-	if ( is_user_logged_in() ) {
-		return 'حسابي';
-	}
-
-	return 'تسجيل الدخول';
+	return is_user_logged_in() ? 'حسابي' : 'تسجيل الدخول';
 }
 
 /**
- * Account link data used by header, drawer, footer and CTAs.
+ * Account link data for header / drawer / footer.
  *
  * @return array{url:string,label:string}
  */
@@ -304,5 +276,124 @@ function alostora_get_account_link() {
 	return array(
 		'url'   => alostora_get_student_dashboard_url(),
 		'label' => alostora_get_account_link_label(),
+	);
+}
+
+/**
+ * Find the Academy Serial Enrollment registration page ID.
+ *
+ * Checks plugin options first, then published pages containing known shortcodes.
+ *
+ * @return int
+ */
+function alostora_get_serial_registration_page_id() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
+	$option_keys = array(
+		'ase_registration_page_id',
+		'academy_serial_enrollment_page_id',
+		'academy_serial_registration_page_id',
+		'serial_enrollment_registration_page_id',
+		'ase_register_page_id',
+	);
+
+	foreach ( $option_keys as $key ) {
+		$page_id = absint( get_option( $key, 0 ) );
+		if ( $page_id > 0 && 'publish' === get_post_status( $page_id ) ) {
+			$cached = $page_id;
+			return $cached;
+		}
+	}
+
+	global $wpdb;
+
+	$like_parts = array(
+		'%[academy_serial%',
+		'%[ase_registration%',
+		'%[ase_register%',
+		'%[serial_enrollment%',
+		'%[academy_serial_enrollment%',
+		'%[serial_register%',
+	);
+
+	$sql_likes = array();
+	foreach ( $like_parts as $like ) {
+		$sql_likes[] = $wpdb->prepare( 'post_content LIKE %s', $like );
+	}
+
+	// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- likes built with $wpdb->prepare above.
+	$page_id = (int) $wpdb->get_var(
+		"SELECT ID FROM {$wpdb->posts}
+		WHERE post_type = 'page'
+			AND post_status = 'publish'
+			AND ( " . implode( ' OR ', $sql_likes ) . ' )
+		ORDER BY ID ASC
+		LIMIT 1'
+	);
+
+	$cached = $page_id > 0 ? $page_id : 0;
+
+	return $cached;
+}
+
+/**
+ * Permalink for the serial enrollment registration page.
+ *
+ * @return string
+ */
+function alostora_get_registration_url() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
+	$page_id = alostora_get_serial_registration_page_id();
+
+	if ( $page_id > 0 ) {
+		$permalink = get_permalink( $page_id );
+		if ( is_string( $permalink ) && $permalink && ! alostora_is_forbidden_student_auth_url( $permalink ) ) {
+			$cached = $permalink;
+			return $cached;
+		}
+	}
+
+	// Theme Customizer override when it is a real frontend page (not wp-login).
+	$custom = get_theme_mod( 'alostora_cta_primary_url', '' );
+	if ( is_string( $custom ) && $custom && ! alostora_is_forbidden_student_auth_url( $custom ) ) {
+		$path = (string) wp_parse_url( $custom, PHP_URL_PATH );
+		if ( $path && ! preg_match( '#/(login|account)/?$#', untrailingslashit( $path ) ) ) {
+			$cached = $custom;
+			return $cached;
+		}
+	}
+
+	$cached = home_url( '/register/' );
+
+	return $cached;
+}
+
+/**
+ * Primary header CTA: register when logged out, account when logged in.
+ *
+ * @return array{url:string,label:string}
+ */
+function alostora_get_primary_cta_link() {
+	if ( is_user_logged_in() ) {
+		return array(
+			'url'   => alostora_get_student_dashboard_url(),
+			'label' => 'حسابي',
+		);
+	}
+
+	$label = get_theme_mod( 'alostora_cta_primary_label', 'سجّل الآن' );
+
+	return array(
+		'url'   => alostora_get_registration_url(),
+		'label' => $label ? $label : 'سجّل الآن',
 	);
 }

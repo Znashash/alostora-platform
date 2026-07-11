@@ -363,16 +363,26 @@ function alostora_shortcode_video_showcase( $atts ) {
  * @return string
  */
 function alostora_shortcode_cta_banner( $atts ) {
+	$primary = alostora_get_primary_cta_link();
+
 	$atts = shortcode_atts(
 		array(
 			'title'    => 'ابدأ رحلتك التعليمية اليوم',
 			'text'     => 'انضمّ إلى آلاف الطلاب الذين اختاروا طريقة الرسوم المتحركة للتعلّم.',
-			'label'    => 'سجّل الآن مجاناً',
-			'url'      => '#',
+			'label'    => $primary['label'],
+			'url'      => $primary['url'],
 		),
 		$atts,
 		'alostora_cta_banner'
 	);
+
+	// Empty / placeholder URLs fall back to the resolved registration/account link.
+	if ( ! $atts['url'] || '#' === $atts['url'] ) {
+		$atts['url'] = $primary['url'];
+	}
+	if ( ! $atts['label'] ) {
+		$atts['label'] = $primary['label'];
+	}
 
 	ob_start();
 	?>

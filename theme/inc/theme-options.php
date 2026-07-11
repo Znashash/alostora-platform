@@ -36,8 +36,8 @@ function alostora_customize_register( $wp_customize ) {
 			'type'    => 'text',
 		),
 		'alostora_cta_primary_url'   => array(
-			'default' => home_url( '/register/' ),
-			'label'   => esc_html__( 'Primary CTA URL', 'alostora' ),
+			'default' => '',
+			'label'   => esc_html__( 'Primary CTA URL (optional override)', 'alostora' ),
 			'type'    => 'url',
 		),
 	);
