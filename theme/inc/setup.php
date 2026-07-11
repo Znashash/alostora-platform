@@ -23,7 +23,7 @@ function alostora_setup() {
 	add_theme_support( 'editor-styles' );
 	add_theme_support( 'wp-block-styles' );
 	add_theme_support( 'custom-logo', array(
-		'height'      => 96,
+		'height'      => 120,
 		'width'       => 320,
 		'flex-height' => true,
 		'flex-width'  => true,
