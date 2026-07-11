@@ -11,10 +11,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$primary_label = get_theme_mod( 'alostora_cta_primary_label', 'سجّل الآن' );
-$primary_url   = get_theme_mod( 'alostora_cta_primary_url', home_url( '/register/' ) );
-$login_label   = get_theme_mod( 'alostora_cta_login_label', 'تسجيل الدخول' );
-$login_url     = get_theme_mod( 'alostora_cta_login_url', wp_login_url() );
+$account_link = alostora_get_account_link();
+$primary_cta  = alostora_get_primary_cta_link();
+$login_label  = $account_link['label'];
+$login_url    = $account_link['url'];
+$primary_label = $primary_cta['label'];
+$primary_url   = $primary_cta['url'];
 
 $menu_args = array(
 	'theme_location' => 'primary',

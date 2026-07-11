@@ -33,6 +33,14 @@ $args = wp_parse_args( $args, array(
 	'image'           => '',
 ) );
 
+$primary_cta = alostora_get_primary_cta_link();
+if ( ! $args['primary_label'] ) {
+	$args['primary_label'] = $primary_cta['label'];
+}
+if ( ! $args['primary_url'] || '#' === $args['primary_url'] ) {
+	$args['primary_url'] = $primary_cta['url'];
+}
+
 // Never render an empty media slot: fall back to the bundled placeholder art.
 $hero_image = $args['image'] ? $args['image'] : alostora_placeholder_url( 'hero-character.webp' );
 ?>

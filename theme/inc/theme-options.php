@@ -36,18 +36,8 @@ function alostora_customize_register( $wp_customize ) {
 			'type'    => 'text',
 		),
 		'alostora_cta_primary_url'   => array(
-			'default' => home_url( '/register/' ),
-			'label'   => esc_html__( 'Primary CTA URL', 'alostora' ),
-			'type'    => 'url',
-		),
-		'alostora_cta_login_label'   => array(
-			'default' => 'تسجيل الدخول',
-			'label'   => esc_html__( 'Login label', 'alostora' ),
-			'type'    => 'text',
-		),
-		'alostora_cta_login_url'     => array(
-			'default' => wp_login_url(),
-			'label'   => esc_html__( 'Login URL', 'alostora' ),
+			'default' => '',
+			'label'   => esc_html__( 'Primary CTA URL (optional override)', 'alostora' ),
 			'type'    => 'url',
 		),
 	);
