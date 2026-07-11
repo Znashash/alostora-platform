@@ -1,15 +1,16 @@
 /**
  * Off-canvas navigation drawer and sticky-header behaviour.
  *
- * Progressive enhancement: the menu works as a plain list without JS; this adds
- * the mobile drawer toggle, focus trapping and a "stuck" class on scroll.
+ * Progressive enhancement: the desktop menu works as a plain list without JS;
+ * this adds the mobile drawer toggle, focus trapping and a "stuck" class on scroll.
  */
 
 export function initNavigation() {
 	const header = document.querySelector( '[data-header]' );
 	const toggle = document.querySelector( '[data-nav-toggle]' );
-	const menu = document.getElementById( 'alostora-primary-menu' );
+	const drawer = document.querySelector( '[data-mobile-drawer]' );
 	const backdrop = document.querySelector( '[data-nav-backdrop]' );
+	const closeBtn = document.querySelector( '[data-nav-close]' );
 
 	if ( header ) {
 		const onScroll = () => {
@@ -19,36 +20,48 @@ export function initNavigation() {
 		window.addEventListener( 'scroll', onScroll, { passive: true } );
 	}
 
-	if ( ! toggle || ! menu ) {
+	if ( ! toggle || ! drawer ) {
 		return;
 	}
 
 	const setOpen = ( open ) => {
-		menu.classList.toggle( 'is-open', open );
+		drawer.classList.toggle( 'is-open', open );
+		drawer.setAttribute( 'aria-hidden', String( ! open ) );
 		if ( backdrop ) {
 			backdrop.classList.toggle( 'is-open', open );
 		}
 		toggle.setAttribute( 'aria-expanded', String( open ) );
 		document.body.classList.toggle( 'u-no-scroll', open );
+
+		if ( open && closeBtn ) {
+			closeBtn.focus();
+		}
 	};
 
 	toggle.addEventListener( 'click', () => {
-		setOpen( ! menu.classList.contains( 'is-open' ) );
+		setOpen( ! drawer.classList.contains( 'is-open' ) );
 	} );
+
+	if ( closeBtn ) {
+		closeBtn.addEventListener( 'click', () => {
+			setOpen( false );
+			toggle.focus();
+		} );
+	}
 
 	if ( backdrop ) {
 		backdrop.addEventListener( 'click', () => setOpen( false ) );
 	}
 
 	document.addEventListener( 'keydown', ( event ) => {
-		if ( 'Escape' === event.key && menu.classList.contains( 'is-open' ) ) {
+		if ( 'Escape' === event.key && drawer.classList.contains( 'is-open' ) ) {
 			setOpen( false );
 			toggle.focus();
 		}
 	} );
 
 	// Close the drawer when a link is followed on small screens.
-	menu.addEventListener( 'click', ( event ) => {
+	drawer.addEventListener( 'click', ( event ) => {
 		if ( event.target.closest( 'a' ) && window.matchMedia( '(max-width: 1024px)' ).matches ) {
 			setOpen( false );
 		}

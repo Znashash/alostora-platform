@@ -8,8 +8,8 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Output the site logo: the custom logo when set, otherwise the bundled brand
- * SVG, wrapped in a home link.
+ * Output the site logo via WordPress Custom Logo, or a text fallback with the
+ * site name when none is set.
  *
  * @param array $args Optional. { 'class' => string }.
  * @return void
@@ -17,21 +17,34 @@ defined( 'ABSPATH' ) || exit;
 function alostora_brand_logo( $args = array() ) {
 	$class = isset( $args['class'] ) ? $args['class'] : 'alostora-brand';
 
-	echo '<a class="' . esc_attr( $class ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
-
 	if ( has_custom_logo() ) {
-		$logo_id = get_theme_mod( 'custom_logo' );
-		echo wp_get_attachment_image( $logo_id, 'full', false, array(
-			'class'    => 'alostora-brand__img',
-			'loading'  => 'eager',
-			'decoding' => 'async',
-			'alt'      => get_bloginfo( 'name' ),
-		) );
-	} else {
-		echo alostora_get_svg( 'logo', array( 'class' => 'alostora-brand__img' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is trusted/escaped inside helper.
+		/**
+		 * Ensure the custom-logo link carries theme brand classes for layout CSS.
+		 *
+		 * @param string $html Custom logo HTML.
+		 * @return string
+		 */
+		$filter = static function ( $html ) use ( $class ) {
+			return preg_replace(
+				'/class="custom-logo-link/',
+				'class="custom-logo-link ' . esc_attr( $class ),
+				$html,
+				1
+			);
+		};
+
+		add_filter( 'get_custom_logo', $filter );
+		echo get_custom_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core escapes logo markup.
+		remove_filter( 'get_custom_logo', $filter );
+		return;
 	}
 
-	echo '</a>';
+	printf(
+		'<a class="%1$s" href="%2$s" rel="home"><span class="alostora-brand__text">%3$s</span></a>',
+		esc_attr( $class ),
+		esc_url( home_url( '/' ) ),
+		esc_html( get_bloginfo( 'name' ) )
+	);
 }
 
 /**
@@ -47,10 +60,6 @@ function alostora_brand_logo( $args = array() ) {
 function alostora_get_svg( $name, $args = array() ) {
 	$name = sanitize_file_name( $name );
 	$file = ALOSTORA_DIR . 'assets/images/icons/' . $name . '.svg';
-
-	if ( 'logo' === $name ) {
-		$file = ALOSTORA_DIR . 'assets/images/logo.svg';
-	}
 
 	if ( ! is_readable( $file ) ) {
 		return '';

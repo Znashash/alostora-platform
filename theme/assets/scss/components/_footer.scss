@@ -59,6 +59,14 @@
 		font-size: 0.95rem;
 	}
 
+	&__brand {
+		.alostora-brand__img,
+		.custom-logo {
+			max-inline-size: 180px;
+			block-size: auto;
+		}
+	}
+
 	a {
 		color: inherit;
 

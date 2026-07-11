@@ -28,14 +28,30 @@
 
 	&__nav {
 		flex: 1 1 auto;
-		display: flex;
+		display: none;
 		justify-content: center;
+
+		@include respond-to("lg") { display: flex; }
 	}
 
 	&__actions {
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+		margin-inline-start: auto;
+	}
+
+	&__login {
+		display: none;
+
+		@include respond-to("lg") { display: inline-flex; }
+	}
+
+	// Hide the register CTA in the top bar on small screens — it lives in the drawer.
+	&__actions .alostora-btn {
+		display: none;
+
+		@include respond-to("lg") { display: inline-flex; }
 	}
 
 	&__toggle {
@@ -59,22 +75,61 @@
 	display: inline-flex;
 	align-items: center;
 	flex: 0 0 auto;
+	color: inherit;
+	text-decoration: none;
 
-	&__img {
-		block-size: 44px;
+	&:hover,
+	&:focus {
+		color: inherit;
+	}
+
+	&__img,
+	.custom-logo {
+		display: block;
+		block-size: auto;
 		inline-size: auto;
+		max-inline-size: 170px;
+		max-block-size: 56px;
+		object-fit: contain;
+	}
+
+	&__text {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
+		line-height: 1.2;
+		color: inherit;
+		white-space: nowrap;
 	}
 }
 
-.alostora-menu {
+.alostora-header__brand {
+	.alostora-brand__img,
+	.custom-logo {
+		max-inline-size: 130px;
+
+		@include respond-to("lg") { max-inline-size: 170px; }
+	}
+}
+
+// Desktop primary menu — horizontal row. Kept separate from the mobile drawer
+// so these flex-direction:row rules never leak into `.mobile-drawer`.
+.alostora-menu--desktop {
 	--gap: clamp(0.75rem, 1.5vw, 1.75rem);
 
 	display: flex;
+	flex-direction: row;
 	flex-wrap: wrap;
+	align-items: center;
 	gap: var(--gap);
 	margin: 0;
 	padding: 0;
 	list-style: none;
+
+	> li {
+		display: block;
+		margin: 0;
+	}
 
 	a {
 		position: relative;
@@ -105,26 +160,147 @@
 
 		&::after { transform: scaleX(1); }
 	}
+}
 
-	// Off-canvas drawer on small screens.
-	@include respond-max("tablet") {
-		position: fixed;
-		inset-block: 0;
-		inset-inline-end: 0;
-		z-index: z("overlay");
+// -----------------------------------------------------------------------------
+// Mobile drawer — exclusive selectors so desktop menu styles cannot override.
+// Physical left/right transforms are authored LTR-canonical so rtlcss (loaded
+// via wp_style_add_data rtl:replace) produces the correct RTL companion.
+// -----------------------------------------------------------------------------
+.mobile-drawer {
+	position: fixed;
+	inset-block: 0;
+	inset-inline-end: 0;
+	z-index: z("overlay");
+	display: flex;
+	flex-direction: column;
+	inline-size: min(84vw, 340px);
+	max-inline-size: 100%;
+	padding: 1.25rem 1.5rem 1.5rem;
+	background: var(--color-surface-invert);
+	color: var(--color-text-invert);
+	box-shadow: var(--shadow-raised);
+	transform: translateX(100%);
+	transition: transform var(--transition-base);
+	overflow-y: auto;
+
+	&.is-open {
+		transform: translateX(0);
+	}
+
+	@include respond-to("lg") {
+		display: none !important;
+	}
+
+	&__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-block-end: 1.5rem;
+		padding-block-end: 1rem;
+		border-block-end: 1px solid color-mix(in srgb, var(--color-text-invert) 14%, transparent);
+	}
+
+	&__brand {
+		.alostora-brand__img,
+		.custom-logo {
+			max-inline-size: 130px;
+		}
+	}
+
+	&__close {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 44px;
+		block-size: 44px;
+		flex: 0 0 auto;
+		color: inherit;
+		border-radius: var(--radius-sm);
+
+		svg { inline-size: 22px; block-size: 22px; fill: currentColor; }
+
+		&:focus-visible { @include focus-ring; }
+	}
+
+	&__nav {
+		flex: 1 1 auto;
+		width: 100%;
+	}
+
+	// Explicit vertical list — do not inherit `.alostora-menu` / desktop row flex.
+	.menu,
+	.menu-primary-container,
+	nav ul {
+		display: flex;
 		flex-direction: column;
-		flex-wrap: nowrap;
-		inline-size: min(84vw, 340px);
-		padding: calc(var(--header-height) + 1.5rem) 1.5rem 1.5rem;
-		background: var(--color-surface-invert);
-		box-shadow: var(--shadow-raised);
-		transform: translateX(100%);
-		transition: transform var(--transition-base);
-		overflow-y: auto;
+		align-items: stretch;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		gap: 0;
+	}
 
-		[dir="ltr"] & { transform: translateX(-100%); }
+	.menu > li,
+	nav ul > li {
+		display: block;
+		width: 100%;
+		margin: 0;
+	}
 
-		&.is-open { transform: translateX(0); }
+	.menu a,
+	nav ul a {
+		display: block;
+		width: 100%;
+		padding: 14px 0;
+		color: inherit;
+		font-weight: 500;
+		text-align: start; // right in RTL Arabic, left in LTR
+
+		&:hover,
+		&:focus {
+			color: var(--color-accent-light);
+		}
+	}
+
+	.current-menu-item > a,
+	.current_page_item > a {
+		color: var(--color-accent-light);
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.75rem;
+		margin-block-start: auto;
+		padding-block-start: 1.5rem;
+		border-block-start: 1px solid color-mix(in srgb, var(--color-text-invert) 14%, transparent);
+	}
+
+	&__login {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.75rem 1rem;
+		color: inherit;
+		font-weight: 600;
+		text-align: center;
+		border: 1px solid color-mix(in srgb, var(--color-text-invert) 35%, transparent);
+		border-radius: var(--radius-pill);
+
+		&:hover,
+		&:focus {
+			color: var(--color-accent-light);
+			border-color: var(--color-accent-light);
+		}
+	}
+
+	&__actions .alostora-btn {
+		width: 100%;
+		justify-content: center;
 	}
 }
 
