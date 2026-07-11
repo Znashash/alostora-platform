@@ -32,6 +32,19 @@ body {
 	max-inline-size: 100%;
 }
 
+// Explicit direction wiring (Arabic is RTL-first). WordPress outputs
+// <html dir="rtl" lang="ar">; these rules make the direction robust rather than
+// relying only on body { direction: rtl }.
+html[dir="rtl"] { direction: rtl; }
+html[dir="rtl"] body { direction: rtl; text-align: right; }
+html[dir="ltr"] { direction: ltr; }
+html[dir="ltr"] body { direction: ltr; text-align: left; }
+
+// Lock body scroll while the mobile drawer is open (no horizontal shift; JS
+// toggles the class, never inline left/right styles).
+body.u-no-scroll,
+body.mobile-menu-open { overflow: hidden; }
+
 img,
 picture,
 video,
