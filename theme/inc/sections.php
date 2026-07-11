@@ -295,44 +295,58 @@ function alostora_shortcode_video_showcase( $atts ) {
 		array(
 			'title'    => 'شاهد طريقة تدريسنا',
 			'subtitle' => 'تجربة تعليمية محاكاة بالكامل.',
-			'main_id'  => '',
-			'tiles'    => '',
 		),
 		$atts,
 		'alostora_video_showcase'
 	);
 
-	$poster = alostora_placeholder_url( 'video-cover.webp' );
+	/**
+	 * Gallery items. Each carries a poster image and an optional VdoCipher video
+	 * ID (kept empty here since placeholders are used). Clicking a thumbnail swaps
+	 * the featured poster + the play button's video ID via JS (no reload).
+	 *
+	 * @var array[] $items
+	 */
+	$items = array(
+		array( 'id' => '', 'title' => 'رحلة في الحضارات القديمة', 'image' => alostora_placeholder_url( 'video-1.webp' ) ),
+		array( 'id' => '', 'title' => 'قصة التاريخ الإسلامي', 'image' => alostora_placeholder_url( 'video-2.webp' ) ),
+		array( 'id' => '', 'title' => 'معالم تاريخية خالدة', 'image' => alostora_placeholder_url( 'video-3.webp' ) ),
+		array( 'id' => '', 'title' => 'دروس بالرسوم المتحركة', 'image' => alostora_placeholder_url( 'video-4.webp' ) ),
+	);
 
-	$tiles = array_filter( array_map( 'trim', explode( ',', (string) $atts['tiles'] ) ) );
-	if ( empty( $tiles ) ) {
-		$tiles = array( '', '', '' );
-	}
+	$featured = $items[0];
+	$play_svg = alostora_get_svg( 'play' );
 
 	ob_start();
 	?>
 	<div class="alostora-section">
 		<div class="alostora-container">
 			<?php echo alostora_section_head( $atts['title'], $atts['subtitle'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>
-			<div class="alostora-showcase">
-				<div class="alostora-showcase__main" data-reveal>
-					<?php
-					alostora_component( 'video-card', array(
-						'id'    => $atts['main_id'],
-						'title' => 'مشاهدة درس تجريبي',
-						'image' => $poster,
-					) );
-					?>
+
+			<div class="alostora-gallery" data-video-gallery>
+				<div class="alostora-gallery__stage alostora-video alostora-video--16x9" data-reveal>
+					<div class="alostora-video__frame">
+						<img class="alostora-gallery__image" data-gallery-image src="<?php echo esc_url( $featured['image'] ); ?>" alt="<?php echo esc_attr( $featured['title'] ); ?>" width="800" height="450" decoding="async">
+						<button type="button" class="alostora-gallery__play" data-video-trigger data-gallery-play data-video-id="<?php echo esc_attr( $featured['id'] ); ?>" aria-label="<?php echo esc_attr( 'تشغيل: ' . $featured['title'] ); ?>">
+							<?php echo $play_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG. ?>
+						</button>
+						<span class="alostora-gallery__caption" data-gallery-caption><?php echo esc_html( $featured['title'] ); ?></span>
+					</div>
 				</div>
-				<div class="alostora-showcase__tiles">
-					<?php foreach ( array_slice( $tiles, 0, 3 ) as $i => $tile_id ) : ?>
-						<?php
-						alostora_component( 'video-card', array(
-							'id'    => $tile_id,
-							'title' => '',
-							'image' => $poster,
-						) );
-						?>
+
+				<div class="alostora-gallery__thumbs" role="group" aria-label="<?php esc_attr_e( 'اختر فيديو', 'alostora' ); ?>">
+					<?php foreach ( $items as $i => $item ) : ?>
+						<button type="button"
+							class="alostora-gallery__thumb<?php echo 0 === $i ? ' is-active' : ''; ?>"
+							data-gallery-thumb
+							data-video-id="<?php echo esc_attr( $item['id'] ); ?>"
+							data-image="<?php echo esc_url( $item['image'] ); ?>"
+							data-title="<?php echo esc_attr( $item['title'] ); ?>"
+							aria-label="<?php echo esc_attr( 'عرض الفيديو: ' . $item['title'] ); ?>"
+							aria-pressed="<?php echo 0 === $i ? 'true' : 'false'; ?>">
+							<img src="<?php echo esc_url( $item['image'] ); ?>" alt="" loading="lazy" decoding="async" width="200" height="112">
+							<span class="alostora-gallery__thumb-play" aria-hidden="true"><?php echo $play_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG. ?></span>
+						</button>
 					<?php endforeach; ?>
 				</div>
 			</div>

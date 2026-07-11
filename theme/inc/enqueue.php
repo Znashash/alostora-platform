@@ -93,19 +93,3 @@ function alostora_enqueue_editor_assets() {
 	add_editor_style( 'assets/css/editor.css' );
 }
 add_action( 'after_setup_theme', 'alostora_enqueue_editor_assets' );
-
-/**
- * Mark the app script as a module so browsers parse it with ES-module semantics.
- *
- * @param string $tag    The full script HTML tag.
- * @param string $handle The registered script handle.
- * @return string
- */
-function alostora_script_as_module( $tag, $handle ) {
-	if ( 'alostora-app' === $handle ) {
-		$tag = str_replace( '<script ', '<script type="module" ', $tag );
-	}
-
-	return $tag;
-}
-add_filter( 'script_loader_tag', 'alostora_script_as_module', 10, 2 );
