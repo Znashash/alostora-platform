@@ -137,3 +137,172 @@ add_shortcode( 'alostora_vdocipher', 'alostora_vdocipher_shortcode' );
 function alostora_has_vdocipher() {
 	return shortcode_exists( 'vdo_video_embed' ) || shortcode_exists( 'vdocipher' );
 }
+
+/* -------------------------------------------------------------------------
+ * Student Dashboard / frontend account links.
+ *
+ * Students must never be sent to wp-login.php or wp-admin. Frontend "login"
+ * and "my account" CTAs always point at the LifterLMS Student Dashboard page,
+ * which shows the login form when logged out and the dashboard when logged in.
+ * Administrators keep normal wp-admin access via WordPress core — these helpers
+ * only affect theme chrome links.
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Whether a URL targets WordPress auth/admin screens that students must not use.
+ *
+ * @param string $url Candidate URL.
+ * @return bool
+ */
+function alostora_is_forbidden_student_auth_url( $url ) {
+	if ( ! is_string( $url ) || '' === $url ) {
+		return true;
+	}
+
+	$path = (string) wp_parse_url( $url, PHP_URL_PATH );
+	$path = strtolower( untrailingslashit( $path ) );
+
+	if ( '' === $path ) {
+		return false;
+	}
+
+	if ( false !== strpos( $path, 'wp-login.php' ) ) {
+		return true;
+	}
+
+	if ( preg_match( '#(?:^|/)wp-admin(?:/|$)#', $path ) ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Find a published page that embeds the LifterLMS my-account shortcode.
+ *
+ * @return int Page ID or 0.
+ */
+function alostora_find_lifterlms_my_account_page_id() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
+	global $wpdb;
+
+	$page_id = (int) $wpdb->get_var(
+		"SELECT ID FROM {$wpdb->posts}
+		WHERE post_type = 'page'
+			AND post_status = 'publish'
+			AND post_content LIKE '%[lifterlms_my_account%'
+		ORDER BY ID ASC
+		LIMIT 1"
+	);
+
+	$cached = $page_id > 0 ? $page_id : 0;
+
+	return $cached;
+}
+
+/**
+ * Resolve the LifterLMS Student Dashboard (My Account) page ID.
+ *
+ * Priority:
+ * 1. LifterLMS configured `myaccount` page (`llms_get_page_id` / option).
+ * 2. Published page containing `[lifterlms_my_account]`.
+ *
+ * @return int Page ID or 0 when unknown.
+ */
+function alostora_get_student_dashboard_page_id() {
+	$page_id = 0;
+
+	if ( function_exists( 'llms_get_page_id' ) ) {
+		$page_id = (int) llms_get_page_id( 'myaccount' );
+	}
+
+	if ( $page_id <= 0 ) {
+		$page_id = absint( get_option( 'lifterlms_myaccount_page_id', 0 ) );
+	}
+
+	if ( $page_id > 0 && 'publish' === get_post_status( $page_id ) ) {
+		return $page_id;
+	}
+
+	return alostora_find_lifterlms_my_account_page_id();
+}
+
+/**
+ * Permalink for the LifterLMS Student Dashboard / login page.
+ *
+ * Never returns wp-login.php or wp-admin URLs. Falls back to
+ * home_url( '/student-dashboard/' ) when no dashboard page can be resolved.
+ *
+ * @return string
+ */
+function alostora_get_student_dashboard_url() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
+	$url = '';
+
+	if ( function_exists( 'llms_get_page_url' ) ) {
+		$candidate = llms_get_page_url( 'myaccount' );
+		if ( is_string( $candidate ) && $candidate && ! alostora_is_forbidden_student_auth_url( $candidate ) ) {
+			$url = $candidate;
+		}
+	}
+
+	if ( ! $url ) {
+		$page_id = alostora_get_student_dashboard_page_id();
+		if ( $page_id > 0 ) {
+			$permalink = get_permalink( $page_id );
+			if ( is_string( $permalink ) && $permalink && ! alostora_is_forbidden_student_auth_url( $permalink ) ) {
+				$url = $permalink;
+			}
+		}
+	}
+
+	if ( ! $url ) {
+		$url = home_url( '/student-dashboard/' );
+	}
+
+	if ( alostora_is_forbidden_student_auth_url( $url ) ) {
+		$url = home_url( '/student-dashboard/' );
+	}
+
+	$cached = $url;
+
+	return $cached;
+}
+
+/**
+ * Frontend account link label based on authentication state.
+ *
+ * Logged out: تسجيل الدخول (Student Dashboard shows the login form).
+ * Logged in: حسابي (same dashboard URL).
+ *
+ * @return string
+ */
+function alostora_get_account_link_label() {
+	if ( is_user_logged_in() ) {
+		return 'حسابي';
+	}
+
+	return 'تسجيل الدخول';
+}
+
+/**
+ * Account link data used by header, drawer, footer and CTAs.
+ *
+ * @return array{url:string,label:string}
+ */
+function alostora_get_account_link() {
+	return array(
+		'url'   => alostora_get_student_dashboard_url(),
+		'label' => alostora_get_account_link_label(),
+	);
+}

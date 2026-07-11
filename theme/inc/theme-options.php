@@ -40,16 +40,6 @@ function alostora_customize_register( $wp_customize ) {
 			'label'   => esc_html__( 'Primary CTA URL', 'alostora' ),
 			'type'    => 'url',
 		),
-		'alostora_cta_login_label'   => array(
-			'default' => 'تسجيل الدخول',
-			'label'   => esc_html__( 'Login label', 'alostora' ),
-			'type'    => 'text',
-		),
-		'alostora_cta_login_url'     => array(
-			'default' => wp_login_url(),
-			'label'   => esc_html__( 'Login URL', 'alostora' ),
-			'type'    => 'url',
-		),
 	);
 
 	foreach ( $ctas as $id => $args ) {

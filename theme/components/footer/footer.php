@@ -50,6 +50,12 @@ $support_links = array(
 	array( 'label' => 'الشروط والأحكام', 'url' => home_url( '/terms/' ) ),
 	array( 'label' => 'تواصل معنا', 'url' => home_url( '/#contact' ) ),
 );
+
+$account_link = alostora_get_account_link();
+$support_links[] = array(
+	'label' => $account_link['label'],
+	'url'   => $account_link['url'],
+);
 ?>
 <footer class="alostora-footer" role="contentinfo">
 	<div class="alostora-footer__main">
