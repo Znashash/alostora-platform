@@ -180,6 +180,8 @@
 	gap: clamp(1.5rem, 3vw, 2.5rem);
 	align-items: start;
 	padding-block: clamp(1.5rem, 3vw, 2.5rem);
+	direction: rtl;
+	text-align: right;
 
 	@include respond-to("md") {
 		// First column (nav) sits on the inline-start edge — right in RTL Arabic.
@@ -191,6 +193,7 @@
 	h1, h2, h3, h4 {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
+		text-align: right;
 	}
 
 	.llms-sd-nav {
@@ -219,6 +222,7 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
+		overflow-x: visible;
 
 		@include respond-max("mobile") { display: none; }
 	}
@@ -238,7 +242,7 @@
 			border-radius: var(--radius-sm);
 			color: var(--color-text);
 			font-weight: 600;
-			text-align: start;
+			text-align: right;
 			text-decoration: none;
 			transition: background-color var(--transition-base), color var(--transition-base);
 
@@ -268,12 +272,361 @@
 	}
 }
 
-// Shared form chrome for login / register / lost password / edit account.
-.llms-person-login-form-wrapper,
+/* -------------------------------------------------------------------------
+ * Login page (Alostora card) — scoped to account login only.
+ * LifterLMS core floats .llms-form-field columns; kill floats here.
+ * ---------------------------------------------------------------------- */
+
+.alostora-login-page,
+.alostora-login-page .alostora-llms,
+.alostora-login-page .alostora-llms__main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.alostora-login-page .alostora-llms {
+	inline-size: 100%;
+	padding-block: clamp(2rem, 6vw, 4.5rem);
+	padding-inline: 16px;
+	background:
+		radial-gradient(1200px 420px at 80% 0%, color-mix(in srgb, var(--color-accent) 14%, transparent), transparent 60%),
+		linear-gradient(180deg, color-mix(in srgb, var(--color-primary) 6%, #fff) 0%, var(--color-bg) 55%);
+}
+
+.alostora-login-page__card,
+.alostora-login-page .llms-person-login-form-wrapper,
+body.alostora-login-page .llms-person-login-form-wrapper {
+	box-sizing: border-box;
+	inline-size: calc(100% - 32px);
+	max-inline-size: 520px;
+	margin-inline: auto;
+	padding: 24px;
+	background: #fff;
+	border: 1px solid #d9e1ea;
+	border-radius: 20px;
+	box-shadow: 0 18px 40px rgba(20, 49, 94, 0.10);
+	float: none !important;
+
+	@include respond-to("md") {
+		inline-size: 90%;
+		padding: 40px;
+	}
+
+	@include respond-to("lg") {
+		inline-size: 100%;
+		max-inline-size: 520px;
+	}
+}
+
+.alostora-login-page__header {
+	margin-block-end: 1.5rem;
+	text-align: right;
+}
+
+.alostora-login-page__title,
+.alostora-login-page .llms-form-heading {
+	margin: 0 0 0.5rem;
+	color: var(--color-heading);
+	font-family: var(--font-heading);
+	font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+	font-weight: 800;
+	line-height: 1.3;
+	text-align: right;
+}
+
+.alostora-login-page__subtitle {
+	margin: 0;
+	color: var(--color-text-soft);
+	font-size: 1rem;
+	line-height: 1.7;
+	text-align: right;
+}
+
+.alostora-login-page .llms-login,
+.alostora-login-page .llms-form,
+.llms-person-login-form-wrapper .llms-login,
+.llms-person-login-form-wrapper .llms-form {
+	inline-size: 100%;
+	max-inline-size: none;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	box-shadow: none;
+	direction: rtl;
+}
+
+.alostora-login-page .llms-form-fields,
+.llms-person-login-form-wrapper .llms-form-fields,
+form.llms-login .llms-form-fields {
+	display: flex;
+	flex-direction: column;
+	gap: 0;
+	inline-size: 100%;
+	float: none !important;
+
+	&::before,
+	&::after {
+		display: none !important;
+		content: none !important;
+	}
+}
+
+.alostora-login-page .llms-form-field,
+.llms-person-login-form-wrapper .llms-form-field,
+form.llms-login .llms-form-field,
+.llms-form .llms-form-field {
+	display: flex !important;
+	flex-direction: column;
+	gap: 8px;
+	inline-size: 100% !important;
+	max-inline-size: none !important;
+	float: none !important;
+	clear: both !important;
+	margin: 0 0 18px !important;
+	padding: 0 !important;
+	position: static !important;
+
+	&[class*="llms-cols-"] {
+		inline-size: 100% !important;
+		float: none !important;
+	}
+
+	label,
+	.llms-label {
+		position: static !important;
+		display: block;
+		inset: auto !important;
+		inline-size: 100%;
+		margin: 0;
+		transform: none !important;
+		color: var(--color-heading);
+		font-weight: 600;
+		line-height: 1.4;
+		text-align: right;
+		pointer-events: auto;
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="password"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="number"],
+	select,
+	textarea {
+		display: block;
+		box-sizing: border-box;
+		inline-size: 100%;
+		min-block-size: 52px;
+		margin: 0;
+		padding: 0 16px;
+		border: 1px solid #d9e1ea;
+		border-radius: 12px;
+		background: #fff;
+		color: var(--color-text);
+		font-size: 1rem;
+		line-height: 1.4;
+		text-align: right;
+		transition: border-color var(--transition-base), box-shadow var(--transition-base);
+
+		&:focus {
+			outline: none;
+			border-color: var(--color-secondary);
+			box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 28%, transparent);
+		}
+	}
+
+	input[type="email"],
+	input[type="password"],
+	input[name*="email"],
+	input[name*="password"],
+	input[name*="user_login"],
+	input#llms_login,
+	input#llms_password {
+		direction: ltr;
+		text-align: left;
+		unicode-bidi: plaintext;
+	}
+
+	.llms-field-description,
+	.description,
+	.llms-error,
+	.llms-notice {
+		margin: 0;
+		color: var(--color-text-soft);
+		font-size: 0.9rem;
+		text-align: right;
+	}
+}
+
+.alostora-login-page .alostora-password-field,
+.llms-person-login-form-wrapper .alostora-password-field,
+form.llms-login .alostora-password-field {
+	.alostora-password-field-wrap,
+	.llms-password-wrapper,
+	.password-field-wrap {
+		position: relative;
+		display: block;
+		inline-size: 100%;
+	}
+
+	input[type="password"],
+	input[type="text"] {
+		padding-inline-end: 48px;
+	}
+
+	.alostora-password-toggle,
+	.password-toggle,
+	button.llms-show-password {
+		position: absolute;
+		inset-inline-end: 14px;
+		inset-block-start: 50%;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 32px;
+		block-size: 32px;
+		padding: 0;
+		border: 0;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--color-primary);
+		cursor: pointer;
+		transform: translateY(-50%);
+	}
+}
+
+.alostora-login-page .llms-form-field.type-submit,
+.llms-person-login-form-wrapper .llms-form-field.type-submit,
+form.llms-login .llms-form-field.type-submit,
+.alostora-login-page .llms-form-field .llms-button-action,
+.llms-person-login-form-wrapper .llms-button-action,
+form.llms-login .llms-button-action,
+.alostora-login-page button[type="submit"],
+.alostora-login-page input[type="submit"] {
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	inline-size: 100% !important;
+	min-block-size: 54px;
+	margin-block-start: 0.25rem;
+	padding: 0.9rem 1.25rem;
+	border: 0;
+	border-radius: 12px;
+	background: var(--gradient-accent);
+	color: #fff;
+	font-family: var(--font-heading);
+	font-size: 1.05rem;
+	font-weight: 700;
+	line-height: 1.2;
+	text-align: center;
+	cursor: pointer;
+	float: none !important;
+
+	&:hover {
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-raised);
+		color: #fff;
+	}
+}
+
+.alostora-login-meta-row,
+.alostora-login-page .llms-form-field.alostora-login-meta-row,
+.llms-person-login-form-wrapper .llms-form-field.alostora-login-meta-row {
+	margin-block-end: 18px !important;
+
+	.alostora-login-meta-row__inner,
+	.login-meta-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		inline-size: 100%;
+	}
+
+	.alostora-login-remember {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0;
+		color: var(--color-heading);
+		font-weight: 600;
+		text-align: right;
+		cursor: pointer;
+
+		input[type="checkbox"] {
+			inline-size: auto;
+			min-block-size: 0;
+			margin: 0;
+			accent-color: var(--color-accent);
+		}
+	}
+
+	.alostora-login-lost a {
+		color: var(--color-primary);
+		font-weight: 600;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	@media (max-width: 600px) {
+		.alostora-login-meta-row__inner,
+		.login-meta-row {
+			flex-direction: column;
+			align-items: stretch;
+		}
+	}
+}
+
+.alostora-login-register {
+	box-sizing: border-box;
+	inline-size: calc(100% - 32px);
+	max-inline-size: 520px;
+	margin: 1.25rem auto 0;
+	padding: 0;
+	text-align: center;
+
+	@include respond-to("md") {
+		inline-size: 90%;
+	}
+
+	@include respond-to("lg") {
+		inline-size: 100%;
+	}
+
+	&__prompt {
+		margin: 0 0 0.65rem;
+		color: var(--color-text-soft);
+	}
+
+	&__link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-block-size: 48px;
+		padding: 0.65rem 1.25rem;
+		border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+		border-radius: 12px;
+		background: #fff;
+		color: var(--color-primary);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		text-decoration: none;
+
+		&:hover {
+			border-color: var(--color-accent);
+			color: var(--color-primary);
+		}
+	}
+}
+
+// Shared form chrome for register / lost password / edit account (not login card).
 .llms-person-form-wrapper,
 .llms-new-person-form-wrapper,
 .llms-lost-password-form,
-form.llms-login,
 form.llms-person-form,
 form.llms-lost-password-form {
 	max-inline-size: 560px;
@@ -294,14 +647,24 @@ form.llms-lost-password-form {
 	text-align: start;
 }
 
-.llms-form-field,
-.llms-form-fields .llms-form-field {
+.llms-person-form-wrapper .llms-form-field,
+.llms-new-person-form-wrapper .llms-form-field,
+.llms-lost-password-form .llms-form-field,
+form.llms-person-form .llms-form-field,
+form.llms-lost-password-form .llms-form-field {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	inline-size: 100% !important;
+	float: none !important;
 	margin-block-end: 1rem;
 
 	label,
 	.llms-label {
+		position: static !important;
 		display: block;
-		margin-block-end: 0.4rem;
+		inline-size: 100%;
+		margin: 0;
 		color: var(--color-heading);
 		font-weight: 600;
 		text-align: start;
@@ -323,7 +686,6 @@ form.llms-lost-password-form {
 		background: var(--color-bg);
 		color: var(--color-text);
 		text-align: start;
-		transition: border-color var(--transition-base), box-shadow var(--transition-base);
 
 		&:focus {
 			outline: none;
@@ -332,7 +694,6 @@ form.llms-lost-password-form {
 		}
 	}
 
-	// Keep typed email/password/URL values LTR without flipping the form chrome.
 	input[type="email"],
 	input[type="password"],
 	input[type="url"],
@@ -342,29 +703,18 @@ form.llms-lost-password-form {
 		direction: ltr;
 		unicode-bidi: plaintext;
 	}
-
-	input[type="checkbox"],
-	input[type="radio"] {
-		margin-inline-end: 0.5rem;
-	}
-
-	.llms-field-description,
-	.description {
-		margin-block-start: 0.35rem;
-		color: var(--color-text-soft);
-		font-size: 0.9rem;
-		text-align: start;
-	}
 }
 
-.llms-form-field.type-submit,
-.llms-form-field .llms-button-action,
-.llms-form-field button[type="submit"],
-.llms-form-field input[type="submit"] {
-	inline-size: 100%;
-	justify-content: center;
-	min-block-size: 52px;
-	border-radius: 12px;
+.llms-person-form-wrapper .llms-form-field.type-submit,
+.llms-lost-password-form .llms-form-field.type-submit,
+form.llms-person-form .llms-form-field.type-submit {
+	.llms-button-action,
+	button[type="submit"],
+	input[type="submit"] {
+		inline-size: 100%;
+		min-block-size: 52px;
+		border-radius: 12px;
+	}
 }
 
 /* -------------------------------------------------------------------------
