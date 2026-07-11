@@ -109,56 +109,42 @@
 	}
 }
 
-// Video showcase: a large featured video beside three smaller tiles.
-// The three tiles define the block size (via their aspect-ratio); the featured
-// video fills that exact height so the two columns align with no whitespace.
-// minmax(0, …) tracks let children shrink so nothing overflows the viewport.
+// Video showcase: one large featured video on the inline-end (left in RTL) and
+// three smaller videos in a horizontal row on the inline-start (right in RTL),
+// vertically centred beside the taller featured video — matching the design.
 .alostora-showcase {
 	display: grid;
 	gap: clamp(1rem, 2.5vw, 1.5rem);
 	grid-template-columns: minmax(0, 1fr);
+	grid-template-areas: "main" "tiles";
 
 	@include respond-to("lg") {
-		grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
-		align-items: stretch;
+		grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+		grid-template-areas: "tiles main";
+		align-items: center;
 	}
 
-	&__main,
-	&__tiles { min-inline-size: 0; }
+	&__main {
+		grid-area: main;
+		min-inline-size: 0;
 
-	// Mobile/tablet: featured video is a standard 16:9 tile on top.
-	&__main .alostora-video-card {
-		inline-size: 100%;
-		aspect-ratio: 16 / 9;
+		.alostora-video-card {
+			inline-size: 100%;
+			aspect-ratio: 16 / 9;
+
+			@include respond-to("lg") { aspect-ratio: 16 / 10; }
+		}
 	}
 
 	&__tiles {
+		grid-area: tiles;
+		min-inline-size: 0;
 		display: grid;
-		gap: clamp(1rem, 2.5vw, 1.5rem);
+		gap: clamp(0.75rem, 1.6vw, 1.25rem);
 		grid-template-columns: 1fr;
 
 		@include respond-to("sm") { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-		@include respond-to("lg") { grid-template-columns: minmax(0, 1fr); }
 
 		.alostora-video-card { aspect-ratio: 16 / 9; }
-	}
-
-	// Desktop: featured video stretches to match the stacked tiles' height,
-	// with the poster absolutely filling the card (object-fit: cover).
-	@include respond-to("lg") {
-		&__main { block-size: 100%; }
-
-		&__main .alostora-video-card {
-			block-size: 100%;
-			aspect-ratio: auto;
-		}
-
-		&__main .alostora-video-card img {
-			position: absolute;
-			inset: 0;
-			inline-size: 100%;
-			block-size: 100%;
-			object-fit: cover;
-		}
 	}
 }
