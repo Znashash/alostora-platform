@@ -3,7 +3,9 @@
  * Component: Course card.
  *
  * Rendered by the LifterLMS loop override and the homepage course carousel. All
- * data is passed in so the component is decoupled from LifterLMS internals.
+ * data is passed in so the component is decoupled from LifterLMS internals. The
+ * instructor avatar is strictly capped to a small circle and falls back to a
+ * branded placeholder — never the large WordPress mystery-person.
  *
  * @package Alostora
  *
@@ -13,6 +15,7 @@
  *     @type string $image      Thumbnail URL.
  *     @type string $category   Category / badge label.
  *     @type string $instructor Instructor name.
+ *     @type string $avatar     Instructor avatar URL (optional).
  *     @type int    $lessons    Lesson count.
  *     @type string $duration   Human-readable duration.
  *     @type float  $rating     Rating out of 5.
@@ -29,11 +32,12 @@ $args = wp_parse_args( $args, array(
 	'image'      => '',
 	'category'   => '',
 	'instructor' => '',
+	'avatar'     => '',
 	'lessons'    => 0,
 	'duration'   => '',
 	'rating'     => 0,
 	'reviews'    => 0,
-	'cta_label'  => esc_html__( 'Enrol now', 'alostora' ),
+	'cta_label'  => 'ابدأ الآن',
 ) );
 ?>
 <article class="alostora-course">
@@ -52,9 +56,26 @@ $args = wp_parse_args( $args, array(
 		</h3>
 
 		<?php if ( $args['instructor'] ) : ?>
+			<?php
+			// Build initials from the first two name tokens (dots stripped) so we
+			// never render a broken/placeholder avatar.
+			$initials = '';
+			foreach ( array_slice( preg_split( '/\s+/', trim( $args['instructor'] ) ), 0, 2 ) as $token ) {
+				$token = trim( $token, '.' );
+				if ( '' !== $token ) {
+					$initials .= function_exists( 'mb_substr' ) ? mb_substr( $token, 0, 1, 'UTF-8' ) : substr( $token, 0, 1 );
+				}
+			}
+			?>
 			<p class="alostora-course__instructor">
-				<?php alostora_svg( 'user' ); ?>
-				<span><?php echo esc_html( $args['instructor'] ); ?></span>
+				<span class="alostora-course__avatar">
+					<?php if ( $args['avatar'] ) : ?>
+						<img src="<?php echo esc_url( $args['avatar'] ); ?>" alt="<?php echo esc_attr( $args['instructor'] ); ?>" width="40" height="40" loading="lazy" decoding="async">
+					<?php else : ?>
+						<span class="alostora-course__initials"><?php echo esc_html( $initials ); ?></span>
+					<?php endif; ?>
+				</span>
+				<span class="alostora-course__instructor-name"><?php echo esc_html( $args['instructor'] ); ?></span>
 			</p>
 		<?php endif; ?>
 
@@ -64,7 +85,7 @@ $args = wp_parse_args( $args, array(
 					<?php alostora_svg( 'play' ); ?>
 					<?php
 					/* translators: %s: number of lessons. */
-					echo esc_html( sprintf( _n( '%s lesson', '%s lessons', (int) $args['lessons'], 'alostora' ), number_format_i18n( (int) $args['lessons'] ) ) );
+					echo esc_html( sprintf( _n( '%s درس', '%s دروس', (int) $args['lessons'], 'alostora' ), number_format_i18n( (int) $args['lessons'] ) ) );
 					?>
 				</span>
 			<?php endif; ?>

@@ -1,80 +1,137 @@
 // -----------------------------------------------------------------------------
-// Components › Step card ("How we teach" flow)
+// Components › Step card & "How we teach" flow
+// Large light circular icon containers with an orange numbered badge, colored
+// illustrative icons, and navy connector arrows (horizontal on desktop, vertical
+// on mobile). Fully RTL with logical properties.
 // -----------------------------------------------------------------------------
 @use "../tools" as *;
 
 .alostora-step {
-	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	text-align: center;
-	padding: 1.5rem 1rem;
+	padding-inline: 0.5rem;
 
 	&__icon {
 		position: relative;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		inline-size: 84px;
-		block-size: 84px;
-		margin-block-end: 1rem;
+		inline-size: clamp(112px, 11vw, 148px);
+		block-size: clamp(112px, 11vw, 148px);
+		margin-block-end: 1.35rem;
 		border-radius: 50%;
-		background: color-mix(in srgb, var(--color-secondary) 12%, transparent);
-		color: var(--color-primary);
+		background: #ffffff;
+		border: 1px solid var(--color-border);
+		box-shadow: 0 16px 34px rgba(20, 49, 94, 0.12);
 
-		svg { inline-size: 38px; block-size: 38px; fill: currentColor; }
+		svg {
+			inline-size: 54%;
+			block-size: 54%;
+		}
 	}
 
+	// Orange numbered badge on the top-right edge (inline-start = right in RTL).
 	&__number {
 		position: absolute;
-		inset-block-start: -6px;
-		inset-inline-end: -6px;
-		inline-size: 30px;
-		block-size: 30px;
+		inset-block-start: 8px;
+		inset-inline-start: 8px;
+		inline-size: 32px;
+		block-size: 32px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: 0.85rem;
+		font-size: 0.9rem;
 		color: var(--color-text-invert);
 		background: var(--gradient-accent);
 		border-radius: 50%;
-		border: 3px solid var(--color-bg);
+		border: 3px solid var(--color-bg-alt);
+		box-shadow: 0 4px 10px rgba(243, 144, 25, 0.4);
 	}
 
 	&__title {
-		margin: 0 0 0.4rem;
-		font-size: 1.15rem;
+		margin: 0 0 0.45rem;
+		font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
+		font-weight: 700;
+		color: var(--color-heading);
 	}
 
 	&__desc {
 		margin: 0;
+		max-inline-size: 26ch;
 		color: var(--color-text-soft);
-		font-size: 0.95rem;
+		font-size: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+		line-height: 1.7;
 	}
 }
 
-// The connected flow row with arrows between steps.
+// Flow container: mobile = 1 per row (vertical arrows), tablet = 2 per row
+// (arrows hidden), desktop = 4 in one row with horizontal arrows between.
 .alostora-steps {
-	display: grid;
-	gap: 1rem;
-	align-items: start;
-	grid-template-columns: 1fr;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 1.5rem 1rem;
 
-	@include respond-to("md") {
-		grid-template-columns: repeat(var(--steps, 4), 1fr);
+	.alostora-step {
+		flex: 1 1 100%;
+		max-inline-size: 320px;
+		margin-inline: auto;
 	}
 
 	&__arrow {
-		display: none;
-		align-self: center;
-		color: var(--color-border);
+		flex: 0 0 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--color-primary);
 
-		@include respond-to("md") { display: inline-flex; }
+		svg {
+			inline-size: 34px;
+			block-size: auto;
+			transform: rotate(-90deg); // point downward on mobile
+		}
+	}
 
-		svg { inline-size: 28px; block-size: 28px; fill: currentColor; }
+	@include respond-to("md") {
+		gap: 2rem 1.25rem;
 
-		// Point the arrow with the reading direction (RTL-aware).
-		[dir="rtl"] & { transform: scaleX(1); }
-		[dir="ltr"] & { transform: scaleX(-1); }
+		.alostora-step {
+			flex: 1 1 40%;
+			max-inline-size: 340px;
+		}
+
+		// Tablet: two per row, connectors hidden.
+		&__arrow { display: none; }
+	}
+
+	@include respond-to("lg") {
+		flex-wrap: nowrap;
+		align-items: flex-start;
+		gap: 0.5rem;
+
+		.alostora-step {
+			flex: 1 1 0;
+			max-inline-size: none;
+		}
+
+		&__arrow {
+			flex: 0 0 auto;
+			display: flex;
+			margin-block-start: clamp(48px, 5.2vw, 66px); // align to circle centre
+			color: var(--color-primary);
+
+			svg {
+				inline-size: 42px;
+				transform: none; // horizontal, points toward the inline-end (RTL: left)
+			}
+		}
+
+		// In LTR the flow reverses, so mirror the arrow.
+		[dir="ltr"] &__arrow svg { transform: scaleX(-1); }
 	}
 }

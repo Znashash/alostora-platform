@@ -33,6 +33,10 @@
 	&__item {
 		scroll-snap-align: start;
 		min-inline-size: 0;
+		block-size: 100%;
+		display: flex;
+
+		> * { inline-size: 100%; }
 	}
 
 	&__controls {

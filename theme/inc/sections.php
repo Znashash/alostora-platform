@@ -1,0 +1,401 @@
+<?php
+/**
+ * Homepage section shortcodes.
+ *
+ * Each shortcode renders one full homepage section by composing the reusable
+ * components. They are used by the Elementor homepage template so content stays
+ * editable (via attributes) while the theme owns the markup and styling. All
+ * imagery falls back to bundled placeholders — no section is ever empty.
+ *
+ * @package Alostora
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Register the homepage section shortcodes.
+ *
+ * Registration is co-located with the implementations in this file so a
+ * shortcode can never be registered without its callback being available (and
+ * vice-versa). Runs on `init`, the standard, safe hook for shortcodes so they
+ * work on the front end without Elementor editing mode. Guarded with
+ * function_exists as a final safety net.
+ *
+ * @return void
+ */
+function alostora_register_section_shortcodes() {
+	$shortcodes = array(
+		'alostora_courses_carousel' => 'alostora_shortcode_courses_carousel',
+		'alostora_steps'            => 'alostora_shortcode_steps',
+		'alostora_features'         => 'alostora_shortcode_features',
+		'alostora_video_showcase'   => 'alostora_shortcode_video_showcase',
+		'alostora_cta_banner'       => 'alostora_shortcode_cta_banner',
+	);
+
+	foreach ( $shortcodes as $tag => $callback ) {
+		if ( function_exists( $callback ) ) {
+			add_shortcode( $tag, $callback );
+		}
+	}
+}
+add_action( 'init', 'alostora_register_section_shortcodes' );
+
+/**
+ * Render a section heading block.
+ *
+ * @param string $title    Title.
+ * @param string $subtitle Subtitle.
+ * @param bool   $invert   Whether the section is on a dark background.
+ * @return string
+ */
+function alostora_section_head( $title, $subtitle = '', $invert = false ) {
+	if ( ! $title && ! $subtitle ) {
+		return '';
+	}
+
+	$out  = '<div class="alostora-section__head"' . ( $invert ? ' data-reveal' : ' data-reveal' ) . '>';
+	$out .= '<hr class="u-divider" aria-hidden="true">';
+	if ( $title ) {
+		$out .= '<h2 class="alostora-section__title">' . esc_html( $title ) . '</h2>';
+	}
+	if ( $subtitle ) {
+		$out .= '<p class="alostora-section__subtitle">' . esc_html( $subtitle ) . '</p>';
+	}
+	$out .= '</div>';
+
+	return $out;
+}
+
+/**
+ * [alostora_features] — "Why learn with animation?" benefits band.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_features( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'title'    => 'لماذا التعلّم بالرسوم المتحركة؟',
+			'subtitle' => 'الرسوم المتحركة ليست مجرد مشاهدة... إنها طريقة تفكير.',
+			'image'    => '',
+		),
+		$atts,
+		'alostora_features'
+	);
+
+	$items = array(
+		array( 'icon' => 'chart', 'title' => 'رفع مستوى التحصيل', 'text' => 'نتائج وتذكّر أفضل في الاختبارات.' ),
+		array( 'icon' => 'brain', 'title' => 'ثبات المعلومة في الذاكرة', 'text' => 'تساعد على تذكّر المعلومة لفترة أطول.' ),
+		array( 'icon' => 'smile', 'title' => 'اجعل التعلّم ممتعاً', 'text' => 'تحوّل الدروس إلى قصص مشوّقة.' ),
+		array( 'icon' => 'target', 'title' => 'زد التركيز والفهم', 'text' => 'تحافظ على الانتباه ووضوح الفكرة.' ),
+	);
+
+	$inner = alostora_get_component( 'features', array(
+		'title'    => $atts['title'],
+		'subtitle' => $atts['subtitle'],
+		'items'    => $items,
+		'image'    => $atts['image'],
+	) );
+
+	return '<div class="alostora-section"><div class="alostora-container">' . $inner . '</div></div>';
+}
+
+/**
+ * [alostora_courses_carousel] — featured courses slider from LifterLMS.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_courses_carousel( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'title'    => 'دوراتنا المميّزة',
+			'subtitle' => 'تعلّم من خلال أفضل الدورات المصمّمة بطريقة عصرية وممتعة.',
+			'count'    => 8,
+		),
+		$atts,
+		'alostora_courses_carousel'
+	);
+
+	$cards = alostora_get_course_cards( (int) $atts['count'] );
+
+	// Never show an empty section: fall back to curated placeholder courses.
+	if ( empty( $cards ) ) {
+		$cards = alostora_get_placeholder_course_cards();
+	}
+
+	ob_start();
+	?>
+	<div class="alostora-section" id="courses">
+		<div class="alostora-container">
+			<?php echo alostora_section_head( $atts['title'], $atts['subtitle'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>
+
+			<div class="alostora-carousel" data-carousel>
+				<div class="alostora-carousel__viewport" data-carousel-viewport>
+					<div class="alostora-carousel__track">
+						<?php foreach ( $cards as $card ) : ?>
+							<div class="alostora-carousel__item"><?php echo $card; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Component escapes its own output. ?></div>
+						<?php endforeach; ?>
+					</div>
+				</div>
+				<div class="alostora-carousel__controls">
+					<button class="alostora-carousel__btn alostora-carousel__btn--prev" type="button" data-carousel-prev aria-label="السابق"><?php alostora_svg( 'chevron' ); ?></button>
+					<button class="alostora-carousel__btn alostora-carousel__btn--next" type="button" data-carousel-next aria-label="التالي"><?php alostora_svg( 'chevron' ); ?></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/**
+ * Curated placeholder course cards shown when no LifterLMS courses are published.
+ *
+ * @return array Rendered course-card component strings.
+ */
+function alostora_get_placeholder_course_cards() {
+	$poster = alostora_placeholder_url( 'video-cover.webp' );
+	$url    = post_type_exists( 'course' ) ? home_url( '/courses/' ) : '#';
+
+	$samples = array(
+		array( 'title' => 'تاريخ الأردن', 'category' => 'تاريخ وطني', 'lessons' => 8, 'duration' => '5 ساعات', 'rating' => 4.9 ),
+		array( 'title' => 'الحضارات القديمة', 'category' => 'حضارات', 'lessons' => 12, 'duration' => '6 ساعات', 'rating' => 4.8 ),
+		array( 'title' => 'التاريخ الإسلامي', 'category' => 'تاريخ إسلامي', 'lessons' => 10, 'duration' => '5 ساعات', 'rating' => 4.9 ),
+		array( 'title' => 'تربية وطنية', 'category' => 'تربية وطنية', 'lessons' => 6, 'duration' => '3 ساعات', 'rating' => 4.7 ),
+	);
+
+	$cards = array();
+	foreach ( $samples as $s ) {
+		$cards[] = alostora_get_component( 'course-card', array(
+			'title'      => $s['title'],
+			'url'        => $url,
+			'image'      => $poster,
+			'category'   => $s['category'],
+			'instructor' => 'أ. نسيم اللبدي',
+			'lessons'    => $s['lessons'],
+			'duration'   => $s['duration'],
+			'rating'     => $s['rating'],
+			'reviews'    => 0,
+			'cta_label'  => 'ابدأ الآن',
+		) );
+	}
+
+	return $cards;
+}
+
+/**
+ * Build an array of rendered course-card component strings from LifterLMS.
+ *
+ * @param int $count Maximum number of courses.
+ * @return array
+ */
+function alostora_get_course_cards( $count = 8 ) {
+	$cards = array();
+
+	if ( ! post_type_exists( 'course' ) ) {
+		return $cards;
+	}
+
+	$query = new WP_Query( array(
+		'post_type'              => 'course',
+		'post_status'            => 'publish',
+		'posts_per_page'         => max( 1, $count ),
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+		'ignore_sticky_posts'    => true,
+	) );
+
+	foreach ( $query->posts as $post ) {
+		$course_id = $post->ID;
+
+		$category = '';
+		$terms    = get_the_terms( $course_id, 'course_cat' );
+		if ( $terms && ! is_wp_error( $terms ) ) {
+			$category = $terms[0]->name;
+		}
+
+		$lessons = 0;
+		if ( function_exists( 'llms_get_post' ) ) {
+			$course = llms_get_post( $course_id );
+			if ( $course && is_callable( array( $course, 'get_lessons' ) ) ) {
+				$lessons = count( $course->get_lessons( 'ids' ) );
+			}
+		}
+
+		$cards[] = alostora_get_component( 'course-card', array(
+			'title'      => get_the_title( $course_id ),
+			'url'        => get_permalink( $course_id ),
+			'image'      => get_the_post_thumbnail_url( $course_id, 'alostora-course-card' ) ?: alostora_placeholder_url( 'video-cover.webp' ),
+			'category'   => $category,
+			'instructor' => get_the_author_meta( 'display_name', $post->post_author ),
+			'lessons'    => $lessons,
+			'cta_label'  => 'ابدأ الآن',
+		) );
+	}
+
+	wp_reset_postdata();
+
+	return $cards;
+}
+
+/**
+ * [alostora_steps] — "How we teach" four-step flow.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_steps( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'title'    => 'كيف ندرّس؟',
+			'subtitle' => 'حوّلنا طريقة التعلّم إلى تجربة لا تُنسى',
+		),
+		$atts,
+		'alostora_steps'
+	);
+
+	$steps = array(
+		array( 'number' => '1', 'icon' => 'step-book', 'title' => 'من الكتاب', 'description' => 'نأخذ المعلومة الأساسية.' ),
+		array( 'number' => '2', 'icon' => 'step-clapperboard', 'title' => 'إلى الرسوم المتحركة', 'description' => 'نحوّلها إلى قصة مرئية.' ),
+		array( 'number' => '3', 'icon' => 'step-brain', 'title' => 'إلى الفهم والتذكّر', 'description' => 'تصل المعلومة بطريقة أسهل.' ),
+		array( 'number' => '4', 'icon' => 'step-trophy', 'title' => 'إلى التفوق والنجاح', 'description' => 'لتحقيق أفضل النتائج.' ),
+	);
+
+	ob_start();
+	?>
+	<div class="alostora-section alostora-section--surface" id="how">
+		<div class="alostora-container">
+			<?php echo alostora_section_head( $atts['title'], $atts['subtitle'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>
+			<div class="alostora-steps" style="--steps: <?php echo count( $steps ); ?>;">
+				<?php
+				$last = count( $steps ) - 1;
+				foreach ( $steps as $i => $step ) {
+					alostora_component( 'step-card', $step );
+					if ( $i < $last ) {
+						echo '<span class="alostora-steps__arrow" aria-hidden="true">' . alostora_get_svg( 'arrow-step' ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG.
+					}
+				}
+				?>
+			</div>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/**
+ * [alostora_video_showcase] — "Watch how we teach" video gallery.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_video_showcase( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'title'    => 'شاهد طريقة تدريسنا',
+			'subtitle' => 'تجربة تعليمية محاكاة بالكامل.',
+		),
+		$atts,
+		'alostora_video_showcase'
+	);
+
+	/**
+	 * Gallery items. Each carries a poster image and an optional VdoCipher video
+	 * ID (kept empty here since placeholders are used). Clicking a thumbnail swaps
+	 * the featured poster + the play button's video ID via JS (no reload).
+	 *
+	 * @var array[] $items
+	 */
+	$items = array(
+		array( 'id' => '', 'title' => 'رحلة في الحضارات القديمة', 'image' => alostora_placeholder_url( 'video-1.webp' ) ),
+		array( 'id' => '', 'title' => 'قصة التاريخ الإسلامي', 'image' => alostora_placeholder_url( 'video-2.webp' ) ),
+		array( 'id' => '', 'title' => 'معالم تاريخية خالدة', 'image' => alostora_placeholder_url( 'video-3.webp' ) ),
+		array( 'id' => '', 'title' => 'دروس بالرسوم المتحركة', 'image' => alostora_placeholder_url( 'video-4.webp' ) ),
+	);
+
+	$featured = $items[0];
+	$play_svg = alostora_get_svg( 'play' );
+
+	ob_start();
+	?>
+	<div class="alostora-section">
+		<div class="alostora-container">
+			<?php echo alostora_section_head( $atts['title'], $atts['subtitle'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in helper. ?>
+
+			<div class="alostora-gallery" data-video-gallery>
+				<div class="alostora-gallery__stage alostora-video alostora-video--16x9" data-reveal>
+					<div class="alostora-video__frame">
+						<img class="alostora-gallery__image" data-gallery-image src="<?php echo esc_url( $featured['image'] ); ?>" alt="<?php echo esc_attr( $featured['title'] ); ?>" width="800" height="450" decoding="async">
+						<button type="button" class="alostora-gallery__play" data-video-trigger data-gallery-play data-video-id="<?php echo esc_attr( $featured['id'] ); ?>" aria-label="<?php echo esc_attr( 'تشغيل: ' . $featured['title'] ); ?>">
+							<?php echo $play_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG. ?>
+						</button>
+						<span class="alostora-gallery__caption" data-gallery-caption><?php echo esc_html( $featured['title'] ); ?></span>
+					</div>
+				</div>
+
+				<div class="alostora-gallery__thumbs" role="group" aria-label="<?php esc_attr_e( 'اختر فيديو', 'alostora' ); ?>">
+					<?php foreach ( $items as $i => $item ) : ?>
+						<button type="button"
+							class="alostora-gallery__thumb<?php echo 0 === $i ? ' is-active' : ''; ?>"
+							data-gallery-thumb
+							data-video-id="<?php echo esc_attr( $item['id'] ); ?>"
+							data-image="<?php echo esc_url( $item['image'] ); ?>"
+							data-title="<?php echo esc_attr( $item['title'] ); ?>"
+							aria-label="<?php echo esc_attr( 'عرض الفيديو: ' . $item['title'] ); ?>"
+							aria-pressed="<?php echo 0 === $i ? 'true' : 'false'; ?>">
+							<img src="<?php echo esc_url( $item['image'] ); ?>" alt="" loading="lazy" decoding="async" width="200" height="112">
+							<span class="alostora-gallery__thumb-play" aria-hidden="true"><?php echo $play_svg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Trusted SVG. ?></span>
+						</button>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}
+
+/**
+ * [alostora_cta_banner] — closing call-to-action banner.
+ *
+ * @param array $atts Attributes.
+ * @return string
+ */
+function alostora_shortcode_cta_banner( $atts ) {
+	$atts = shortcode_atts(
+		array(
+			'title'    => 'ابدأ رحلتك التعليمية اليوم',
+			'text'     => 'انضمّ إلى آلاف الطلاب الذين اختاروا طريقة الرسوم المتحركة للتعلّم.',
+			'label'    => 'سجّل الآن مجاناً',
+			'url'      => '#',
+		),
+		$atts,
+		'alostora_cta_banner'
+	);
+
+	ob_start();
+	?>
+	<div class="alostora-section alostora-section--tight">
+		<div class="alostora-container">
+			<div class="alostora-cta" data-reveal>
+				<div class="alostora-cta__text">
+					<h2 class="alostora-cta__title"><?php echo esc_html( $atts['title'] ); ?></h2>
+					<p class="alostora-cta__subtitle"><?php echo esc_html( $atts['text'] ); ?></p>
+				</div>
+				<div class="alostora-cta__actions">
+					<?php
+					alostora_component( 'buttons', array(
+						'label' => $atts['label'],
+						'url'   => $atts['url'],
+						'style' => 'primary',
+						'size'  => 'lg',
+					) );
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+	return ob_get_clean();
+}

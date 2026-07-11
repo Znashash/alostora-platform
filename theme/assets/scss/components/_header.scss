@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// Components › Header & primary navigation
+// Components › Header, primary navigation & mobile drawer
 // -----------------------------------------------------------------------------
 @use "../tools" as *;
 
@@ -27,15 +27,37 @@
 	}
 
 	&__nav {
-		flex: 1 1 auto;
-		display: flex;
-		justify-content: center;
+		display: none;
+
+		@include respond-to("lg") {
+			display: flex;
+			flex: 1 1 auto;
+			justify-content: center;
+		}
 	}
 
 	&__actions {
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
+		margin-inline-start: auto; // push actions to the inline-end (left in RTL)
+
+		// Below the desktop breakpoint the header shows only logo + hamburger;
+		// the login link and register button live inside the drawer.
+		@include respond-max("tablet") {
+			.alostora-btn { display: none; }
+		}
+	}
+
+	&__login {
+		color: inherit;
+		font-weight: 600;
+		white-space: nowrap;
+
+		&:hover { color: var(--color-accent-light); }
+
+		// The login link lives inside the drawer on tablet/mobile.
+		@include respond-max("tablet") { display: none; }
 	}
 
 	&__toggle {
@@ -47,12 +69,37 @@
 		color: inherit;
 		border-radius: var(--radius-sm);
 
-		svg { inline-size: 24px; block-size: 24px; fill: currentColor; }
-
-		@include respond-to("lg") { display: none; }
+		svg { inline-size: 26px; block-size: 26px; fill: currentColor; }
 
 		&:focus-visible { @include focus-ring; }
+
+		@include respond-to("lg") { display: none; }
 	}
+
+	// Transparent overlay over the hero on the front page; solid + fixed on scroll.
+	.home & {
+		position: absolute;
+		inset-inline: 0;
+		inset-block-start: 0;
+		background: transparent;
+		backdrop-filter: none;
+		box-shadow: none;
+
+		&.is-stuck {
+			position: fixed;
+			background: var(--color-surface-invert);
+			backdrop-filter: saturate(140%) blur(10px);
+			box-shadow: var(--shadow-raised);
+		}
+	}
+}
+
+// The site wrapper is the positioning context for the absolute home header; the
+// hero clears the header height so its content is never hidden beneath it.
+.alostora-site { position: relative; }
+
+.home .alostora-hero .alostora-hero__inner {
+	padding-block-start: calc(var(--header-height) + clamp(2rem, 5vw, 4rem));
 }
 
 .alostora-brand {
@@ -61,11 +108,12 @@
 	flex: 0 0 auto;
 
 	&__img {
-		block-size: 44px;
+		block-size: 46px;
 		inline-size: auto;
 	}
 }
 
+// Desktop inline menu.
 .alostora-menu {
 	--gap: clamp(0.75rem, 1.5vw, 1.75rem);
 
@@ -105,33 +153,124 @@
 
 		&::after { transform: scaleX(1); }
 	}
+}
 
-	// Off-canvas drawer on small screens.
-	@include respond-max("tablet") {
-		position: fixed;
-		inset-block: 0;
-		inset-inline-end: 0;
-		z-index: z("overlay");
+// -----------------------------------------------------------------------------
+// Off-canvas mobile drawer
+// -----------------------------------------------------------------------------
+.alostora-drawer {
+	position: fixed;
+	inset-block-start: 0;
+	block-size: 100dvh;
+	// Anchored to the inline-start edge (right in RTL, left in LTR) via a logical
+	// property so it is correct without any rtlcss-flipped stylesheet. Only the
+	// physical transform direction needs a per-direction rule (below).
+	inset-inline-start: 0;
+	z-index: 10001; // above all page content, incl. Elementor
+	display: flex;
+	flex-direction: column;
+	inline-size: min(86vw, 360px);
+	max-inline-size: 100%;
+	padding-block: 1.25rem;
+	padding-inline: 20px;
+	background: var(--color-surface-invert);
+	color: var(--color-text-invert);
+	box-shadow: var(--shadow-raised);
+	direction: rtl;
+	text-align: right;
+	// RTL default: parked off the right edge; slides in to translateX(0).
+	transform: translateX(100%);
+	transition: transform 0.3s ease;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+
+	&.is-open { transform: translateX(0); }
+
+	@include respond-to("lg") { display: none; }
+
+	&__top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding-block-end: 1rem;
+		margin-block-end: 0.5rem;
+		border-block-end: 1px solid color-mix(in srgb, var(--color-text-invert) 14%, transparent);
+
+		.alostora-brand__img { block-size: 40px; }
+	}
+
+	&__close {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		inline-size: 40px;
+		block-size: 40px;
+		font-size: 1.75rem;
+		line-height: 1;
+		color: inherit;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-text-invert) 10%, transparent);
+
+		&:hover { background: var(--color-accent); }
+		&:focus-visible { @include focus-ring; }
+	}
+
+	&__menu {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
 		flex-direction: column;
-		flex-wrap: nowrap;
-		inline-size: min(84vw, 340px);
-		padding: calc(var(--header-height) + 1.5rem) 1.5rem 1.5rem;
-		background: var(--color-surface-invert);
-		box-shadow: var(--shadow-raised);
-		transform: translateX(100%);
-		transition: transform var(--transition-base);
-		overflow-y: auto;
 
-		[dir="ltr"] & { transform: translateX(-100%); }
+		li { border-block-end: 1px solid color-mix(in srgb, var(--color-text-invert) 8%, transparent); }
 
-		&.is-open { transform: translateX(0); }
+		a {
+			display: block;
+			padding-block: 0.9rem;
+			color: inherit;
+			font-weight: 600;
+			text-align: start;
+
+			&:hover { color: var(--color-accent-light); }
+		}
+
+		.current-menu-item > a { color: var(--color-accent-light); }
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		margin-block-start: auto;
+		padding-block-start: 1.25rem;
+	}
+
+	&__login {
+		color: inherit;
+		font-weight: 600;
+		text-align: center;
+		padding-block: 0.6rem;
+
+		&:hover { color: var(--color-accent-light); }
 	}
 }
 
-.alostora-nav-backdrop {
+// Future English (LTR): park the drawer off the LEFT edge instead.
+[dir="ltr"] .alostora-drawer {
+	direction: ltr;
+	text-align: left;
+	transform: translateX(-100%);
+}
+
+[dir="ltr"] .alostora-drawer.is-open {
+	transform: translateX(0);
+}
+
+.alostora-drawer-backdrop {
 	position: fixed;
 	inset: 0;
-	z-index: z("sticky");
+	z-index: 10000; // just beneath the drawer, above all page content
 	background: rgba(10, 20, 40, 0.55);
 	opacity: 0;
 	visibility: hidden;

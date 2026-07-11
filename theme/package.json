@@ -11,9 +11,8 @@
 		"sass": "sass assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=compressed",
 		"sass:dev": "sass assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=expanded",
 		"prefix": "postcss \"assets/css/*.css\" --replace --no-map",
-		"rtl": "rtlcss assets/css/main.css assets/css/main-rtl.css && rtlcss assets/css/editor.css assets/css/editor-rtl.css",
-		"build": "npm run sass && npm run prefix && npm run rtl",
-		"build:dev": "npm run sass:dev && npm run prefix && npm run rtl",
+		"build": "npm run sass && npm run prefix",
+		"build:dev": "npm run sass:dev && npm run prefix",
 		"watch": "sass --watch assets/scss/main.scss:assets/css/main.css assets/scss/fonts.scss:assets/css/fonts.css assets/scss/critical.scss:assets/css/critical.css assets/scss/editor.scss:assets/css/editor.css --no-source-map --style=expanded"
 	},
 	"browserslist": [

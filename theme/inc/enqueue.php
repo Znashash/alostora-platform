@@ -42,8 +42,12 @@ function alostora_enqueue_assets() {
 		alostora_asset_version( 'assets/css/main.css' )
 	);
 
-	// The WordPress-generated RTL companion loads automatically via wp_style_add_data.
-	wp_style_add_data( 'alostora-main', 'rtl', 'replace' );
+	// NOTE: no separate RTL stylesheet is loaded. main.css is authored with CSS
+	// logical properties (RTL-correct via the browser from <html dir="rtl">), and
+	// the few direction-specific cases (drawer, arrows) use explicit [dir="…"]
+	// rules. This removes the fragile dependency on an rtlcss-flipped file that
+	// caused the mobile drawer to break when caching/optimization stopped it
+	// from loading.
 
 	// Font-face declarations (kept separate so they can be preloaded up-front).
 	wp_enqueue_style(
@@ -93,19 +97,3 @@ function alostora_enqueue_editor_assets() {
 	add_editor_style( 'assets/css/editor.css' );
 }
 add_action( 'after_setup_theme', 'alostora_enqueue_editor_assets' );
-
-/**
- * Mark the app script as a module so browsers parse it with ES-module semantics.
- *
- * @param string $tag    The full script HTML tag.
- * @param string $handle The registered script handle.
- * @return string
- */
-function alostora_script_as_module( $tag, $handle ) {
-	if ( 'alostora-app' === $handle ) {
-		$tag = str_replace( '<script ', '<script type="module" ', $tag );
-	}
-
-	return $tag;
-}
-add_filter( 'script_loader_tag', 'alostora_script_as_module', 10, 2 );

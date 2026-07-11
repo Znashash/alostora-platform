@@ -2,18 +2,40 @@
 /**
  * LifterLMS override: course loop author.
  *
- * Overrides LifterLMS `loop/author.php`. Wraps the standard LifterLMS author
- * output in the brand instructor row so the catalog card matches the design.
+ * Overrides LifterLMS `loop/author.php`. Renders a compact instructor row with a
+ * small branded avatar placeholder (never the large WordPress mystery-person)
+ * plus the instructor name, using the LifterLMS course API.
  *
  * @package Alostora
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! function_exists( 'llms_get_author' ) ) {
+if ( ! function_exists( 'llms_get_post' ) ) {
 	return;
 }
 
-echo '<span class="alostora-course__instructor">';
-echo llms_get_author( array( 'avatar_size' => 28 ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped inside function.
-echo '</span>';
+$course = llms_get_post( get_the_ID() );
+
+if ( ! $course || ! is_callable( array( $course, 'get_author_name' ) ) ) {
+	return;
+}
+
+$author = $course->get_author_name();
+
+if ( ! $author ) {
+	return;
+}
+
+$initials = '';
+foreach ( array_slice( preg_split( '/\s+/', trim( $author ) ), 0, 2 ) as $token ) {
+	$token = trim( $token, '.' );
+	if ( '' !== $token ) {
+		$initials .= function_exists( 'mb_substr' ) ? mb_substr( $token, 0, 1, 'UTF-8' ) : substr( $token, 0, 1 );
+	}
+}
+?>
+<span class="alostora-course__instructor">
+	<span class="alostora-course__avatar"><span class="alostora-course__initials"><?php echo esc_html( $initials ); ?></span></span>
+	<span class="alostora-course__instructor-name"><?php echo esc_html( $author ); ?></span>
+</span>

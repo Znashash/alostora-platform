@@ -108,3 +108,143 @@
 		background: linear-gradient(to top, rgba(10, 20, 40, 0.85), transparent);
 	}
 }
+
+// Video gallery: one large featured video with a row of selectable thumbnails.
+// Clicking a thumbnail swaps the featured poster + video ID (JS) with a fade and
+// no page reload. Thumbnails scroll horizontally when they overflow, so there is
+// never horizontal page overflow and the featured video stays full width.
+.alostora-gallery {
+	display: grid;
+	gap: clamp(1rem, 2vw, 1.5rem);
+	justify-items: center;
+
+	&__stage {
+		inline-size: 100%;
+		max-inline-size: 900px;
+		margin-inline: auto;
+	}
+
+	&__image {
+		position: absolute;
+		inset: 0;
+		inline-size: 100%;
+		block-size: 100%;
+		object-fit: cover;
+		transition: opacity 0.28s ease;
+
+		&.is-swapping { opacity: 0; }
+	}
+
+	// Large centered play button on the featured stage.
+	&__play {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		transform: translate(50%, -50%); // RTL: inline-start = right, so +50% x
+		inline-size: clamp(58px, 7vw, 76px);
+		block-size: clamp(58px, 7vw, 76px);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-base, #fff) 92%, transparent);
+		color: var(--color-primary);
+		box-shadow: var(--shadow-raised);
+		transition: transform 0.2s ease, background-color 0.2s ease;
+		z-index: 2;
+
+		&:hover { background: #fff; transform: translate(50%, -50%) scale(1.06); }
+		&:focus-visible { @include focus-ring; }
+
+		svg { inline-size: 42%; block-size: 42%; fill: currentColor; margin-inline-start: 4%; }
+	}
+
+	[dir="ltr"] &__play { transform: translate(-50%, -50%); }
+	[dir="ltr"] &__play:hover { transform: translate(-50%, -50%) scale(1.06); }
+
+	&__caption {
+		position: absolute;
+		inset-inline: 0;
+		inset-block-end: 0;
+		z-index: 2;
+		padding: 1.75rem 1.15rem 0.9rem;
+		margin: 0;
+		color: var(--color-text-invert);
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.15rem);
+		text-align: start;
+		background: linear-gradient(to top, rgba(10, 20, 40, 0.85), transparent);
+	}
+
+	&__thumbs {
+		display: flex;
+		gap: clamp(0.6rem, 1.4vw, 1rem);
+		inline-size: 100%;
+		max-inline-size: 900px;
+		margin-inline: auto;
+		overflow-x: auto;
+		scroll-snap-type: x proximity;
+		padding-block-end: 0.35rem;
+		scrollbar-width: thin;
+
+		&::-webkit-scrollbar { block-size: 6px; }
+		&::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-pill); }
+	}
+
+	&__thumb {
+		position: relative;
+		flex: 0 0 clamp(112px, 30%, 200px);
+		aspect-ratio: 16 / 9;
+		padding: 0;
+		overflow: hidden;
+		border: 3px solid transparent;
+		border-radius: var(--radius-md);
+		background: var(--color-surface-invert);
+		cursor: pointer;
+		scroll-snap-align: start;
+		transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+		img {
+			inline-size: 100%;
+			block-size: 100%;
+			object-fit: cover;
+			transition: transform 0.4s ease;
+		}
+
+		&:hover {
+			transform: translateY(-2px);
+			box-shadow: var(--shadow-card);
+
+			img { transform: scale(1.06); }
+		}
+
+		&:focus-visible { @include focus-ring; }
+
+		// Active thumbnail: Alostora orange border.
+		&.is-active {
+			border-color: var(--color-accent);
+			box-shadow: 0 8px 20px rgba(243, 144, 25, 0.35);
+		}
+
+		&-play {
+			position: absolute;
+			inset-block-start: 50%;
+			inset-inline-start: 50%;
+			transform: translate(50%, -50%);
+			inline-size: 30px;
+			block-size: 30px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 50%;
+			background: color-mix(in srgb, var(--color-base, #fff) 88%, transparent);
+			color: var(--color-primary);
+			pointer-events: none;
+
+			svg { inline-size: 13px; block-size: 13px; fill: currentColor; margin-inline-start: 2px; }
+		}
+	}
+
+	[dir="ltr"] &__thumb-play { transform: translate(-50%, -50%); }
+}

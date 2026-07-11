@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 96" role="img" aria-label="Alostora alostorajo.com" fill="none">
+	<title>Alostora - alostorajo.com</title>
+	<!-- Emblem: open book + rising arrow / torch (light variant for dark backgrounds) -->
+	<g>
+		<path d="M12 60 C24 50 40 50 52 56 L52 30 C40 24 24 24 12 34 Z" fill="#7FB2E8"/>
+		<path d="M92 60 C80 50 64 50 52 56 L52 30 C64 24 80 24 92 34 Z" fill="#CFE1F7"/>
+		<path d="M12 60 C24 52 40 52 52 58 C64 52 80 52 92 60 L92 66 C80 58 64 58 52 64 C40 58 24 58 12 66 Z" fill="#5C93D6"/>
+		<path d="M50 54 L50 20 L44 26 L46 14 L58 14 L60 26 L54 20 L54 54 Z" fill="#CFE1F7"/>
+		<path d="M52 4 C57 10 60 14 58 20 C56 15 54 15 52 18 C50 15 48 15 46 20 C44 14 47 10 52 4 Z" fill="#F5A623"/>
+		<path d="M52 9 C55 13 56 16 54 20 C53 17 51 17 50 20 C48 16 49 13 52 9 Z" fill="#F39019"/>
+	</g>
+	<!-- Wordmark -->
+	<text x="150" y="52" font-family="Tajawal, 'IBM Plex Sans Arabic', sans-serif" font-size="40" font-weight="800" fill="#FFFFFF" text-anchor="middle" direction="rtl" xml:lang="ar">&#1575;&#1604;&#1571;&#1587;&#1591;&#1608;&#1585;&#1577;</text>
+	<text x="150" y="82" font-family="Tajawal, 'IBM Plex Sans Arabic', sans-serif" font-size="20" font-weight="700" fill="#9CC0EA" text-anchor="middle" letter-spacing="1">alostorajo.com</text>
+</svg>

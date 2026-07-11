@@ -11,13 +11,21 @@ defined( 'ABSPATH' ) || exit;
  * Output the site logo: the custom logo when set, otherwise the bundled brand
  * SVG, wrapped in a home link.
  *
- * @param array $args Optional. { 'class' => string }.
+ * @param array $args Optional. {
+ *     @type string $class   Wrapper class. Default 'alostora-brand'.
+ *     @type string $variant 'light' for dark backgrounds (header/footer),
+ *                           'dark' for light backgrounds. Default 'light'.
+ * }
  * @return void
  */
 function alostora_brand_logo( $args = array() ) {
-	$class = isset( $args['class'] ) ? $args['class'] : 'alostora-brand';
+	$args    = wp_parse_args( $args, array(
+		'class'   => 'alostora-brand',
+		'variant' => 'light',
+	) );
+	$svg_name = 'light' === $args['variant'] ? 'logo-light' : 'logo';
 
-	echo '<a class="' . esc_attr( $class ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
+	echo '<a class="' . esc_attr( $args['class'] ) . '" href="' . esc_url( home_url( '/' ) ) . '" rel="home" aria-label="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
 
 	if ( has_custom_logo() ) {
 		$logo_id = get_theme_mod( 'custom_logo' );
@@ -28,7 +36,7 @@ function alostora_brand_logo( $args = array() ) {
 			'alt'      => get_bloginfo( 'name' ),
 		) );
 	} else {
-		echo alostora_get_svg( 'logo', array( 'class' => 'alostora-brand__img' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is trusted/escaped inside helper.
+		echo alostora_get_svg( $svg_name, array( 'class' => 'alostora-brand__img' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG markup is trusted/escaped inside helper.
 	}
 
 	echo '</a>';
@@ -48,8 +56,9 @@ function alostora_get_svg( $name, $args = array() ) {
 	$name = sanitize_file_name( $name );
 	$file = ALOSTORA_DIR . 'assets/images/icons/' . $name . '.svg';
 
-	if ( 'logo' === $name ) {
-		$file = ALOSTORA_DIR . 'assets/images/logo.svg';
+	// Brand logos live at the images root, not in the icons directory.
+	if ( 'logo' === $name || 'logo-light' === $name ) {
+		$file = ALOSTORA_DIR . 'assets/images/' . $name . '.svg';
 	}
 
 	if ( ! is_readable( $file ) ) {
@@ -107,6 +116,56 @@ function alostora_get_rating( $rating, $count = 0 ) {
 	</span>
 	<?php
 	return trim( ob_get_clean() );
+}
+
+/**
+ * Fallback primary navigation.
+ *
+ * Rendered when no menu is assigned to the `primary` location so the header
+ * always shows the expected Arabic navigation matching the approved design. The
+ * markup mirrors wp_nav_menu output (same id/classes) so the mobile drawer and
+ * its JS toggle work identically.
+ *
+ * @return void
+ */
+function alostora_primary_menu_fallback() {
+	$items = array(
+		array( 'label' => 'الرئيسية', 'url' => home_url( '/' ) ),
+		array( 'label' => 'الدورات', 'url' => home_url( '/courses/' ) ),
+		array( 'label' => 'كيف ندرّس؟', 'url' => home_url( '/#how' ) ),
+		array( 'label' => 'عن الأسطورة', 'url' => home_url( '/#about' ) ),
+		array( 'label' => 'تواصل معنا', 'url' => home_url( '/#contact' ) ),
+	);
+
+	echo '<ul id="alostora-primary-menu" class="alostora-menu">';
+	foreach ( $items as $item ) {
+		printf(
+			'<li class="menu-item"><a href="%s">%s</a></li>',
+			esc_url( $item['url'] ),
+			esc_html( $item['label'] )
+		);
+	}
+	echo '</ul>';
+}
+
+/**
+ * Return the URL to a bundled placeholder asset.
+ *
+ * Placeholders live in assets/images/placeholders and are used until final
+ * artwork is provided. Falls back to the inline SVG logo if the file is missing.
+ *
+ * @param string $name File name (e.g. 'hero-character.webp').
+ * @return string
+ */
+function alostora_placeholder_url( $name ) {
+	$name = sanitize_file_name( $name );
+	$rel  = 'assets/images/placeholders/' . $name;
+
+	if ( is_readable( ALOSTORA_DIR . $rel ) ) {
+		return ALOSTORA_URI . $rel;
+	}
+
+	return ALOSTORA_URI . 'assets/images/logo.svg';
 }
 
 /**

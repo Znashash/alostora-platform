@@ -74,8 +74,36 @@
 
 	&__media {
 		position: relative;
+		text-align: center;
+		isolation: isolate;
 
-		img { border-radius: var(--radius-lg); }
+		// Ambient glow so the artwork melts into the dark hero (no rectangle).
+		&::before {
+			content: "";
+			position: absolute;
+			inset: -8% -6% -12% -6%;
+			z-index: -1;
+			background:
+				radial-gradient(48% 42% at 42% 32%, rgba(243, 144, 25, 0.30), transparent 70%),
+				radial-gradient(60% 60% at 60% 70%, rgba(44, 111, 191, 0.28), transparent 72%);
+			filter: blur(6px);
+			pointer-events: none;
+		}
+
+		img {
+			inline-size: 100%;
+			block-size: auto;
+			max-inline-size: 560px;
+			margin-inline: auto;
+			border-radius: 0;
+			// Fade the artwork edges into the background so it never reads as a
+			// rectangular image. Center stays fully opaque.
+			-webkit-mask-image: radial-gradient(78% 78% at 50% 42%, #000 58%, transparent 100%);
+			mask-image: radial-gradient(78% 78% at 50% 42%, #000 58%, transparent 100%);
+			filter: drop-shadow(0 26px 55px rgba(0, 0, 0, 0.55));
+
+			@include respond-to("lg") { max-inline-size: 100%; }
+		}
 	}
 
 	// Inline video trigger with pulsing ring.
