@@ -186,13 +186,6 @@
 		grid-template-columns: minmax(200px, 260px) minmax(0, 1fr);
 	}
 
-	.llms-sd-header,
-	.llms-sd-title,
-	h1, h2, h3, h4 {
-		color: var(--color-heading);
-		font-family: var(--font-heading);
-	}
-
 	.llms-sd-nav {
 		@include card-surface;
 		padding: 1rem;
@@ -206,8 +199,6 @@
 			padding-inline: 0.85rem;
 			background: var(--color-surface-card);
 			color: var(--color-text);
-
-			@include respond-max("mobile") { display: block; }
 		}
 	}
 
@@ -219,8 +210,6 @@
 		list-style: none;
 		margin: 0;
 		padding: 0;
-
-		@include respond-max("mobile") { display: none; }
 	}
 
 	.llms-sd-item {
@@ -238,7 +227,7 @@
 			border-radius: var(--radius-sm);
 			color: var(--color-text);
 			font-weight: 600;
-			text-align: start;
+			text-align: right;
 			text-decoration: none;
 			transition: background-color var(--transition-base), color var(--transition-base);
 
@@ -256,6 +245,14 @@
 		}
 	}
 
+	.llms-sd-header,
+	.llms-sd-title,
+	h1, h2, h3, h4 {
+		color: var(--color-heading);
+		font-family: var(--font-heading);
+		text-align: right;
+	}
+
 	.llms-sd-tab,
 	.llms-sd-section {
 		min-inline-size: 0;
@@ -269,42 +266,119 @@
 }
 
 // Shared form chrome for login / register / lost password / edit account.
+// LifterLMS core uses floated .llms-form-field columns which overlap in RTL —
+// force a single-column flex stack scoped to account forms only.
 .llms-person-login-form-wrapper,
 .llms-person-form-wrapper,
 .llms-new-person-form-wrapper,
-.llms-lost-password-form,
+.llms-student-dashboard .llms-person-form-wrapper,
 form.llms-login,
 form.llms-person-form,
-form.llms-lost-password-form {
-	max-inline-size: 560px;
+form.llms-lost-password-form,
+.llms-lost-password-form {
+	display: block;
+	width: 100%;
+	max-width: 520px;
+	max-inline-size: 520px;
 	margin-inline: auto;
 	padding: clamp(1.5rem, 4vw, 2.25rem);
 	background: var(--color-surface-card);
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-card);
+	box-sizing: border-box;
+	overflow: visible;
 }
 
 .llms-form-heading,
-.llms-person-form-wrapper .llms-form-heading {
+.llms-person-form-wrapper .llms-form-heading,
+form.llms-login .llms-form-heading {
 	margin: 0 0 1.25rem;
+	padding: 0;
 	color: var(--color-heading);
 	font-family: var(--font-heading);
 	font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem);
-	text-align: start;
+	text-align: right;
+	float: none;
 }
 
-.llms-form-field,
-.llms-form-fields .llms-form-field {
-	margin-block-end: 1rem;
+.llms-person-login-form-wrapper .llms-form-fields,
+.llms-person-form-wrapper .llms-form-fields,
+.llms-new-person-form-wrapper .llms-form-fields,
+form.llms-login .llms-form-fields,
+form.llms-person-form .llms-form-fields,
+form.llms-lost-password-form .llms-form-fields,
+.llms-lost-password-form .llms-form-fields {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 0;
+	float: none;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	clear: both;
+
+	&::before,
+	&::after {
+		display: none !important;
+		content: none !important;
+	}
+}
+
+.llms-person-login-form-wrapper .llms-form-field,
+.llms-person-form-wrapper .llms-form-field,
+.llms-new-person-form-wrapper .llms-form-field,
+form.llms-login .llms-form-field,
+form.llms-person-form .llms-form-field,
+form.llms-lost-password-form .llms-form-field,
+.llms-lost-password-form .llms-form-field,
+.llms-form .llms-form-field {
+	display: flex !important;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 8px;
+	float: none !important;
+	clear: both;
+	position: static !important;
+	width: 100% !important;
+	max-width: 100%;
+	margin: 0 0 18px;
+	padding: 0;
+	box-sizing: border-box;
+
+	// Kill LifterLMS column widths that cause side-by-side overlap in RTL.
+	&.llms-cols-1,
+	&.llms-cols-2,
+	&.llms-cols-3,
+	&.llms-cols-4,
+	&.llms-cols-5,
+	&.llms-cols-6,
+	&.llms-cols-7,
+	&.llms-cols-8,
+	&.llms-cols-9,
+	&.llms-cols-10,
+	&.llms-cols-11,
+	&.llms-cols-12 {
+		width: 100% !important;
+		float: none !important;
+	}
 
 	label,
 	.llms-label {
+		position: static !important;
 		display: block;
-		margin-block-end: 0.4rem;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		float: none;
+		inset: auto;
+		transform: none;
 		color: var(--color-heading);
-		font-weight: 600;
-		text-align: start;
+		font-weight: 700;
+		text-align: right;
+		line-height: 1.4;
+		pointer-events: auto;
 	}
 
 	input[type="text"],
@@ -315,14 +389,17 @@ form.llms-lost-password-form {
 	input[type="number"],
 	select,
 	textarea {
-		inline-size: 100%;
-		min-block-size: 52px;
+		display: block;
+		width: 100%;
+		min-height: 50px;
+		margin: 0;
 		padding: 0.75rem 1rem;
 		border: 1px solid var(--color-border);
 		border-radius: 12px;
 		background: var(--color-bg);
 		color: var(--color-text);
 		text-align: start;
+		box-sizing: border-box;
 		transition: border-color var(--transition-base), box-shadow var(--transition-base);
 
 		&:focus {
@@ -332,7 +409,7 @@ form.llms-lost-password-form {
 		}
 	}
 
-	// Keep typed email/password/URL values LTR without flipping the form chrome.
+	// Keep typed email/password/URL values LTR without flipping labels.
 	input[type="email"],
 	input[type="password"],
 	input[type="url"],
@@ -341,30 +418,93 @@ form.llms-lost-password-form {
 	input[name*="user_login"] {
 		direction: ltr;
 		unicode-bidi: plaintext;
+		text-align: left;
 	}
 
-	input[type="checkbox"],
-	input[type="radio"] {
-		margin-inline-end: 0.5rem;
+	&.type-checkbox,
+	&.type-radio {
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+
+		input {
+			width: auto;
+			min-height: auto;
+			margin: 0;
+		}
+
+		label {
+			width: auto;
+			display: inline;
+			text-align: right;
+		}
 	}
 
 	.llms-field-description,
-	.description {
-		margin-block-start: 0.35rem;
+	.description,
+	.llms-description {
+		position: static;
+		display: block;
+		width: 100%;
+		margin: 0;
 		color: var(--color-text-soft);
 		font-size: 0.9rem;
-		text-align: start;
+		text-align: right;
+
+		a {
+			color: var(--color-secondary);
+			text-decoration: underline;
+		}
+	}
+
+	// Password visibility control: keep inside the field, not over the label.
+	.llms-password-toggle,
+	.password-toggle,
+	button[class*="password"],
+	span[class*="password-toggle"],
+	span[class*="toggle-password"] {
+		position: absolute;
+		inset-block-start: auto;
+		inset-block-end: 12px;
+		inset-inline-end: 12px;
+		inset-inline-start: auto;
+		z-index: 2;
+		color: var(--color-primary);
+		background: transparent;
+		border: 0;
+		padding: 0;
+		line-height: 1;
+	}
+
+	&.type-password,
+	&:has(input[type="password"]) {
+		position: relative;
+
+		input[type="password"] {
+			padding-inline-end: 2.75rem;
+		}
 	}
 }
 
-.llms-form-field.type-submit,
-.llms-form-field .llms-button-action,
-.llms-form-field button[type="submit"],
-.llms-form-field input[type="submit"] {
-	inline-size: 100%;
-	justify-content: center;
-	min-block-size: 52px;
-	border-radius: 12px;
+.llms-person-login-form-wrapper .llms-form-field.type-submit,
+.llms-person-form-wrapper .llms-form-field.type-submit,
+form.llms-login .llms-form-field.type-submit,
+form.llms-person-form .llms-form-field.type-submit,
+.llms-form-field.type-submit {
+	margin-block-start: 0.25rem;
+
+	.llms-button-action,
+	button[type="submit"],
+	input[type="submit"],
+	button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		min-height: 50px;
+		border-radius: 12px;
+	}
 }
 
 /* -------------------------------------------------------------------------
@@ -401,15 +541,27 @@ form[class*="ase-reg"] {
 	h1, h2, h3, legend {
 		color: var(--color-heading);
 		font-family: var(--font-heading);
-		text-align: start;
+		text-align: right;
 	}
 
 	label {
+		position: static;
 		display: block;
+		width: 100%;
 		margin-block-end: 0.4rem;
 		color: var(--color-heading);
 		font-weight: 600;
-		text-align: start;
+		text-align: right;
+	}
+
+	.form-row,
+	.ase-field,
+	.field,
+	p {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin-block-end: 1rem;
 	}
 
 	input[type="text"],
@@ -419,8 +571,7 @@ form[class*="ase-reg"] {
 	select,
 	textarea {
 		inline-size: 100%;
-		min-block-size: 52px;
-		margin-block-end: 1rem;
+		min-block-size: 50px;
 		padding: 0.75rem 1rem;
 		border: 1px solid var(--color-border);
 		border-radius: 12px;
@@ -439,6 +590,7 @@ form[class*="ase-reg"] {
 	input[type="password"] {
 		direction: ltr;
 		unicode-bidi: plaintext;
+		text-align: left;
 	}
 
 	input[type="checkbox"] {
@@ -451,10 +603,16 @@ form[class*="ase-reg"] {
 	.ase-terms,
 	[class*="terms"] {
 		display: flex;
+		flex-direction: row;
 		align-items: flex-start;
 		gap: 0.5rem;
 		margin-block: 0.75rem 1.25rem;
-		text-align: start;
+		text-align: right;
+
+		label {
+			width: auto;
+			margin: 0;
+		}
 	}
 
 	button[type="submit"],
@@ -465,7 +623,7 @@ form[class*="ase-reg"] {
 		align-items: center;
 		justify-content: center;
 		inline-size: 100%;
-		min-block-size: 52px;
+		min-block-size: 50px;
 		margin-block-start: 0.5rem;
 		padding: 0.85rem 1.25rem;
 		border: 0;

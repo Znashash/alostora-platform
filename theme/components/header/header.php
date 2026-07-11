@@ -11,12 +11,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$account_link = alostora_get_account_link();
-$primary_cta  = alostora_get_primary_cta_link();
-$login_label  = $account_link['label'];
-$login_url    = $account_link['url'];
-$primary_label = $primary_cta['label'];
-$primary_url   = $primary_cta['url'];
+$auth = alostora_get_auth_controls();
 
 $menu_args = array(
 	'theme_location' => 'primary',
@@ -34,15 +29,30 @@ $menu_args = array(
 		</nav>
 
 		<div class="alostora-header__actions">
-			<a class="alostora-header__login" href="<?php echo esc_url( $login_url ); ?>"><?php echo esc_html( $login_label ); ?></a>
-			<?php
-			alostora_component( 'buttons', array(
-				'label' => $primary_label,
-				'url'   => $primary_url,
-				'style' => 'primary',
-				'size'  => 'sm',
-			) );
-			?>
+			<?php if ( ! empty( $auth['logged_in'] ) && ! empty( $auth['account'] ) ) : ?>
+				<?php
+				alostora_component( 'buttons', array(
+					'label' => $auth['account']['label'],
+					'url'   => $auth['account']['url'],
+					'style' => 'primary',
+					'size'  => 'sm',
+				) );
+				?>
+			<?php else : ?>
+				<?php if ( ! empty( $auth['login'] ) ) : ?>
+					<a class="alostora-header__login" href="<?php echo esc_url( $auth['login']['url'] ); ?>"><?php echo esc_html( $auth['login']['label'] ); ?></a>
+				<?php endif; ?>
+				<?php
+				if ( ! empty( $auth['register'] ) ) {
+					alostora_component( 'buttons', array(
+						'label' => $auth['register']['label'],
+						'url'   => $auth['register']['url'],
+						'style' => 'primary',
+						'size'  => 'sm',
+					) );
+				}
+				?>
+			<?php endif; ?>
 			<button class="alostora-header__toggle" type="button" aria-expanded="false" aria-controls="alostora-drawer" aria-label="فتح القائمة" data-nav-toggle>
 				<span class="screen-reader-text"><?php esc_html_e( 'Open menu', 'alostora' ); ?></span>
 				<?php alostora_svg( 'menu' ); ?>
@@ -65,15 +75,33 @@ $menu_args = array(
 	</nav>
 
 	<div class="alostora-drawer__actions">
-		<a class="alostora-drawer__login" href="<?php echo esc_url( $login_url ); ?>"><?php echo esc_html( $login_label ); ?></a>
-		<?php
-		alostora_component( 'buttons', array(
-			'label' => $primary_label,
-			'url'   => $primary_url,
-			'style' => 'primary',
-			'size'  => 'lg',
-		) );
-		?>
+		<?php if ( ! empty( $auth['logged_in'] ) && ! empty( $auth['account'] ) ) : ?>
+			<?php
+			alostora_component( 'buttons', array(
+				'label' => $auth['account']['label'],
+				'url'   => $auth['account']['url'],
+				'style' => 'primary',
+				'size'  => 'lg',
+			) );
+			?>
+			<?php if ( ! empty( $auth['logout'] ) ) : ?>
+				<a class="alostora-drawer__login" href="<?php echo esc_url( $auth['logout']['url'] ); ?>"><?php echo esc_html( $auth['logout']['label'] ); ?></a>
+			<?php endif; ?>
+		<?php else : ?>
+			<?php if ( ! empty( $auth['login'] ) ) : ?>
+				<a class="alostora-drawer__login" href="<?php echo esc_url( $auth['login']['url'] ); ?>"><?php echo esc_html( $auth['login']['label'] ); ?></a>
+			<?php endif; ?>
+			<?php
+			if ( ! empty( $auth['register'] ) ) {
+				alostora_component( 'buttons', array(
+					'label' => $auth['register']['label'],
+					'url'   => $auth['register']['url'],
+					'style' => 'primary',
+					'size'  => 'lg',
+				) );
+			}
+			?>
+		<?php endif; ?>
 	</div>
 </div>
 <div class="alostora-drawer-backdrop" data-drawer-backdrop></div>

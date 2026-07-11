@@ -259,24 +259,107 @@ function alostora_get_student_dashboard_url() {
 }
 
 /**
+ * Primary marketing CTA (hero / banner).
+ *
+ * Logged out → registration page.
+ * Logged in → single account link (safe for one-CTA surfaces).
+ *
+ * @return array{url:string,label:string}
+ */
+function alostora_get_primary_cta_link() {
+	$auth = alostora_get_auth_controls();
+
+	if ( ! empty( $auth['account'] ) ) {
+		return $auth['account'];
+	}
+
+	return $auth['register'];
+}
+
+/**
+ * Centralized frontend auth controls for chrome (header / drawer / footer).
+ *
+ * Logged out: login + register.
+ * Logged in: a single account control (never both login + register as حسابي).
+ *
+ * @return array{
+ *     logged_in: bool,
+ *     account: array{url:string,label:string}|null,
+ *     login: array{url:string,label:string}|null,
+ *     register: array{url:string,label:string}|null,
+ *     logout: array{url:string,label:string}|null
+ * }
+ */
+function alostora_get_auth_controls() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
+	$dashboard = alostora_get_student_dashboard_url();
+
+	if ( is_user_logged_in() ) {
+		$cached = array(
+			'logged_in' => true,
+			'account'   => array(
+				'url'   => $dashboard,
+				'label' => 'حسابي',
+			),
+			'login'     => null,
+			'register'  => null,
+			'logout'    => array(
+				'url'   => wp_logout_url( home_url( '/' ) ),
+				'label' => 'تسجيل الخروج',
+			),
+		);
+
+		return $cached;
+	}
+
+	$register_label = get_theme_mod( 'alostora_cta_primary_label', 'سجّل الآن' );
+
+	$cached = array(
+		'logged_in' => false,
+		'account'   => null,
+		'login'     => array(
+			'url'   => $dashboard,
+			'label' => 'تسجيل الدخول',
+		),
+		'register'  => array(
+			'url'   => alostora_get_registration_url(),
+			'label' => $register_label ? $register_label : 'سجّل الآن',
+		),
+		'logout'    => null,
+	);
+
+	return $cached;
+}
+
+/**
+ * Account link data for simple single-link consumers.
+ *
+ * @return array{url:string,label:string}
+ */
+function alostora_get_account_link() {
+	$auth = alostora_get_auth_controls();
+
+	if ( ! empty( $auth['account'] ) ) {
+		return $auth['account'];
+	}
+
+	return $auth['login'];
+}
+
+/**
  * Frontend account link label based on authentication state.
  *
  * @return string
  */
 function alostora_get_account_link_label() {
-	return is_user_logged_in() ? 'حسابي' : 'تسجيل الدخول';
-}
+	$link = alostora_get_account_link();
 
-/**
- * Account link data for header / drawer / footer.
- *
- * @return array{url:string,label:string}
- */
-function alostora_get_account_link() {
-	return array(
-		'url'   => alostora_get_student_dashboard_url(),
-		'label' => alostora_get_account_link_label(),
-	);
+	return $link['label'];
 }
 
 /**
@@ -375,25 +458,4 @@ function alostora_get_registration_url() {
 	$cached = home_url( '/register/' );
 
 	return $cached;
-}
-
-/**
- * Primary header CTA: register when logged out, account when logged in.
- *
- * @return array{url:string,label:string}
- */
-function alostora_get_primary_cta_link() {
-	if ( is_user_logged_in() ) {
-		return array(
-			'url'   => alostora_get_student_dashboard_url(),
-			'label' => 'حسابي',
-		);
-	}
-
-	$label = get_theme_mod( 'alostora_cta_primary_label', 'سجّل الآن' );
-
-	return array(
-		'url'   => alostora_get_registration_url(),
-		'label' => $label ? $label : 'سجّل الآن',
-	);
 }

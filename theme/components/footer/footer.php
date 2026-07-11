@@ -51,19 +51,26 @@ $support_links = array(
 	array( 'label' => 'تواصل معنا', 'url' => home_url( '/#contact' ) ),
 );
 
-$account_link    = alostora_get_account_link();
-$primary_cta     = alostora_get_primary_cta_link();
-$support_links[] = array(
-	'label' => $account_link['label'],
-	'url'   => $account_link['url'],
-);
+$auth = alostora_get_auth_controls();
 
-// Registration CTA in footer when the visitor is logged out.
-if ( ! is_user_logged_in() ) {
+if ( ! empty( $auth['account'] ) ) {
 	$support_links[] = array(
-		'label' => $primary_cta['label'],
-		'url'   => $primary_cta['url'],
+		'label' => $auth['account']['label'],
+		'url'   => $auth['account']['url'],
 	);
+} else {
+	if ( ! empty( $auth['login'] ) ) {
+		$support_links[] = array(
+			'label' => $auth['login']['label'],
+			'url'   => $auth['login']['url'],
+		);
+	}
+	if ( ! empty( $auth['register'] ) ) {
+		$support_links[] = array(
+			'label' => $auth['register']['label'],
+			'url'   => $auth['register']['url'],
+		);
+	}
 }
 ?>
 <footer class="alostora-footer" role="contentinfo">

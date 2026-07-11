@@ -55,7 +55,7 @@ $alostora_modules = array(
 	'inc/performance.php',        // Core Web Vitals: lazyload, cleanup, WebP/AVIF.
 	'inc/elementor.php',          // Elementor locations + Theme Builder support.
 	'inc/lifterlms.php',          // LifterLMS support + VdoCipher integration.
-	'inc/i18n-frontend.php',      // Frontend Arabic strings for LifterLMS/account UI.
+	'inc/localization.php',       // Frontend Arabic strings for LifterLMS / serial forms.
 );
 
 foreach ( $alostora_modules as $alostora_module ) {
