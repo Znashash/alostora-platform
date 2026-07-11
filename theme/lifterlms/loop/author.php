@@ -26,8 +26,16 @@ $author = $course->get_author_name();
 if ( ! $author ) {
 	return;
 }
+
+$initials = '';
+foreach ( array_slice( preg_split( '/\s+/', trim( $author ) ), 0, 2 ) as $token ) {
+	$token = trim( $token, '.' );
+	if ( '' !== $token ) {
+		$initials .= function_exists( 'mb_substr' ) ? mb_substr( $token, 0, 1, 'UTF-8' ) : substr( $token, 0, 1 );
+	}
+}
 ?>
 <span class="alostora-course__instructor">
-	<span class="alostora-course__avatar"><?php alostora_svg( 'user' ); ?></span>
+	<span class="alostora-course__avatar"><span class="alostora-course__initials"><?php echo esc_html( $initials ); ?></span></span>
 	<span class="alostora-course__instructor-name"><?php echo esc_html( $author ); ?></span>
 </span>

@@ -97,6 +97,14 @@
 		svg { inline-size: 20px; block-size: 20px; fill: currentColor; }
 	}
 
+	&__initials {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.9rem;
+		line-height: 1;
+		color: var(--color-primary);
+	}
+
 	&__instructor-name {
 		min-inline-size: 0;
 		overflow: hidden;

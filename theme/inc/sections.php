@@ -75,8 +75,9 @@ function alostora_section_head( $title, $subtitle = '', $invert = false ) {
 function alostora_shortcode_features( $atts ) {
 	$atts = shortcode_atts(
 		array(
-			'title' => 'لماذا التعلّم بالرسوم المتحركة؟',
-			'image' => '',
+			'title'    => 'لماذا التعلّم بالرسوم المتحركة؟',
+			'subtitle' => 'الرسوم المتحركة ليست مجرد مشاهدة... إنها طريقة تفكير.',
+			'image'    => '',
 		),
 		$atts,
 		'alostora_features'
@@ -85,14 +86,15 @@ function alostora_shortcode_features( $atts ) {
 	$items = array(
 		array( 'icon' => 'chart', 'title' => 'رفع مستوى التحصيل', 'text' => 'نتائج وتذكّر أفضل في الاختبارات.' ),
 		array( 'icon' => 'brain', 'title' => 'ثبات المعلومة في الذاكرة', 'text' => 'تساعد على تذكّر المعلومة لفترة أطول.' ),
-		array( 'icon' => 'video', 'title' => 'اجعل التعلّم ممتعاً', 'text' => 'تحوّل الدروس إلى قصص مشوّقة.' ),
-		array( 'icon' => 'trophy', 'title' => 'زيادة التركيز والفهم', 'text' => 'تحافظ على الانتباه ووضوح الفكرة.' ),
+		array( 'icon' => 'smile', 'title' => 'اجعل التعلّم ممتعاً', 'text' => 'تحوّل الدروس إلى قصص مشوّقة.' ),
+		array( 'icon' => 'target', 'title' => 'زد التركيز والفهم', 'text' => 'تحافظ على الانتباه ووضوح الفكرة.' ),
 	);
 
 	$inner = alostora_get_component( 'features', array(
-		'title' => $atts['title'],
-		'items' => $items,
-		'image' => $atts['image'],
+		'title'    => $atts['title'],
+		'subtitle' => $atts['subtitle'],
+		'items'    => $items,
+		'image'    => $atts['image'],
 	) );
 
 	return '<div class="alostora-section"><div class="alostora-container">' . $inner . '</div></div>';

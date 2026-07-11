@@ -56,12 +56,23 @@ $args = wp_parse_args( $args, array(
 		</h3>
 
 		<?php if ( $args['instructor'] ) : ?>
+			<?php
+			// Build initials from the first two name tokens (dots stripped) so we
+			// never render a broken/placeholder avatar.
+			$initials = '';
+			foreach ( array_slice( preg_split( '/\s+/', trim( $args['instructor'] ) ), 0, 2 ) as $token ) {
+				$token = trim( $token, '.' );
+				if ( '' !== $token ) {
+					$initials .= function_exists( 'mb_substr' ) ? mb_substr( $token, 0, 1, 'UTF-8' ) : substr( $token, 0, 1 );
+				}
+			}
+			?>
 			<p class="alostora-course__instructor">
 				<span class="alostora-course__avatar">
 					<?php if ( $args['avatar'] ) : ?>
 						<img src="<?php echo esc_url( $args['avatar'] ); ?>" alt="<?php echo esc_attr( $args['instructor'] ); ?>" width="40" height="40" loading="lazy" decoding="async">
 					<?php else : ?>
-						<?php alostora_svg( 'user' ); ?>
+						<span class="alostora-course__initials"><?php echo esc_html( $initials ); ?></span>
 					<?php endif; ?>
 				</span>
 				<span class="alostora-course__instructor-name"><?php echo esc_html( $args['instructor'] ); ?></span>
