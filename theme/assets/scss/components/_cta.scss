@@ -30,19 +30,6 @@
 
 	> * { position: relative; z-index: 1; }
 
-	&__brand {
-		flex: 0 0 auto;
-		order: -1; // keep the logo on the inline-start (right in RTL) edge
-
-		.alostora-brand__img { block-size: clamp(46px, 4vw, 60px); }
-	}
-
-	&__text {
-		flex: 1 1 auto;
-		min-inline-size: 0;
-		text-align: start;
-	}
-
 	&__title {
 		margin: 0;
 		color: var(--color-text-invert);
@@ -55,10 +42,4 @@
 	}
 
 	&__actions { flex-shrink: 0; }
-
-	@include respond-max("mobile") {
-		text-align: center;
-
-		&__text { text-align: center; flex-basis: 100%; }
-	}
 }

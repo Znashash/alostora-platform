@@ -84,10 +84,10 @@ function alostora_shortcode_features( $atts ) {
 	);
 
 	$items = array(
-		array( 'icon' => 'chart', 'title' => 'رفع مستوى التحصيل', 'text' => 'نتائج أفضل في الاختبارات.' ),
-		array( 'icon' => 'smile', 'title' => 'تجعل التعلم ممتعاً', 'text' => 'تودّع الملل إلى الأبد.' ),
-		array( 'icon' => 'brain', 'title' => 'تثبّت المعلومة في الذاكرة', 'text' => 'تساعد على التذكر لفترة أطول.' ),
-		array( 'icon' => 'target', 'title' => 'تزيد التركيز والفهم', 'text' => 'تجعل المعلومة أكثر وضوحاً.' ),
+		array( 'icon' => 'chart', 'title' => 'رفع مستوى التحصيل', 'text' => 'نتائج وتذكّر أفضل في الاختبارات.' ),
+		array( 'icon' => 'brain', 'title' => 'ثبات المعلومة في الذاكرة', 'text' => 'تساعد على تذكّر المعلومة لفترة أطول.' ),
+		array( 'icon' => 'smile', 'title' => 'اجعل التعلّم ممتعاً', 'text' => 'تحوّل الدروس إلى قصص مشوّقة.' ),
+		array( 'icon' => 'target', 'title' => 'زد التركيز والفهم', 'text' => 'تحافظ على الانتباه ووضوح الفكرة.' ),
 	);
 
 	$inner = alostora_get_component( 'features', array(
@@ -352,7 +352,7 @@ function alostora_shortcode_cta_banner( $atts ) {
 	$atts = shortcode_atts(
 		array(
 			'title'    => 'ابدأ رحلتك التعليمية اليوم',
-			'text'     => 'انضم إلى آلاف الطلاب الذين اختاروا طريقة محاكاة للتعلم',
+			'text'     => 'انضمّ إلى آلاف الطلاب الذين اختاروا طريقة الرسوم المتحركة للتعلّم.',
 			'label'    => 'سجّل الآن مجاناً',
 			'url'      => '#',
 		),
@@ -365,9 +365,6 @@ function alostora_shortcode_cta_banner( $atts ) {
 	<div class="alostora-section alostora-section--tight">
 		<div class="alostora-container">
 			<div class="alostora-cta" data-reveal>
-				<div class="alostora-cta__brand">
-					<?php alostora_brand_logo( array( 'class' => 'alostora-brand alostora-cta__logo', 'variant' => 'light' ) ); ?>
-				</div>
 				<div class="alostora-cta__text">
 					<h2 class="alostora-cta__title"><?php echo esc_html( $atts['title'] ); ?></h2>
 					<p class="alostora-cta__subtitle"><?php echo esc_html( $atts['text'] ); ?></p>
